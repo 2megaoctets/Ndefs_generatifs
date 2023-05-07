@@ -1,3 +1,5 @@
+// nettoie, fais des ndefs
+
 (
 ~modelBitsPreset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, mod1: 1, mod2: 1, modulo: 256, greyHdiff: 0.707, greyHdelTmod: 1, greyHfb: 0.9);
 // default
@@ -39,6 +41,18 @@
 // rrand
 )
 
+~pmModPreset = (carfreq: rrand(0.1, 2), modfreq: rrand(0.05, 5), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi), mul: 0.4)
+
+(
+Ndef(\PMMod, {
+	PMOsc.kr(
+		carfreq: ~pmModPreset[\carfreq], // Line.kr(0.05, 0.5, 20),
+		modfreq: ~pmModPreset[\modfreq], // Line.kr(5, 0.5, 40),
+		pmindex: ~pmModPreset[\pmindex], //Line.kr(5, 0.1, 35)
+	)
+});
+)
+
 (
 // need this: s.options.memSize_(16384*10);
 Ndef(\modelBits, {
@@ -68,34 +82,26 @@ Ndef(\modelBits, {
 	sig = Splay.ar(
 		Limiter.ar(
 			Greyhole.ar(
-				sig1 + sig2,
-				sig1 * ~modelBitsPreset[\greyHdelTmod],
-				// SinOsc.kr(0.2, 0, 0.6) , // 0.5,
-				// test 060523
+				sig1 + sig2, // in
+				sig1 *  ~modelBitsPreset[\greyHdelTmod], // deltime
 				SinOsc.kr(
-					// variables + valeurs dans les args:
-					PMOsc.kr(
-						Line.kr(5, 0.15, 20),
-						Line.kr(50, 500, 90),
-						Line.kr(5, 0.1, 35)
-				), 0, 0.6) , // 0.5,
-				sig1,
-				// 060523
-				// ~modelBitsPreset[\greyHdiff],
-				SinOsc.kr(~modelBitsPreset[\greyHdiff], Line.kr(pi, (pi / 2), 50)),
-				// 060523
-				// ~modelBitsPreset[\greyHfb]
-				SinOsc.kr(Line.kr(0, ~modelBitsPreset[\greyHfb], 25))
+					// ! ndefs. séparer les mods du graphe
+					Ndef.kr(\PMMod), 0, 0.6) , // damp // 0.5,
+				SinOsc.kr(
+					~modelBitsPreset[\greyHdiff],
+					Line.kr(pi, (pi / 2), 50)), // diff
+				SinOsc.kr(Line.kr(0, ~modelBitsPreset[\greyHfb], 25)) // fb
 			),
 			0.5
 		).flatten
 	);
 	sig = (sig * env * ~modelBitsPreset[\amp]);
-	// OffsetOut.ar(out, sig);
 });
 )
 
 Ndef(\modelBits).fadeTime_(18);
+
+Ndef(\PMMod).fadeTime_(5);
 
 Ndef(\modelBits).play(2);
 

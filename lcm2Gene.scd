@@ -1,4 +1,5 @@
 // on le garde?
+// pas forcément
 
 (
 ~lcm2GenePreset = (amp: 0.01, atk: 0.001, rls: 0.2, sustain: 1, rate1: 28, rate2: 26, smooth1: 0.4, smooth2: 0.2);

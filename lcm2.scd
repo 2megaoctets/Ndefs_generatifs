@@ -1,3 +1,4 @@
+// garde. mets des mods
 (
 ~lcm2Preset = (amp: 0.031, atk: 0.001, rls: 0.2, sustain: 1, mod1: 3.09431, mod2: 54.0487);
 // default
@@ -18,6 +19,10 @@
 (
 ~lcm2Preset = (amp: 0.031, atk: rrand(0.001, 0.31), rls: rrand(0.92, 3.6), sustain: 1, mod1: rrand(1.4, 4.09431), mod2: rrand(20, 54.0487));
 // rrand
+)
+
+(
+mod1Preset = ();
 )
 
 

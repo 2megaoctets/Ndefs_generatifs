@@ -70,7 +70,7 @@ Ndef(\mod1, {
 )
 
 (
-~lcm2Preset = (amp: 0.06, atk: rrand(0.001, 0.31), rls: rrand(0.92, 3.6), sustain: 1, mod1: rrand(1.4, 4.09431), mod2: rrand(20, 54.0487));
+~lcm2Preset = (amp: 0.06, atk: rrand(0.001, 1.31), rls: rrand(0.92, 3.6), sustain: 1, mod1: rrand(1.4, 4.09431), mod2: rrand(20, 54.0487));
 // rrand
 )
 

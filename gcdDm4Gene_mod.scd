@@ -5,10 +5,37 @@ Ndef(\mod1).fadeTime_(15);
 )
 
 (
+~mod1Preset = (freq: rrand(0.12, 20) , freqTo: rrand(0.05, 25), freqSlope: rrand(0.15, 10), iphase: rrand(0.0, pi), iphaseTo: rrand(0.0, pi), iphaseSlope: rrand(0.13, 25), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.1, 7.5));
+)
+
+(
 Ndef(\mod1, {
 	FSinOsc.kr(
-		freq: Line.kr(~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqSlope]
-		),
+		freq: Line.kr(~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqSlope]),
+		iphase: Line.kr(~mod1Preset[\iphase], ~mod1Preset[\iphaseTo], ~mod1Preset[\iphaseSlope]),
+		mul: Line.kr(~mod1Preset[\mul], ~mod1Preset[\mulTo], ~mod1Preset[\mulSlope])
+	)
+})
+)
+
+Ndef(\mod2).fadeTime_(12);
+
+(
+~mod2Preset = (carfreq: 1, carfreqTo: 0.5, carfreqSlope: 5, modfreq: 2, modfreqTo: 20, modfreqSlope: 7.5, pmindex: 0.5, pmindexTo: 4, pmindexSlope: 10, modphase: 0.0, modphaseTo: 0.1, modphaseSlope: 6, mul: 0.5, mulTo: 0.75, mulSlope: 6);
+)
+
+(
+~mod2Preset = (carfreq: rrand(0.1, 127), carfreqTo: rrand(0.1, 127), carfreqSlope: rrand(0.05, 127), modfreq: rrand(0.2, 127), modfreqTo: rrand(0.1, 200), modfreqSlope: rrand(0.05, 10), pmindex: rrand(0.5, 127), pmindexTo: rrand(0.4, 127), pmindexSlope: rrand(0.2, 10), modphase: rrand(0.0, pi), modphaseTo: rrand(0, pi*2), modphaseSlope: rrand(0.1, 10), mul: rrand(0.25, 0.75), mulTo: rrand(0.5, 0.75), mulSlope: rrand(0.6, 10));
+)
+
+(
+Ndef(\mod2, {
+	PMOsc.kr(
+		carfreq:  XLine.kr(~mod2Preset[\carfreq], ~mod2Preset[\carfreqTo], ~mod2Preset[\carfreqSlope]),
+		modfreq:  Line.kr(~mod2Preset[\modfreq], ~mod2Preset[\modfreqTo], ~mod2Preset[\modfreqSlope]),
+		pmindex:  Line.kr(~mod2Preset[\pmindex], ~mod2Preset[\pmindexTo], ~mod2Preset[\pmindexSlope]),
+		modphase: Line.kr(~mod2Preset[\modphase], ~mod2Preset[\modphaseTo], ~mod2Preset[\modphaseSlope]),
+		mul: Line.kr(~mod2Preset[\mul], ~mod2Preset[\mulTo], ~mod2Preset[\mulSlope])
 	)
 })
 )
@@ -65,17 +92,17 @@ Ndef(\gcdDm4Gene, {
 
 	// envMod = XLine.kr(start, end, 100);
 
-	envMod = LFTri.kr(0.005, -1).exprange(~gcdDm4GenePreset[\start], ~gcdDm4GenePreset[\end]);
+	envMod = LFTri.kr(Ndef.kr(\mod2), -1).exprange(~gcdDm4GenePreset[\start], ~gcdDm4GenePreset[\end]);
 
 	src1 = TDuty.ar(seq * envMod * SampleDur.ir);
 	src2 = PulseCount.ar(Impulse.ar(~gcdDm4GenePreset[\rate1])) % ~gcdDm4GenePreset[\mod2];
 	src3 = PulseCount.ar(src1) % ~gcdDm4GenePreset[\mod3];
 
-	sig = gcd(src2, src3 + [0, 2]);
+	sig = gcd(src2, src3 + [Ndef.kr(\mod1) * 0.5/*0*/, Ndef.kr(\mod2) * 2]);
 	sig1 = gcd(lcm(src2 + [~gcdDm4GenePreset[\dev1], ~gcdDm4GenePreset[\dev2]], src3),sig);
 
-	sig = SinOsc.ar(sig * 443 + ~gcdDm4GenePreset[\add]) * 0.1;
-	sig1 = SinOsc.ar(sig1 * ~gcdDm4GenePreset[\mul1] + ~gcdDm4GenePreset[\add1]) * 0.4;
+	sig = SinOsc.ar((sig * Ndef.ar(\mod1))  + 443 + ~gcdDm4GenePreset[\add]) * 0.1;
+	sig1 = SinOsc.ar((Ndef.ar(\mod2) * sig1) * ~gcdDm4GenePreset[\mul1] + ~gcdDm4GenePreset[\add1]) * 0.4;
 
 	sig = (Limiter.ar(LPF.ar(HPF.ar(sig, 50) + sig1, 5000), 0.3) *
 		env * ~gcdDm4GenePreset[\amp]);

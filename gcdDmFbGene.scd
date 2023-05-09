@@ -27,7 +27,7 @@
 	arg start = 0, size = 6, reverse = false;
 	var arr = Array.series(size, start, 1);
 	if(reverse, {
-		arr.sort({ arg a, b; a > b}) ;
+		arr.sort.reverse ;
 	}, {
 		arr;
 	});

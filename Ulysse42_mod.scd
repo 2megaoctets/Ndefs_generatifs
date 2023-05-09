@@ -1,9 +1,9 @@
 (
-~ulysse42Preset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, mod1: 0.2, mod2: 0.71) // default
+~ulysse42Preset = (amp: 0.2, atk: 0.001, rls: 0.2, sustain: 1, mod1: 0.2, mod2: 0.71) // default
 )
 
 (
-~ulysse42Preset = (amp: 0.1, atk: rrand(0.0005, 0.01), rls: rrand(0.12, 0.32), sustain: 1, mod1: rrand(0.05, 0.82), mod2: rrand(0.0, 1.0))
+~ulysse42Preset = (amp: 0.2, atk: rrand(0.0005, 0.01), rls: rrand(0.12, 2), sustain: 1, mod1: rrand(0.05, 0.82), mod2: rrand(0.0, 1.0))
 )
 
 (
@@ -25,10 +25,10 @@ Ndef(\ulysse42, {
 	// mod1 = ~ulysse42Preset[\mod1].linlin(0, 1, -10, 10);
 
 	// test 060523
-	mod1 = SinOscFB.kr(
-		Line.kr(~ulysse42Preset[\mod1].linlin(0, 1, -10, 10), 1, 100),
-		Line.kr(0.01, 0.1, 20),
-		0.5
+	mod1 = SinOsc.kr(
+		Line.kr(~ulysse42Preset[\mod1].linlin(0, 1, -10, 10), 1, ~ulysse42Preset[\atk] * 1000),
+		Line.kr(0, ~ulysse42Preset[\mod1], ~ulysse42Preset[\rls] * 10),
+		SinOsc.kr(Line.kr(0, ~ulysse42Preset[\mod1], 5), Line.kr(0, [pi/2, pi], ~ulysse42Preset[\rls] * 100) )
 	);
 
 	sig1 =  LFSaw.kr(0.062).range(-10, 10);
@@ -36,7 +36,7 @@ Ndef(\ulysse42, {
 
 	// sig2 = sig1.frac;
 	// test 060523
-	sig2 = sig1.frac * SinOsc.kr(Line.kr(~ulysse42Preset[\mod2], 10, 100));
+	sig2 = sig1.frac * SinOsc.kr(Line.kr(0, ~ulysse42Preset[\mod2] * 10, ~ulysse42Preset[\rls] * 100), [pi/2, pi]);
 	sig3 = 0.8 - sig2.moddif(0.5, 1);
 
 	z1 = gcd(sig1, mod1) +  sig2;
@@ -46,12 +46,12 @@ Ndef(\ulysse42, {
 	// sinFrq = 132 * ([z1, z2].flop.abs + 1);
 
 	// test 060523
-	sinFrq = 130 * ([z1, z2].flop.abs + SinOsc.kr(Line.kr(~ulysse42Preset[\mod1], 1, 20)));
-	/*sinFrq = SinOscFB.kr(
-		Line.kr(~ulysse42Preset[\mod1], 25, 10),
-		Line.kr(~ulysse42Preset[\mod2], 0.5, 30),
-		Line.kr(0, 0.4, 20)
-		)	* ([z1, z2].flop.abs + 1);*/
+	sinFrq = 130 * ([z1, z2].flop.abs + SinOsc.kr(Line.kr(~ulysse42Preset[\mod1], 1, ~ulysse42Preset[\rls] * 20), [pi, pi/2]));
+	// sinFrq = SinOsc.kr(
+	// 	Line.kr(0, ~ulysse42Preset[\mod1], ~ulysse42Preset[\rls]),
+	// 	Line.kr(0, ~ulysse42Preset[\mod2], ~ulysse42Preset[\rls] * 2),
+	// 	Line.kr(0, 0.4, 20)
+	// )	* ([z1, z2].flop.abs + 1);
 
 
 	sig = (SinOsc.ar(sinFrq) * AmpComp.kr(sinFrq) * sig3).mean;
@@ -60,8 +60,8 @@ Ndef(\ulysse42, {
 );
 
 
-Ndef(\ulysse42).play(2);
+Ndef(\ulysse42).play();
 
 Ndef(\ulysse42).release(10);
 
-Ndef(\ulysse42).fadeTime_(16);
+Ndef(\ulysse42).fadeTime_(6);

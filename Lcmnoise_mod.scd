@@ -64,7 +64,7 @@ Ndef(\mod3, {
 		carfreq: ~mod3Preset[\carfreq],
 		modfreq: Line.kr( ~mod3Preset[\modfreq], ~mod3Preset[\modfreqTo],  ~mod3Preset[\modfreqSlope] * 10),
 		pmindex: Line.kr( ~mod3Preset[\pmindex], ~mod3Preset[\pmindexTo], ~mod3Preset[\pmindexSlope]* 15),
-		modphase: Line.kr( ~mod3Preset[\modphase], ~mod3Preset[\modphaseTo], ~mod3Preset[\modphaseSlope] * 20),
+		modphase: Line.kr( ~mod3Preset[\modphase], ~mod3Preset[\modphaseTo], ~mod3Preset[\modphaseSlope]),
 		mul: ~mod3Preset[\mul]
 	)
 });
@@ -93,9 +93,12 @@ Ndef(\lcmnoise, {
 	snd = [
 		tanh(
 			lcm(
-				SinOsc.ar(Ndef.kr(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr(LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				SinOsc.ar(
+					Ndef.kr(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+					XLine.kr(~mod2Preset[\iphase], ~mod2Preset[\iphaseTo], ~mod3Preset[\modphaseSlope])
 				).range(-100,100).round(1),
-				SinOsc.ar(Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				SinOsc.ar(Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+					XLine.kr(~mod3Preset[\modphase], ~mod3Preset[\modphaseTo], ~mod2Preset[\iphaseSlope])
 				).range(-100,100).round(1)
 			)*0.0001
 		),

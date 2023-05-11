@@ -9,7 +9,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-~mod1Preset = (syncFreq: rrand(0.1, 50), syncFreqTo: rrand(0.1, 50), syncFreqSlope: rrand(0.1, 10), sawFreq: rrand(0.1, 50), sawFreqTo: rrand(0.1, 50), sawFreqSlope: rrand(0.1, 10), mul: rrand(0.45, 0.95), mulTo: rrand(0.45, 0.95), mulSlope: rrand(0.1, 10), LPFFreq: rrand(20.0, 8000), LPFFreqTo: rrand(20.0, 8000), LPFFreqSlope: rrand(0.1, 10), LPFMul: rrand(0.45, 0.95), LPFMulTo: rrand(0.45, 0.95), LPFMulSlope: rrand(0.1, 10));
+~mod1Preset = (syncFreq: rrand(0.1, 10), syncFreqTo: rrand(0.1, 10), syncFreqSlope: rrand(0.1, 10), sawFreq: rrand(0.1, 10), sawFreqTo: rrand(0.1, 10), sawFreqSlope: rrand(0.1, 10), mul: rrand(0.45, 0.95), mulTo: rrand(0.45, 0.95), mulSlope: rrand(0.1, 10), LPFFreq: rrand(20.0, 8000), LPFFreqTo: rrand(20.0, 8000), LPFFreqSlope: rrand(0.1, 10), LPFMul: rrand(0.45, 0.95), LPFMulTo: rrand(0.45, 0.95), LPFMulSlope: rrand(0.1, 10));
 )
 
 (
@@ -55,22 +55,22 @@ Ndef(\mod2, {
 Ndef(\mod3).fadeTime_(12);
 
 (
-~pmModPreset = (carfreq: rrand(0.1, 5), modfreq: rrand(0.05, 10), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi*2), mul: 0.95, modfreqTo: rrand(0.05, 10), modfreqSlope: rrand(0.1, 10), pmindexTo: rrand(0.1, 12), pmindexSlope: rrand(0.1, 10), modphaseTo: rrand(0.0, pi*2), modphaseSlope: rrand(0.1, 10))
+~mod3Preset = (carfreq: rrand(0.1, 5), modfreq: rrand(0.05, 10), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi*2), mul: 0.95, modfreqTo: rrand(0.05, 10), modfreqSlope: rrand(0.1, 10), pmindexTo: rrand(0.1, 12), pmindexSlope: rrand(0.1, 10), modphaseTo: rrand(0.0, pi*2), modphaseSlope: rrand(0.1, 10))
 )
 
 (
-Ndef(\PMMod, {
+Ndef(\mod3, {
 	PMOsc.kr(
-		carfreq: ~pmModPreset[\carfreq],
-		modfreq: Line.kr( ~pmModPreset[\modfreq], ~pmModPreset[\modfreqTo],  ~pmModPreset[\modfreqSlope] * 10),
-		pmindex: Line.kr( ~pmModPreset[\pmindex], ~pmModPreset[\pmindexTo], ~pmModPreset[\pmindexSlope]* 15),
-		modphase: Line.kr( ~pmModPreset[\modphase], ~pmModPreset[\modphaseTo], ~pmModPreset[\modphaseSlope] * 20),
-		mul: ~pmModPreset[\mul]
+		carfreq: ~mod3Preset[\carfreq],
+		modfreq: Line.kr( ~mod3Preset[\modfreq], ~mod3Preset[\modfreqTo],  ~mod3Preset[\modfreqSlope] * 10),
+		pmindex: Line.kr( ~mod3Preset[\pmindex], ~mod3Preset[\pmindexTo], ~mod3Preset[\pmindexSlope]* 15),
+		modphase: Line.kr( ~mod3Preset[\modphase], ~mod3Preset[\modphaseTo], ~mod3Preset[\modphaseSlope] * 20),
+		mul: ~mod3Preset[\mul]
 	)
 });
 )
 
-Ndef(\lcmnoise).fadeTime_(5);
+Ndef(\lcmnoise).fadeTime_(15);
 
 (
 ~lcmnoisePreset =  (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, spread: 1, GHdamp: 0.2, GHsize: 1.6, GHfeedback: 0.9, GHmodDepth: 0.1, GHmodFreq: 2); // default
@@ -88,22 +88,22 @@ Ndef(\lcmnoise).fadeTime_(5);
 Ndef(\lcmnoise, {
 	var snd, revchain, env;
 
-	env = EnvGen.kr(Env.asr(~lcmnoisePreset[\atk], 1, ~lcmnoisePreset[\rls]), timeScale: ~lcmnoisePreset[\sustain]);
+	env = EnvGen.kr(Env.asr(~lcmnoisePreset[\atk], 1, ~lcmnoisePreset[\rls]), timeScale: ~lcmnoisePreset[\sustain]) + SinOsc.kr(Ndef.kr(\mod2) % Ndef.kr(\mod3));
 
 	snd = [
 		tanh(
 			lcm(
-				SinOsc.ar(Ndef.kr(\mod1) + LFNoise0.kr(LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				SinOsc.ar(Ndef.kr(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr(LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1),
-				SinOsc.ar(Ndef.kr(\mod1) + LFNoise0.kr(Ndef.kr(\mod3) * LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				SinOsc.ar(Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1)
 			)*0.0001
 		),
 		tanh(
 			lcm(
-				Saw.ar(Ndef.kr(\mod2) + Ndef.kr(\mod3) / LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				Saw.ar(Ndef.kr(\mod2) * Ndef.kr(\mod3) - LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1),
-				LFCub.ar(LFNoise0.kr(Ndef.kr(\mod2) + LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				LFCub.ar(LFNoise0.kr(Ndef(\mod1) * Ndef.kr(\mod2) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1)
 			)*0.0001
 		)

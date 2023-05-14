@@ -1,3 +1,5 @@
+// séparer les ndefs
+
 Ndef(\mod1).fadeTime_(12);
 
 (
@@ -72,7 +74,7 @@ Ndef(\gcdDm3Gene).fadeTime_(18);
 	arr.sort;
 };
 
-Post << ~gcdDm3GenePreset = (amp: 0.1, atk: rrand(0.001, 0.1), rls: rrand(0.2, 1.5), sustain: 1, add1: rrand(80, 102), add2: rrand(60, 100), add3: rrand(75, 90), mod1: rrand(40, 100), mod2: rrand(30, 101), mod3: rrand(42, 102), dev1: rrand(8, 10), dev2: rrand(15, 25), seq1: ~randArr.(size:rrand(8, 12)), seq2: ~randArr.(size:rrand(6, 12)), seq3: ~randArr.(size:rrand(4, 12)));
+Post << ~gcdDm3GenePreset = (amp: 0.15, atk: rrand(0.001, 0.1), rls: rrand(0.2, 1.5), sustain: 1, add1: rrand(80, 102), add2: rrand(60, 100), add3: rrand(75, 90), mod1: rrand(40, 100), mod2: rrand(30, 101), mod3: rrand(42, 102), dev1: rrand(8, 10), dev2: rrand(15, 25), seq1: ~randArr.(size:rrand(8, 12)), seq2: ~randArr.(size:rrand(6, 12)), seq3: ~randArr.(size:rrand(4, 12)));
 // rrand
 )
 

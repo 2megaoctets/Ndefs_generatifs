@@ -1,3 +1,5 @@
+// fabien 1405
+
 Ndef(\mod1).fadeTime_(12);
 
 (
@@ -70,6 +72,8 @@ Ndef(\mod3, {
 });
 )
 
+Ndef(\lcmnoise).numChannels;
+
 Ndef(\lcmnoise).fadeTime_(15);
 
 (
@@ -81,7 +85,7 @@ Ndef(\lcmnoise).fadeTime_(15);
 )
 
 (
-~lcmnoisePreset =  (amp: 0.1, atk: rrand(0.0005, 0.1), rls: rrand(0.2, 1.35), sustain: 1, spread: 1, GHsize: rrand(0.0001,5), GHdamp: rrand(0.5, 5), GHfeedback: rrand(0.01, 1), GHmodDepth: rrand(0.01, 1), GHmodFreq: rrand(0.01, 10)); // rrand
+~lcmnoisePreset =  (amp: 0.1, atk: rrand(0.0005, 0.1), rls: rrand(0.2, 1.35), sustain: 1, spread: rrand(0.5, 1), GHsize: rrand(0.0001,5), GHdamp: rrand(0.5, 5), GHfeedback: rrand(0.01, 1), GHmodDepth: rrand(0.01, 1), GHmodFreq: rrand(0.01, 10)); // rrand
 )
 
 (
@@ -94,19 +98,30 @@ Ndef(\lcmnoise, {
 		tanh(
 			lcm(
 				SinOsc.ar(
-					Ndef.kr(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+					Ndef.kr(\mod2) * Ndef.kr(\mod1) +
+					LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+					,
 					XLine.kr(~mod2Preset[\iphase], ~mod2Preset[\iphaseTo], ~mod3Preset[\modphaseSlope])
 				).range(-100,100).round(1),
-				SinOsc.ar(Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+				SinOsc.ar(
+					Ndef.kr(\mod1) /
+					LFNoise0.kr(
+						Ndef.kr(\mod3) %
+					LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+					,
 					XLine.kr(~mod3Preset[\modphase], ~mod3Preset[\modphaseTo], ~mod2Preset[\iphaseSlope])
 				).range(-100,100).round(1)
 			)*0.0001
 		),
 		tanh(
 			lcm(
-				Saw.ar(Ndef.kr(\mod2) * Ndef.kr(\mod3) - LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				Saw.ar(
+					Ndef.kr(\mod2) * Ndef.kr(\mod3) -
+					LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1),
-				LFCub.ar(LFNoise0.kr(Ndef(\mod1) * Ndef.kr(\mod2) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
+				LFCub.ar(LFNoise0.kr(
+					Ndef(\mod1) * Ndef.kr(\mod2) %
+					LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1)
 			)*0.0001
 		)
@@ -125,12 +140,12 @@ Ndef(\lcmnoise, {
 
 	revchain = Greyhole.ar(
 		in: revchain,
-		delayTime: LFNoise1.ar(Ndef.kr(\mod3)).range(0.0001,0.2),
-		damp: SinOsc.kr(~lcmnoisePreset[\GHdamp], [pi, pi/2]),
-		size: LFNoise1.ar(Ndef.kr(\mod1) + ~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
-		feedback: LFNoise1.kr(Ndef.kr(\mod2) + ~lcmnoisePreset[\GHfeedback]),
-		modDepth: LFNoise0.kr(Ndef.kr(\mod3) % ~lcmnoisePreset[\GHmodDepth]),
-		modFreq: LFNoise0.kr(Ndef.kr(\mod1) % ~lcmnoisePreset[\GHmodFreq])
+		delayTime: LFNoise1.ar(0.1).range(0.0001,0.2),
+		damp: ~lcmnoisePreset[\GHdamp],
+		size: LFNoise1.kr(~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
+		feedback: LFNoise1.kr(~lcmnoisePreset[\GHfeedback]),
+		modDepth: LFNoise0.kr(~lcmnoisePreset[\GHmodDepth]),
+		modFreq: LFNoise0.kr(~lcmnoisePreset[\GHmodFreq])
 	);
 	revchain = LeakDC.ar(revchain);
 	revchain = Limiter.ar(revchain) * LFNoise1.ar([1,1]).range(0,0.9);
@@ -139,11 +154,14 @@ Ndef(\lcmnoise, {
 	//snd = Limiter.ar(snd, 0.7);
 	snd = snd.softclip;
 	snd = LPF.ar(snd, LFNoise1.ar(0.1).exprange(100,20000));
-	snd * env * ~lcmnoisePreset[\amp];
+	snd = snd * env * ~lcmnoisePreset[\amp];
+	snd.sum;
 })
 )
 
 Ndef(\lcmnoise).play(2);
+
+Ndef(\lcmnoise).clear;
 
 Ndef(\lcmnoise).release(10);
 

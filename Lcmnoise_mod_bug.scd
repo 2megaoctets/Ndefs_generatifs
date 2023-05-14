@@ -1,3 +1,5 @@
+// voir l 50 pour remplacer les Line
+
 Ndef(\mod1).fadeTime_(12);
 
 (
@@ -5,7 +7,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-~mod1Preset = (syncFreq: 2, syncFreqTo: 4, syncFreqSlope: 1.5, sawFreq: 0.5, sawFreqTo: 1.6, sawFreqSlope: 2.5, mul: 1.0, mulTo: 1.0, mulSlope: 1, LPFFreq: 14000, LPFFreqTo: 40, LPFFreqSlope: 10, LPFMul: 1.0, LPFMulTo: 0.7, LPFMulSlope: 2.5);
+~mod1Preset = (syncFreq: 2, syncFreqTo: 4, syncFreqSlope: 1.5, sawFreq: 0.5, sawFreqTo: 1.6, sawFreqSlope: 2.5, mul: 1.0, mulTo: 1.0, mulSlope: 1, LPFFreq: 14000, LPFFreqTo: 40, LPFFreqSlope: 10, LPFMul: 0.10, LPFMulTo: 0.37, LPFMulSlope: 2.5);
 )
 
 (
@@ -40,19 +42,22 @@ Ndef(\mod2).fadeTime_(12);
 
 (
 Ndef(\mod2, {
-	BPF.kr(
-		VarSaw.kr(
+	BPF.ar(
+		VarSaw.ar(
 			freq: XLine.kr(~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqSlope]),
 			iphase: Line.kr(~mod2Preset[\iphase], ~mod2Preset[\iphaseTo], ~mod2Preset[\iphaseSlope]),
 			width: Line.kr(~mod2Preset[\width], ~mod2Preset[\widthTo], ~mod2Preset[\widthSlope]),
 			mul: XLine.kr(~mod2Preset[\mul], ~mod2Preset[\mulTo], ~mod2Preset[\mulSlope])
 			) ,
-		freq: XLine.kr(~mod2Preset[\BPFFreq], ~mod2Preset[\BPFFreqTo], ~mod2Preset[\BPFFreqSlope]),
-		rq: XLine.kr(~mod2Preset[\BPFRq], ~mod2Preset[\BPFRqTo], ~mod2Preset[\BPFRqSlope]),
-		mul: ~mod2Preset[\BPFMul]
+		freq: Phasor.kr(trig: Impulse.kr(0.1), rate: ~mod2Preset[\BPFFreqSlope], start: ~mod2Preset[\BPFFreq], end: ~mod2Preset[\BPFFreqTo], resetPos: ~mod2Preset[\BPFFreq]),
+ // XLine.kr(~mod2Preset[\BPFFreq], ~mod2Preset[\BPFFreqTo], ~mod2Preset[\BPFFreqSlope]).poll,
+		rq: 0.34, // XLine.kr(~mod2Preset[\BPFRq], ~mod2Preset[\BPFRqTo], ~mod2Preset[\BPFRqSlope]),
+		mul: 0.161 // ~mod2Preset[\BPFMul]
 	);
 })
 )
+
+Ndef(\mod2).clear;
 
 Ndef(\mod3).fadeTime_(12);
 
@@ -61,7 +66,7 @@ Ndef(\mod3).fadeTime_(12);
 )
 
 (
-~mod3Preset = (carfreq: rrand(0.1, 5), modfreq: rrand(0.05, 10), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi*2), mul: 1.0, modfreqTo: rrand(0.05, 10), modfreqSlope: rrand(0.1, 10), pmindexTo: rrand(0.1, 12), pmindexSlope: rrand(0.1, 10), modphaseTo: rrand(0.0, pi*2), modphaseSlope: rrand(0.1, 10))
+~mod3Preset = (carfreq: rrand(0.1, 5), modfreq: rrand(0.05, 10), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi), mul: 1.0, modfreqTo: rrand(0.05, 10), modfreqSlope: rrand(0.1, 10), pmindexTo: rrand(0.1, 12), pmindexSlope: rrand(0.1, 10), modphaseTo: rrand(0.0, pi), modphaseSlope: rrand(0.1, 10))
 )
 
 (
@@ -87,7 +92,7 @@ Ndef(\lcmnoise).fadeTime_(15);
 )
 
 (
-~lcmnoisePreset =  (amp: 0.1, atk: rrand(0.0005, 0.1), rls: rrand(0.2, 1.35), sustain: 1, spread: rrand(0.75, 1), GHsize: rrand(0.0001,5), GHdamp: rrand(0.5, 5), GHfeedback: rrand(0.01, 1), GHmodDepth: rrand(0.01, 1), GHmodFreq: rrand(0.01, 10)); // rrand
+~lcmnoisePreset =  (amp: 0.0121, atk: rrand(0.0005, 0.1), rls: rrand(0.2, 1.35), sustain: 1, spread: rrand(0.75, 1), GHsize: rrand(0.0001,5), GHdamp: rrand(0.5, 5), GHfeedback: rrand(0.01, 1), GHmodDepth: rrand(0.01, 1), GHmodFreq: rrand(0.01, 10)); // rrand
 )
 
 
@@ -101,18 +106,19 @@ Ndef(\lcmnoise, {
 		tanh(
 			lcm(
 				SinOsc.ar(
-					Ndef.kr(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+					Ndef.ar(\mod2) * Ndef.kr(\mod1) + LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
 					XLine.kr(~mod2Preset[\iphase])
 				).range(-100,100).round(1),
-				SinOsc.ar(Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
+				SinOsc.ar(
+					Ndef.kr(\mod1) / LFNoise0.kr(Ndef.kr(\mod3) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000),
 					XLine.kr(~mod3Preset[\modphase])
 				).range(-100,100).round(1)
 			)*0.0001
 		),
 		tanh(
 			lcm(
-				Saw.ar(Ndef.kr(\mod2) * Ndef.kr(\mod3) - LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
-				).range(-100,100).round(1),
+				Saw.ar(
+					Ndef.ar(\mod2) * Ndef.kr(\mod3) - LFNoise0.kr( LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)).range(-100,100).round(1),
 				LFCub.ar(LFNoise0.kr(Ndef(\mod1) * Ndef.kr(\mod2) % LFNoise0.kr(1/10).exprange(0.1,1)).exprange(1,15000)
 				).range(-100,100).round(1)
 			)*0.0001
@@ -132,12 +138,12 @@ Ndef(\lcmnoise, {
 
 	revchain = Greyhole.ar(
 		in: revchain,
-		delayTime: LFNoise1.ar(Ndef.kr(\mod3)).range(0.0001,0.2),
+		delayTime: LFNoise1.ar().range(0.0001,0.2),
 		damp: SinOsc.kr(~lcmnoisePreset[\GHdamp], rrand(0, pi)),
-		size: LFNoise1.ar(Ndef.kr(\mod1) + ~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
-		feedback: LFNoise1.kr(Ndef.kr(\mod2) + ~lcmnoisePreset[\GHfeedback]),
-		modDepth: LFNoise0.kr(Ndef.kr(\mod3) % ~lcmnoisePreset[\GHmodDepth]),
-		modFreq: LFNoise0.kr(Ndef.kr(\mod1) % ~lcmnoisePreset[\GHmodFreq])
+		size: LFNoise1.ar( ~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
+		feedback: LFNoise1.kr(~lcmnoisePreset[\GHfeedback]),
+		modDepth: LFNoise0.kr(~lcmnoisePreset[\GHmodDepth]),
+		modFreq: LFNoise0.kr(~lcmnoisePreset[\GHmodFreq])
 	);
 	revchain = LeakDC.ar(revchain);
 	revchain = Limiter.ar(revchain) * LFNoise1.ar([1,1]).range(0,0.9);
@@ -147,6 +153,8 @@ Ndef(\lcmnoise, {
 	snd = snd.softclip;
 	snd = LPF.ar(snd, LFNoise1.ar(0.1).exprange(100,20000));
 	snd * env * ~lcmnoisePreset[\amp];
+	// rajouter sum
+	snd = Limiter.ar(snd.sum, 0.5);
 })
 )
 

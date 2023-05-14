@@ -1,3 +1,5 @@
+// séparer les ndefs
+
 Ndef(\mod1).fadeTime_(12);
 
 (

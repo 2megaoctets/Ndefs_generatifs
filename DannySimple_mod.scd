@@ -1,3 +1,5 @@
+// séparer les ndefs
+
 Ndef(\mod1).fadeTime_(12);
 
 (
@@ -91,6 +93,9 @@ Ndef(\dannySimple).fadeTime_(19);
 (
 ~dannySimplePreset = (amp: 0.51, atk: rrand(0.00051,0.01), rls: rrand(0.1,0.23), sustain: 1, add1: rrand(430, 1970), add2: rrand(230, 1930), div1: rrand(15, 50), div2: rrand(20,35), rng1Lo: rrand(-4, -1.2), rng1Hi: rrand(1.3, 4.5) , rng2Lo: rrand(-12, 24), rng2Hi: rrand(-12, 24), freq1: [12, 24, 35, 49.5, 65.6, 20], freq2: [32, 64, 127, 260, 330, 475])
 )
+
+// séparer les ndefs
+
 
 (
 Ndef(\dannySimple, {

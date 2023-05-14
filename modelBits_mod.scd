@@ -41,7 +41,14 @@
 // rrand
 )
 
+
+Ndef(\modelBits).fadeTime_(18);
+
+Ndef(\PMMod).fadeTime_(5);
+
+(
 ~pmModPreset = (carfreq: rrand(0.1, 2), modfreq: rrand(0.05, 5), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi), mul: 0.4)
+)
 
 (
 Ndef(\PMMod, {
@@ -99,9 +106,6 @@ Ndef(\modelBits, {
 });
 )
 
-Ndef(\modelBits).fadeTime_(18);
-
-Ndef(\PMMod).fadeTime_(5);
 
 Ndef(\modelBits).play(2);
 

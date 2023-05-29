@@ -1,26 +1,26 @@
-// séparer les ndefs
+// 290523 ok mais pas super intéressant
 
 Ndef(\mod1).fadeTime_(12);
 
 (
-~mod1Preset = (freq: 10, freqTo: 0.1, freqSlope: 2.5, iphase: 0.0, iphaseTo: pi, iphaseSlope: 3.25, width: 0.5, widthTo: 0.95, widthSlope: 4.5, mul: 0.5, mulTo: 0.95, mulSlope: 5);
+~mod1Preset = (freq: 10, freqTo: 0.1, freqSlope: 0.125, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
 )
 
 (
-~mod1Preset = (freq: 0.3, freqTo: 0.5, freqSlope: 2, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 3, width: 0.95, widthTo: 0.25, widthSlope: 5, mul: 0.95, mulTo: 0.5, mulSlope: 6);
+~mod1Preset = (freq: 0.3, freqTo: 0.5, freqSlope: 0.12, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 0.03, width: 0.95, widthTo: 0.25, widthSlope: 0.05, mul: 0.95, mulTo: 0.5, mulSlope: 0.06);
 )
 
 (
-~mod1Preset = (freq: rrand(0.1, 20), freqTo: rrand(0.1, 20), freqSlope: rrand(0.1, 10), iphase: rrand(0.0, 1), iphaseTo: rrand(0.01, 1), iphaseSlope: rrand(0.1, 10), width: rrand(0.1, 1), widthTo: rrand(0.1, 1), widthSlope: rrand(0.1, 10), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.1, 10));
+~mod1Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 5), freqSlope: rrand(0.01, 0.10), iphase: rrand(0.0, 1), iphaseTo: rrand(0.01, 1), iphaseSlope: rrand(0.01, 0.10), width: rrand(0.1, 1), widthTo: rrand(0.1, 1), widthSlope: rrand(0.01, 0.10), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.01, 0.10));
 )
 
 (
 Ndef(\mod1, {
 	LFPulse.kr(
-		freq: XLine.kr(~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqSlope]),
-		iphase: Line.kr(~mod1Preset[\iphase], ~mod1Preset[\iphaseTo], ~mod1Preset[\iphaseSlope]),
-		width: Line.kr(~mod1Preset[\width], ~mod1Preset[\widthTo], ~mod1Preset[\widthSlope]),
-		mul: Line.kr(~mod1Preset[\mul], ~mod1Preset[\mulTo], ~mod1Preset[\mulSlope])
+		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]) * (Ndef.kr(\mod2) * 0.5 + 0.5),
+		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope], resetPos: ~mod1Preset[\iphaseTo]),
+		width: Phasor.kr(start: ~mod1Preset[\width], end: ~mod1Preset[\widthTo], rate: ~mod1Preset[\widthSlope], resetPos: ~mod1Preset[\widthTo]),
+		mul: Phasor.kr(start: ~mod1Preset[\mul], end: ~mod1Preset[\mulTo], rate: ~mod1Preset[\mulSlope], resetPos: ~mod1Preset[\mulTo])
 	)
 });
 )
@@ -29,19 +29,19 @@ Ndef(\mod1, {
 Ndef(\mod2).fadeTime_(12);
 
 (
-~mod2Preset = (freq: 0.5, freqTo: 0.25, freqSlope: 5, feedback: 0.0, feedbackTo: pi, feedbackSlope: 6, mul: 0.47, mulTo: 0.75, mulSlope: 7);
+~mod2Preset = (freq: 0.5, freqTo: 0.25, freqSlope: 0.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
 )
 
 (
-~mod2Preset = (freq: rrand(0.05, 10), freqTo: rrand(0.01, 10), freqSlope: rrand(0.1, 10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.10, 10), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.1, 10));
+~mod2Preset = (freq: rrand(0.05, 2), freqTo: rrand(0.01, 3), freqSlope: rrand(0.01, 0.10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.010, 0.10), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.10));
 )
 
 (
 Ndef(\mod2, {
 	SinOscFB.kr(
-		freq: XLine.kr(~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqSlope]),
-		feedback: Line.kr(~mod2Preset[\feedback], ~mod2Preset[\feedbackTo], ~mod2Preset[\feedbackSlope]),
-		mul: Line.kr(~mod2Preset[\mul], ~mod2Preset[\mulTo], ~mod2Preset[\mulSlope])
+		freq: Phasor.kr(start: ~mod2Preset[\freq], end: ~mod2Preset[\freqTo], rate: ~mod2Preset[\freqSlope], resetPos: ~mod2Preset[\freqTo]) * (Ndef.kr(\mod1) * 0.5 + 0.5),
+		feedback: Phasor.kr(start: ~mod2Preset[\feedback], end: ~mod2Preset[\feedbackTo], rate: ~mod2Preset[\feedbackSlope], resetPos: ~mod2Preset[\feedbackTo]),
+		mul: Phasor.kr(start: ~mod2Preset[\mul], end: ~mod2Preset[\mulTo], rate: ~mod2Preset[\mulSlope], resetPos: ~mod2Preset[\mulTo])
 	)
 });
 )
@@ -55,7 +55,7 @@ Ndef(\gcdDm3Gene).fadeTime_(18);
 )
 
 (
-~gcdDm3GenePreset = ( 'atk': 0.06398223733902, 'dev1': 9, 'add1': 93, 'mod2': 42, 'amp': 0.1, 'mod3': 92, 'add2': 94, 'add3': 86, 'dev2': 20, 'mod1': 95, 'rls': 0.21757351160049,  'sustain': 1, seq1: [2, 6, 12, 5], seq2: [7, 5, 8], seq3: [12, 9] )
+~gcdDm3GenePreset = ( 'atk': 0.06398223733902, 'dev1': 9, 'add1': 93, 'mod2': 42, 'amp': 0.1, 'mod3': 92, 'add2': 94, 'add3': 86, 'dev2': 20, 'mod1': 95, 'rls': 0.21757351160049,  'sustain': 1, seq1: [2, 6, 12, 5], seq2: [1, 1, 2, 3, 3, 4, 4, 7, 5, 8, 12], seq3: [12, 9] )
 )
 
 (
@@ -63,7 +63,7 @@ Ndef(\gcdDm3Gene).fadeTime_(18);
 )
 
 (
-~gcdDm3GenePreset = ( 'atk': 0.09078190100193, 'dev1': 10, 'add1': 99, 'mod2': 46, 'amp': 0.1, 'mod3': 101, 'add2': 75,   'add3': 75, 'dev2': 21, 'mod1': 92, 'rls': 0.2850227355957, 'sustain': 1, seq1: [1, 2, 10, 2, 2, 3, 6, 7, 9, 11, 13, 16, 19], seq2: [12, 13, 12, 16, 13, 15, 14, 12, 15, 10], seq3: [6, 17, 12, 9] )
+~gcdDm3GenePreset = ( 'atk': 0.09078190100193, 'dev1': 10, 'add1': 99, 'mod2': 46, 'amp': 0.1, 'mod3': 101, 'add2': 75,   'add3': 75, 'dev2': 21, 'mod1': 92, 'rls': 0.2850227355957, 'sustain': 1, seq1: [1, 2, 10, 2, 2, 3, 6, 7, 9, 11, 13, 16, 19], seq2: [12, 13, 12, 16, 13, 15, 14, 12, 15, 10], seq3: [6, 9, 12, 16, 18, 29] )
 )
 
 
@@ -85,16 +85,15 @@ Ndef(\gcdDm3Gene, {
 
 	env = EnvGen.kr(Env.asr(~gcdDm3GenePreset[\atk], 1, ~gcdDm3GenePreset[\rls]), timeScale: ~gcdDm3GenePreset[\sustain]);
 
-	// sig1 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq1] * SinOsc.kr(0.52, 1.16, SinOsc.kr(2, 0, 30)), inf) + ~gcdDm3GenePreset[\add1] * SampleDur.ir);
-	sig1 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq1] % ~mod1Preset[\freq], inf) + ~gcdDm3GenePreset[\add1] * SampleDur.ir);
-	sig2 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq2] % ~mod2Preset[\freq], inf) + ~gcdDm3GenePreset[\add2] * SampleDur.ir);
-	sig3 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq3] % LPF.kr((Ndef.kr(\mod1) + Ndef.kr(\mod2) * 0.5), Line.kr(~mod1Preset[\freq] * Ndef.kr(\mod2), ~mod2Preset[\freqTo] * Ndef.kr(\mod1), ~mod1Preset[\freqSlope]) * 128, 0.75), inf) + ~gcdDm3GenePreset[\add3] * SampleDur.ir);
+	sig1 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq1] , inf) + ~gcdDm3GenePreset[\add1] * SampleDur.ir);
+	sig2 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq2] , inf) + ~gcdDm3GenePreset[\add2]  * SampleDur.ir);
+	sig3 = TDuty.ar(Dseq(~gcdDm3GenePreset[\seq3] , inf) + ~gcdDm3GenePreset[\add3] * SampleDur.ir);
 
-	sig1 = PulseCount.ar(sig1) % ~gcdDm3GenePreset[\mod1];
-	sig2 = PulseCount.ar(sig2) % ~gcdDm3GenePreset[\mod2];
+	sig1 = PulseCount.ar(sig1)  % ~gcdDm3GenePreset[\mod1];
+	sig2 = PulseCount.ar(sig2)  % ~gcdDm3GenePreset[\mod2] ;
 	sig3 = PulseCount.ar(sig3) % ~gcdDm3GenePreset[\mod3];
 
-	sig = gcd(gcd(sig1 + [0, 0], sig2 + [0, ~gcdDm3GenePreset[\dev1]]), sig3 + [0, ~gcdDm3GenePreset[\dev2]]);
+	sig = gcd(gcd(sig1 + [0,0], sig2 + [0, ~gcdDm3GenePreset[\dev1]  + (Ndef(\mod1) * 0.5 + 0.5)  ]), sig3 + [0, ~gcdDm3GenePreset[\dev2]  + (Ndef.kr(\mod2) % 0.5 + 0.5)]);
 	sig = Limiter.ar(LPF.ar(HPF.ar(sig, 20), 10000), 0.3);
 
 	sig = sig * env;

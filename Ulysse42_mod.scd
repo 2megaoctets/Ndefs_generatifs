@@ -72,6 +72,10 @@ Ndef(\mod2).release(10);
 )
 
 (
+~ulysse42Preset = ( 'rls': 1.1913818120956, 'mod2': 0.98036432266235, 'atk': 0.0083026005625725, 'mod1': 0.29627777457237, 'amp': 0.2, 'sustain': 1 )
+)
+
+(
 ~ulysse42Preset = (amp: 0.2, atk: rrand(0.0005, 0.01), rls: rrand(0.12, 2), sustain: 1, mod1: rrand(0.05, 0.82), mod2: rrand(0.0, 1.0))
 )
 
@@ -123,4 +127,4 @@ Ndef(\ulysse42).play(2);
 
 Ndef(\ulysse42).release(10);
 
-Ndef(\ulysse42).fadeTime_(6);
+Ndef(\ulysse42).fadeTime_(16);

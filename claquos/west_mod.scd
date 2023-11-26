@@ -1,6 +1,5 @@
+// sept23 tout à refaire
 // 010623 : finir de moduler le graphe principal
-
-Ndef(\west).fadeTime_(8);
 
 (
 Ndef(\mod1).fadeTime_(12);
@@ -27,13 +26,13 @@ Ndef(\mod1, {
 Ndef(\mod2).fadeTime_(12);
 )
 
-(~mod2Preset = (freq: 1.75, freqTo: 0.175, freqSlope: 0.01, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.01, mul: 1, mulTo: 1, mulSlope: 0.01);)
+(~mod2Preset = (freq: 1.75, freqTo: 0.175, freqSlope: 1, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.01, mul: 1, mulTo: 1, mulSlope: 0.01);)
 
-(~mod2Preset = (freq: 0.66, freqTo: 0.165, freqSlope: 0.001, phase: pi/2, phaseTo: 0, phaseSlope: 0.001, mul: 0.85, mulTo: 0.95, mulSlope: 0.005);)
+(~mod2Preset = (freq: 1066, freqTo: 165, freqSlope: 0.001, phase: pi/2, phaseTo: 0, phaseSlope: 0.001, mul: 0.85, mulTo: 0.95, mulSlope: 0.005);)
 
-(~mod2Preset = (freq: 1, freqTo: 0.1, freqSlope: 0.001, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.01, mul: 1, mulTo: 0.95, mulSlope: 0.005);)
+(~mod2Preset = (freq: 1, freqTo: 201, freqSlope: 1, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.0, mul: 1, mulTo: 0.95, mulSlope: 0.005);)
 
-(~mod2Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 2), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.85, 0.95), mulTo: rrand(0.85, 0.95), mulSlope: rrand(0.01, 0.1));)
+(~mod2Preset = (freq: rrand(0.2, 490), freqTo: rrand(0.2, 20), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.85, 0.95), mulTo: rrand(0.85, 0.95), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod2, {
@@ -46,7 +45,7 @@ Ndef(\mod2, {
 )
 
 (
-Ndef(\mod3).fadeTime_(12);
+Ndef(\mod3).fadeTime_(22);
 )
 
 (~mod3Preset = (freq: 0.1, freqTo: 0.6, freqSlope: 0.05, mul: 0.95, mulTo: 0.99, mulSlope: 0.01);)
@@ -64,10 +63,8 @@ Ndef(\mod3, {
 })
 )
 
-(
-~westPreset = (fadeIn: 0.01, fadeOut: 0.01, freq: 220, pitchBendRatio: 1, glide: 0, fm1Ratio: 0.66, fm2Ratio: 3.3, fm1Amount: 0.0, fm2Amount: 0.0, vel: 0.7, pressure: 0, timbre: 0, waveShape: 0, waveFolds: 0, envType: 0, attack: 0.04, peak: 10000, decay: 1, amp: 0.15, lfoShape: 0, lfoFreq: 0.5, lfoToFreqAmount: 0, lfoToWaveShapeAmount: 0, lfoToWaveFoldsAmount: 0, lfoToFm1Amount: 0, lfoToFm2Amount: 0, lfoToAttackAmount: 0, lfoToPeakAmount: 0, lfoToDecayAmount: 0, lfoToReverbMixAmount: 0, drift: 0, dur: 10, t_gate: 1, /*gate=1, */ killGate: 1 );
-// default
-)
+Ndef(\west).fadeTime_(28);
+
 (
 ~westPreset = ( 'fadeIn': 0.009472633600235, 'lfoToWaveFoldsAmount': 0.067932558059692, 'attack': 0.04, 'pressure': 0.048356151580811,
   'drift': 0.1580126285553, 'fadeOut': 0.0072627478837967, 'envType': 1, 'lfoToFreqAmount': 0.091015434265137, 'lfoShape': 3,
@@ -227,21 +224,23 @@ Ndef(\west, {
 	signal = signal * vel.linlin(0, 1, [0.18, 0.2], 1) ;
 
 	// Saturation amp
-	signal = tanh(signal * ~westPreset[\pressure].linlin(0, 1, 1.5, 3) * ~westPreset[\amp]).softclip;
+	signal = tanh(signal * ~westPreset[\pressure].linlin(0, 1, 1.5, 3)).softclip;
 
 	// main Envelope
 	signal = signal * EnvGen.kr(
 		Env([0.0,1.0,1.0,0], [~westPreset[\fadeIn], ~westPreset[\fadeOut]], releaseNode: 2)
 	);
 
-	signal = Limiter.ar(signal, 0.7, 0.1);
+	signal = Limiter.ar(signal * ~westPreset[\amp] * 0.68, 0.7, 0.1);
 	signal;
 
 });
 )
 
+Ndef(\west).fadeTime_(29);
+
 Ndef(\west).clear;
 
 Ndef(\west).play(2);
 
-Ndef(\west).release(9);
+Ndef(\west).release(25);

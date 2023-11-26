@@ -1,7 +1,7 @@
 Ndef(\mod1).fadeTime_(12);
 
 (
-~mod1Preset = (freq: 0.031, freqTo: 0.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
+~mod1Preset = (freq: 0.031, freqTo: 20.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
 )
 
 (
@@ -9,7 +9,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-~mod1Preset = (freq: rrand(0.1, 2), freqTo: rrand(0.1, 0.020), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.01, 1), iphaseSlope: rrand(0.01, 0.10), width: rrand(0.1, 1), widthTo: rrand(0.1, 1), widthSlope: rrand(0.01, 0.10), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.01, 0.10));
+~mod1Preset = (freq: rrand(0.1, 1020), freqTo: rrand(0.1, 1520.020), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.01, 1), iphaseSlope: rrand(0.01, 0.10), width: rrand(0.1, 1), widthTo: rrand(0.1, 1), widthSlope: rrand(0.01, 0.10), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.01, 0.10));
 )
 
 (
@@ -31,7 +31,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-~mod2Preset = (freq: rrand(0.05, 1), freqTo: rrand(0.01, 1), freqSlope: rrand(0.01, 0.10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.010, 0.10), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.10));
+~mod2Preset = (freq: rrand(0.05, 1200), freqTo: rrand(0.01, 3120.0), freqSlope: rrand(0.01, 0.10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.010, 0.10), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.10));
 )
 
 (
@@ -45,7 +45,7 @@ Ndef(\mod2, {
 )
 
 
-Ndef(\variation5).fadeTime_(9);
+Ndef(\variation5).fadeTime_(19);
 
 (
 ~variation5Preset = ('amp': 0.6, 'atk': 0.0001, 'dcy': 0.1, 'stn': 1, 'rls': 1.2, 'bohlen':[1,27/25,25/21,9/7,7/5,75/49,5/3,9/5,49/25,15/7,7/3,63/25,25/9,3], size: 8, iter: 5)
@@ -81,8 +81,8 @@ Ndef(\variation5, {
 		};
 		a / (~variation5Preset[\size] * 5);
 	} ! ~variation5Preset[\size]; //8;
-	sig = Splay.ar(sig, 0.98) * ~variation5Preset[\amp] * 0.84 * env;
-	sig;
+	sig = Splay.ar(sig, 0.98) * ~variation5Preset[\amp] * 0.974 * env;
+	sig = sig * 0.95;
 });
 )
 

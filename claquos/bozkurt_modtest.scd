@@ -1,3 +1,77 @@
+(Ndef(\mod1).fadeTime_(10);)
+
+(~mod1Preset = (freq: 1, mul: 0.5);)
+
+(~mod1Preset = (freq: 0.2, mul: 0.5);)
+
+(~mod1Preset = (freq: rrand(0.05, 4), mul: 0.5);)
+
+(
+Ndef(\mod1, {
+	LFNoise1.kr(
+		~mod1Preset[\freq],
+		~mod1Preset[\mul]
+	)
+});
+)
+
+(
+Ndef(\mod1, {
+	LFNoise1.kr(
+		~mod1Preset[\freq] + Ndef.kr(\mod3),
+		~mod1Preset[\mul]
+	)
+});
+)
+
+(Ndef(\mod2).fadeTime_(10);)
+
+(~mod2Preset = (freq: 1, feedback: 0.5, mul: 0.75);)
+
+(~mod2Preset = (freq: 0.5, feedback: 0.25, mul: 0.8);)
+
+(~mod2Preset = (freq: rrand(0.075, 10), feedback: rrand(0.0, 0.5), mul: 0.5);)
+
+(
+Ndef(\mod2, {
+	SinOscFB.kr(
+		freq: ~mod2Preset[\freq],
+		feedback: Phasor.kr(rate: 1, start: ~mod2Preset[\feedback], end: 0, resetPos: ~mod2Preset[\feedback]) /** Ndef.kr(\mod1)*/,
+		mul: ~mod2Preset[\mul]
+	)
+});
+)
+
+(
+Ndef(\mod2, {
+	SinOscFB.kr(
+		freq: Phasor.kr(rate: 0.1, start: ~mod2Preset[\freq], end: ~mod2Preset[\freq] * 0.3, resetPos: ~mod2Preset[\freq]),
+		feedback: ~mod2Preset[\feedback] + Ndef.kr(\mod1) * 0.5,
+		mul: ~mod2Preset[\mul]
+	)
+});
+)
+
+
+(
+Ndef(\mod3).fadeTime_(7);
+)
+
+(
+~mod3Preset = (freq: rrand(0.05, 5), mul: 0.8);
+)
+
+(
+Ndef(\mod3, {
+	LFNoise0.kr(
+		freq: ~mod3Preset[\freq] + Ndef.kr(\mod2),
+		mul: ~mod3Preset[\mul] * Ndef.kr(\mod1) * 0.5,
+	);
+});
+)
+
+
+
 (
 ~bozkurtPreset = (amp: 0.21, att: 0.01, rel: 10, impFreq: 0.25, freq1: 4, freq2: 6, delTime: 0.3, decTime: 50, feedBack: 1);
 // default
@@ -30,28 +104,25 @@
 
 (
 Ndef(\bozkurt, {
-	//  amp = 1, att = 0.01, rel = 10, impFreq = 0.25, freq1 = 4, freq2 = 6, delTime = 0.3, decTime = 50, feedBack = 1;
 	var sig, env, input, ctrl;
-	//env = Linen.kr(gate, att, 1, rel, doneAction);
 	env = EnvGen.ar(Env.asr(~bozkurtPreset[\att], 1, ~bozkurtPreset[\rel]));
-	input = LocalIn.ar(2).tanh * ~bozkurtPreset[\feedBack];
-	ctrl = Latch.kr(input[0].abs, Impulse.kr(~bozkurtPreset[\impFreq]));
-	sig = Blip.ar([~bozkurtPreset[\freq1], ~bozkurtPreset[\freq2]], 100 * ctrl + 50, 0.9);
+	input = LocalIn.ar(2).tanh * cos (~bozkurtPreset[\feedBack] + Ndef.kr(\mod1)).range(0.1, 0.5);
+	ctrl = Latch.kr(input[0].abs, Impulse.kr(~bozkurtPreset[\impFreq] * cos(Ndef.kr(\mod3) + Ndef.kr(\mod2)) * 0.5));
+	sig = Blip.ar([~bozkurtPreset[\freq1], ~bozkurtPreset[\freq2]] + Ndef.kr(\mod1), /*100*/ Ndef.kr(\mod3) * ctrl + 50, Ndef.kr(\mod2) * 0.25) * 0.25;
 	sig = CombC.ar(
 		sig,
-		1,
+		Ndef.kr(\mod1) + Ndef.kr(\mod2) * 0.5/*1*/,
 		ctrl * ~bozkurtPreset[\delTime],
 		~bozkurtPreset[\decTime] * input
 	);
 	LocalOut.ar(sig);
-	sig = Splay.ar(sig * env, 1, ~bozkurtPreset[\amp]);
-	// OffsetOut.ar(out, sig);
-	// OffsetOut.ar(out, DirtPan.ar(sig, ~dirt.numChannels, pan));
+	sig = Splay.ar(sig * env, 1, ~bozkurtPreset[\amp] * 0.5);
+	sig = Limiter.ar(sig, 0.5, 0.05);
 });
 )
 
 Ndef(\bozkurt).fadeTime_(19);
 
-Ndef(\bozkurt).play();
+Ndef(\bozkurt).play(2);
 
 Ndef(\bozkurt).release(20);

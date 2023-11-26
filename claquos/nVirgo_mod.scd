@@ -1,4 +1,5 @@
-// 290523 mods ok
+// sept23 revoir tout le graphe !!
+// ne joue pas ! pas clair !
 
 Ndef(\mod1).fadeTime_(12);
 
@@ -155,10 +156,10 @@ Ndef(\nVirgo).fadeTime_(10);
 Ndef(\nVirgo, {
 	var sig, env;
 	env = EnvGen.ar(Env.asr(~nVirgoPreset[\att], 1, ~nVirgoPreset[\rel] ));
-	sig = LocalIn.ar(2) * ~nVirgoPreset[\feedBack]  + Saw.ar(
+	sig = LocalIn.ar(2, 1) * ~nVirgoPreset[\feedBack].max(1).min(4) /** Saw.ar(
 		[~nVirgoPreset[\sawFreq1] % (Ndef.kr(\mod2) * 0.5 + 0.5), ~nVirgoPreset[\sawFreq2] % (Ndef.kr(\mod3) * 0.25 + 0.25).sqrt],
 		~nVirgoPreset[\sawAmp]
-	) * env;
+	) * env*/;
 	sig = BPF.ar(
 		sig, // in
 		~nVirgoPreset[\bpff] ** LFNoise0.kr(
@@ -168,10 +169,12 @@ Ndef(\nVirgo, {
 ).distort ;
 	sig = Limiter.ar(CombN.ar(sig, 1 + (Ndef.kr(\mod3) * 0.5 + 0.5), ~nVirgoPreset[\delayTime] , ~nVirgoPreset[\decayTime]), 0.7, 0.09);
 	LocalOut.ar(sig);
-	sig = Limiter.ar(HPF.ar(sig * ~nVirgoPreset[\amp] * env, 65), 0.65, 0.01);
+	sig = Limiter.ar(HPF.ar(sig * ~nVirgoPreset[\amp] * env * 1.75, 65), 0.5, 0.01);
 });
 )
 
 Ndef(\nVirgo).play(2);
 
-Ndef(\nVirgo).release(10);
+Ndef(\nVirgo).release(30);
+
+Ndef(\nVirgo).clear;

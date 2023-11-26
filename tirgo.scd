@@ -1,3 +1,5 @@
+// orage, pas sur de pouvoir mettre des mods
+
 (
 ~tirgoPreset = (amp: 0.021, att: 0.01, rel: 5, blipFreqMod: 2, blipHarmo: 400, brfFreq: 150, brfRq: 2);
 // default

@@ -1,3 +1,29 @@
+(Ndef(\mod1).fadeTime_(12);)
+
+(
+~mod1Preset = ();
+)
+
+(Ndef(\mod1, {});)
+
+(Ndef(\mod2).fadeTime_(12);)
+
+(
+~mod2Preset = ();
+)
+
+(Ndef(\mod2, {});)
+
+(Ndef(\mod3).fadeTime_(12);)
+
+(
+~mod3Preset = ();
+)
+
+(Ndef(\mod3, {});)
+
+
+Ndef(\nozkurt).fadeTime_(9);
 
 (
 ~nozkurtPreset = (amp: 0.021, att: 0.01, rel: 5, sinFreq: 55, impMin: 0.0002, impMax: 0.7, impFreq: 8);
@@ -13,7 +39,7 @@
 )
 
 (
-~nozkurtPreset = (amp: 0.0121, att: rrand(0.01, 0.1), rel: 5, sinFreq: rrand(55, 90), impMin: rrand(0.0002, 0.0005), impMax: rrand(0.254, 0.7), impFreq: rrand(8, 18));
+~nozkurtPreset = (amp: 0.0121, att: rrand(0.01, 0.1), rel: 5, sinFreq: rrand(55, 90), impMin: rrand(0.0002, 0.0005), impMax: rrand(0.254, 0.7), impFreq: rrand(0.8, 18));
 // rrand
 )
 
@@ -32,8 +58,6 @@ Ndef(\nozkurt, {
 });
 )
 
-Ndef(\nozkurt).fadeTime_(9);
-
-Ndef(\nozkurt).play(2);
+Ndef(\nozkurt).play();
 
 Ndef(\nozkurt).release(10);

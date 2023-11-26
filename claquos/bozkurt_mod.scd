@@ -82,7 +82,7 @@ Ndef(\mod3, {
 )
 
 (
-~bozkurtPreset = ( 'delTime': 0.25894921898842, 'rel': 4.3807460069656, 'att': 0.053788027763367, 'feedBack': 0.85149073600769, 'freq1': 9.2091425895691, 'decTime': 31.394058465958, 'amp': 0.21, 'impFreq': 0.36753037571907, 'freq2': 8.2406767845154 )
+~bozkurtPreset = ( 'delTime': 0.25894921898842, 'rel': 4.3807460069656, 'att': 0.053788027763367, 'feedBack': 0.85149073600769, 'freq1': 9.2091425895691, 'decTime': 31.394058465958, 'amp': 0.1, 'impFreq': 0.36753037571907, 'freq2': 8.2406767845154 )
 )
 
 (
@@ -129,8 +129,8 @@ Ndef(\bozkurt, {
 });
 )
 
-Ndef(\bozkurt).fadeTime_(19);
+Ndef(\bozkurt).fadeTime_(29);
 
 Ndef(\bozkurt).play(2);
 
-Ndef(\bozkurt).release(20);
+Ndef(\bozkurt).release(45);

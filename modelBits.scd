@@ -83,7 +83,7 @@ Ndef(\modelBits, {
 });
 )
 
-Ndef(\modelBits).fadeTime_(8);
+Ndef(\modelBits).fadeTime_(18);
 
 Ndef(\modelBits).play(2);
 

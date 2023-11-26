@@ -8,7 +8,7 @@ Ndef(\mod1).fadeTime_(12);
 
 (~mod1Preset = (freq: 0.65, freqTo: 3, freqSlope: 0.01, iphase: 0.65, iphaseTo: 0.15, iphaseSlope: 0.01, width: 0.99, widthTo: 0.45, widthSlope: 0.03, mul: 0.9, mulTo: 0.8, mulSlope: 0.01);)
 
-(~mod1Preset = (freq: rrand(0.02, 3), freqTo: rrand(0.2, 0.03), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.1));)
+(~mod1Preset = (freq: rrand(0.02, 3), freqTo: rrand(0.2, 60.03), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod1, {
@@ -44,7 +44,7 @@ Ndef(\mod1, {
 )
 
 (
-~mod2Preset = (freq: rrand(0.2, 5), freqTo: rrand(0.2, 1200), freqSlope: rrand(0.01, 0.1), feedback: rrand(0.0, 0.15), feedbackTo: rrand(0.0, 0.15), feedbackSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.85), mulTo: rrand(0.65, 0.85), mulSlope: rrand(0.01, 0.1));
+~mod2Preset = (freq: rrand(0.2, 50), freqTo: rrand(0.2, 1200), freqSlope: rrand(0.01, 0.1), feedback: rrand(0.0, 0.15), feedbackTo: rrand(0.0, 0.65), feedbackSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.85), mulTo: rrand(0.65, 0.85), mulSlope: rrand(0.01, 0.1));
 )
 
 (Ndef(\mod2, {
@@ -64,7 +64,7 @@ Ndef(\mod3).fadeTime_(12);
 (~mod3Preset = (carfreq: 1.5, carfreqTo: 0.115, carfreqSlope: 0.01, modfreq: 0.5, modfreqTo: 6, modfreqSlope: 0.05, pmindex: 2, pmindexTo: 10, pmindexSlope: 0.5, modphase: 0.0, modphaseTo: 0.0, modphaseSlope: 0.01, mul: 1, mulTo: 0.99, mulSlope: 0.001);)
 
 (
-~mod3Preset = (carfreq: rrand(0.05,0.3), carfreqTo: rrand(0.05,0.3), carfreqSlope: rrand(0.01,0.1), modfreq: rrand(1.0, 600), modfreqTo: rrand(1.0, 1060), modfreqSlope: rrand(0.01, 0.1), pmindex: rrand(0.25, 3), pmindexTo: rrand(0.25, 123), pmindexSlope: rrand(0.01, 0.1), modphase: rrand(0.0, 2pi), modphaseTo: rrand(0.0, 2pi), modphaseSlope: rrand(0.01, 0.1), mul: rrand(0.85,1), mulTo: rrand(0.85,1), mulSlope: rrand(0.01,0.1));
+~mod3Preset = (carfreq: rrand(0.05,0.3), carfreqTo: rrand(0.05,10.3), carfreqSlope: rrand(0.01,0.1), modfreq: rrand(1.0, 600), modfreqTo: rrand(1.0, 1060), modfreqSlope: rrand(0.01, 0.1), pmindex: rrand(0.25, 3), pmindexTo: rrand(0.25, 123), pmindexSlope: rrand(0.01, 0.1), modphase: rrand(0.0, 2pi), modphaseTo: rrand(0.0, 2pi), modphaseSlope: rrand(0.01, 0.1), mul: rrand(0.85,1), mulTo: rrand(0.85,1), mulSlope: rrand(0.01,0.1));
 )
 
 (
@@ -88,7 +88,7 @@ Ndef(\mod3, {
 )
 
 
-Ndef(\variation13).fadeTime_(26);
+Ndef(\variation13).fadeTime_(6);
 
 (
 Ndef(\variation13, {
@@ -112,4 +112,4 @@ Ndef(\variation13, {
 
 Ndef(\variation13).play(2);
 
-Ndef(\variation13).release(0);
+Ndef(\variation13).release(20);

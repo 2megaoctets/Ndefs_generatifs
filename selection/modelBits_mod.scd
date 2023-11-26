@@ -1,26 +1,45 @@
-// nettoie, fais des ndefs
-
-Ndef(\modelBits).fadeTime_(18);
+// sept23 ok + niveaux
 
 Ndef(\mod1).fadeTime_(5);
 
 (
-~mod1Preset = (carfreq: rrand(0.1, 2), modfreq: rrand(0.05, 5), pmindex: rrand(0.01, 10), modphase: rrand(0.0, pi), mul: 0.84)
+~mod1Preset = ( 'modphase': 0.42452019487867, 'carfreq': 1.2535860538483, 'mulSlope': 0.058299063444138, 'modphaseSlope': 0.073567924499512, 'modfreqTo': 24.511067903042, 'mulTo': 0.95904877781868, 'modfreqSlope': 0.20608748197556, 'pmindex': 2.7849441599846, 'pmindexSlope': 0.1293374478817, 'carfreqSlope': 0.25615617036819, 'pmindexTo': 10.268060958385, 'modphaseTo': 1.4097495766797, 'mul': 0.84, 'modfreq': 4.4292234003544, 'carfreqTo': 918.15034991503 )
+)
+
+(
+~mod1Preset = ( 'modphase': 0.29323338554752, 'carfreq': 81.1254114151, 'mulSlope': 0.048926523923874, 'modphaseSlope': 0.087207719087601, 'modfreqTo': 39.22200050354, 'mulTo': 0.8108024597168, 'modfreqSlope': 0.59559218883514, 'pmindex': 8.0641621637344, 'pmindexSlope': 0.027451459169388,  'carfreqSlope': 0.82722432613373, 'pmindexTo': 2.9833337426186, 'modphaseTo': 1.684930468379, 'mul': 0.84, 'modfreq': 2.0313854038715, 'carfreqTo': 1973.4282182455 );
+)
+
+(
+~mod1Preset = ( 'modphase': 0.087266878718637, 'carfreq': 262.89206403494, 'mulSlope': 0.093853449821472, 'modphaseSlope': 0.040396648645401, 'modfreqTo': 30.883689069748, 'mulTo': 0.89851289987564, 'modfreqSlope': 0.82097284793854, 'pmindex': 7.2078354144096, 'pmindexSlope': 0.13108181595802, 'carfreqSlope': 0.18160084486008, 'pmindexTo': 15.054594004154, 'modphaseTo': 2.0049558166927, 'mul': 0.84, 'modfreq': 1.966198605299, 'carfreqTo': 1290.5497785807 );
+)
+
+(
+~mod1Preset = ( 'modphase': 1.0656638685833, 'carfreq': 164.67572306395, 'mulSlope': 0.035908497571945, 'modphaseSlope': 0.081132934093475,  'modfreqTo': 18.610445821285, 'mulTo': 0.75320801138878, 'modfreqSlope': 0.52883297204971, 'pmindex': 0.83734379649162, 'pmindexSlope': 0.18432351946831,  'carfreqSlope': 0.4756959438324, 'pmindexTo': 9.2282877802849, 'modphaseTo': 1.5526123493619, 'mul': 0.84, 'modfreq': 0.2965084195137,   'carfreqTo': 754.22301733494 )
+)
+
+
+(
+~mod1Preset = (carfreq: rrand(0.1, 302), carfreqTo: rrand(0.5,2000), carfreqSlope: rrand(0.1, 1), modfreq: rrand(0.05, 5), modfreqTo: rrand(0.1, 50), modfreqSlope: rrand(0.1,1), pmindex: rrand(0.01, 10), pmindexTo: rrand(0.1, 20), pmindexSlope: rrand(0.01, 0.3), modphase: rrand(0.0, pi), modphaseTo: rrand(0.01, pi), modphaseSlope: rrand(0.01, 0.1), mul: 0.84, mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));
 )
 
 (
 Ndef(\mod1, {
 	PMOsc.kr(
-		carfreq: ~mod1Preset[\carfreq] * (Ndef.kr(\mod2) * 0.5 + 0.5), // Line.kr(0.05, 0.5, 20),
-		modfreq: Phasor.kr(0.0, 0.1, 1 / ~mod1Preset[\modfreq], ~mod1Preset[\modfreq], ~mod1Preset[\modfreq]) + (Ndef.kr(\mod2) * 2 + 2), // Line.kr(5, 0.5, 40),
-		pmindex: ~mod1Preset[\pmindex] * cos(Ndef.kr(\mod2) * 0.5 + 0.5), //Line.kr(5, 0.1, 35)
-		modphase: Phasor.kr(0.0, 0.1, 1 / ~mod1Preset[\modphase], ~mod1Preset[\modphase], ~mod1Preset[\modphase]) % cos(Ndef.kr(\mod2) * 0.5 + 0.5),
-		mul: ~mod1Preset[\mul]
+		carfreq: Phasor.kr(0.0, ~mod1Preset[\carfreqSlope], ~mod1Preset[\carfreq], ~mod1Preset[\carfreqTo], ~mod1Preset[\carfreqTo]),
+		modfreq: Phasor.kr(0.0, ~mod1Preset[\modfreqSlope], ~mod1Preset[\modfreq], ~mod1Preset[\modfreqTo], ~mod1Preset[\modfreqTo] ) + (Ndef.kr(\mod2) * 2 + 2),
+		pmindex: Phasor.kr(0.0, ~mod1Preset[\pmindexSlope], ~mod1Preset[\pmindex], ~mod1Preset[\pmindexTo], ~mod1Preset[\pmindexTo]),
+		modphase: Phasor.kr(0.0, ~mod1Preset[\modphaseSlope], ~mod1Preset[\modphase], ~mod1Preset[\modphaseTo], ~mod1Preset[\modphaseTo]) % cos(Ndef.kr(\mod2) * 0.5 + 0.5),
+		mul: Phasor.kr(0.0, ~mod1Preset[\mulSlope], ~mod1Preset[\mul], ~mod1Preset[\mulTo], ~mod1Preset[\mulTo])
 	)
 });
 )
 
+Ndef(\mod1).release(19);
+
 Ndef(\mod2).fadeTime_(10);
+
+Ndef(\mod2).release(19);
 
 (
 ~mod2Preset = (freq: 0.2, freqTo: 1, freqSlope: 0.0105, iphase: 0, iphaseTo: 0.15, iphaseSlope: 0.13, width: 0.5, widthTo: 1, widthSlope: 0.175, mul: 0.85, mulTo: 1, mulSlope: 0.03 );
@@ -41,13 +60,15 @@ Ndef(\mod2, {
 };)
 )
 
+Ndef(\modelBits).fadeTime_(28);
+
 (
-~modelBitsPreset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, mod1: 1, mod2: 1, modulo: 256, greyHdiff: 0.707, greyHdelTmod: 1, greyHfb: 0.9, count1_1: 5, count1_2: 3, count1_3: 9, count1_4: 11);
+~modelBitsPreset = (amp: 0.061, atk: 0.001, rls: 0.2, sustain: 1, mod1: 1, mod2: 1, modulo: 256, greyHdiff: 0.707, greyHdelTmod: 1, greyHfb: 0.9, count1_1: 5, count1_2: 3, count1_3: 9, count1_4: 11);
 // default
 )
 
 (
-~modelBitsPreset = ( 'rls': 0.38701448440552, 'mod2': 0.94951220750809, 'atk': 0.099110740423203, 'mod1': 0.7352654337883, 'amp': 0.1, 'sustain': 1, greyHdiff: 0.707, greyHdelTmod: 1, modulo: 256, greyHfb: 0.9, count1_1: 9, count1_2: 7, count1_3: 6, count1_4: 13 )
+~modelBitsPreset = ( 'rls': 0.38701448440552, 'mod2': 0.94951220750809, 'atk': 0.099110740423203, 'mod1': 0.7352654337883, 'amp': 0.071, 'sustain': 1, greyHdiff: 0.707, greyHdelTmod: 1, modulo: 256, greyHfb: 0.9, count1_1: 9, count1_2: 7, count1_3: 6, count1_4: 13 )
 )
 
 (
@@ -120,12 +141,10 @@ Ndef(\modelBits, {
 			0.5
 		).flatten
 	);
-	sig = (sig * env * ~modelBitsPreset[\amp]);
+	sig = (sig * env * ~modelBitsPreset[\amp] * 0.84);
 });
 )
 
-
 Ndef(\modelBits).play(2);
 
-Ndef(\modelBits).release(10);
-
+Ndef(\modelBits).release(20);

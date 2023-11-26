@@ -1,6 +1,6 @@
 // Moduler Greyhole
 
-Ndef(\mod1).fadeTime_(12);
+Ndef(\mod1).fadeTime_(22);
 
 (
 ~mod1Preset = (freq: 1, freqTo: 0.2, iphase: 0.0, iphaseTo: 0.15, width: 0.5, widthTo: 0.8, mul: 0.785, mulTo: 1,freqSlope: 0.10, iphaseSlope: 0.05, widthSlope: 0.015, mulSlope: 0.020);
@@ -12,8 +12,8 @@ Ndef(\mod1).fadeTime_(12);
 
 (
 Ndef(\mod1, {
-	LFPulse.kr
-		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]) / (Ndef.kr(\mod2) * 3 + 3),
+	LFPulse.kr(
+		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]),
 		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope], resetPos: ~mod1Preset[\iphaseTo]),
 		// iphase: ~mod1Preset[\iphase],
 		width: Phasor.kr(start: ~mod1Preset[\width], end: ~mod1Preset[\widthTo], rate: ~mod1Preset[\widthSlope], resetPos: ~mod1Preset[\widthTo]),
@@ -42,7 +42,7 @@ Ndef(\mod2, {
 })
 )
 
-(Ndef(\mod3).fadeTime_(10);)
+(Ndef(\mod3).fadeTime_(14);)
 
 (
 ~mod3Preset = (freq: , freqTo: , freqSlope: , phase: , phaseTo: , phaseSlope: , mul: , mulTo: , mulSlope: );
@@ -66,7 +66,7 @@ Ndef(\mod3, {
 )
 
 
-Ndef(\modelAix).fadeTime_(9);
+Ndef(\modelAix).fadeTime_(19);
 
 (
 ~modelAixPreset = ( 'atk': 0.0010641890645027, 'pan': 0, 'revtSel': 1, 'out': 2, 'amp': 0.1, 'rls': 0.25551299858093, 'sustain': 1 )
@@ -78,7 +78,7 @@ Ndef(\modelAix).fadeTime_(9);
 ) // default
 
 (
-~modelAixPreset = ( 'atk': 0.00071098121404648, 'revtSel': 1, 'out': 2, 'amp': 0.1, 'rls': 0.16832694339752, 'sustain': 1 )
+~modelAixPreset = ( 'atk': 0.00071098121404648, 'revtSel': 1, 'out': 2, 'amp': 0.061, 'rls': 0.16832694339752, 'sustain': 1 )
 )
 
 (
@@ -86,7 +86,7 @@ Ndef(\modelAix).fadeTime_(9);
 )
 
 (
-~modelAixPreset = (out: 2, amp: 0.1, pan: 0, atk: rrand(0.0005, 0.12), rls: rrand(0.162, 2.3), sustain: 1, revtSel: rrand(0,1))
+~modelAixPreset = (amp: 0.1, pan: 0, atk: rrand(0.0005, 0.12), rls: rrand(0.162, 2.3), sustain: 1, revtSel: rrand(0,1))
 ) // rrand
 
 
@@ -118,11 +118,13 @@ Ndef(\modelAix, {
 
 	);
 	snd = Limiter.ar(snd, 0.9);
-	snd = (snd * env * ~modelAixPreset[\amp]);
+	snd = (snd * env * ~modelAixPreset[\amp] * 0.34);
 	// OffsetOut.ar(out, snd);
+	snd = snd.sum;
 });
 )
 
+
 Ndef(\modelAix).play(2);
 
-Ndef(\modelAix).release(18);
+Ndef(\modelAix).release(38);

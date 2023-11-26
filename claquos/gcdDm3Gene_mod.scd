@@ -3,7 +3,7 @@
 Ndef(\mod1).fadeTime_(12);
 
 (
-~mod1Preset = (freq: 10, freqTo: 0.1, freqSlope: 0.125, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
+~mod1Preset = (freq: 1, freqTo: 0.1, freqSlope: 0.125, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
 )
 
 (
@@ -26,7 +26,7 @@ Ndef(\mod1, {
 )
 
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\mod2).fadeTime_(32);
 
 (
 ~mod2Preset = (freq: 0.5, freqTo: 0.25, freqSlope: 0.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
@@ -47,7 +47,7 @@ Ndef(\mod2, {
 )
 
 
-Ndef(\gcdDm3Gene).fadeTime_(18);
+Ndef(\gcdDm3Gene).fadeTime_(8);
 
 (
 ~gcdDm3GenePreset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, add1: 102, add2: 101, add3: 100, mod1: 100, mod2: 101, mod3: 102, dev1: 10, dev2: 20, seq1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], seq2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], seq3: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
@@ -93,11 +93,11 @@ Ndef(\gcdDm3Gene, {
 	sig2 = PulseCount.ar(sig2)  % ~gcdDm3GenePreset[\mod2] ;
 	sig3 = PulseCount.ar(sig3) % ~gcdDm3GenePreset[\mod3];
 
-	sig = gcd(gcd(sig1 + [0,0], sig2 + [0, ~gcdDm3GenePreset[\dev1]  + (Ndef(\mod1) * 0.5 + 0.5)  ]), sig3 + [0, ~gcdDm3GenePreset[\dev2]  + (Ndef.kr(\mod2) % 0.5 + 0.5)]);
+	sig = gcd(gcd(sig1 + [0,0], sig2 + [0, ~gcdDm3GenePreset[\dev1]  + Ndef(\mod1)   ]), sig3 + [0, ~gcdDm3GenePreset[\dev2]  + (Ndef.kr(\mod2) % 0.5 + 0.5)]);
 	sig = Limiter.ar(LPF.ar(HPF.ar(sig, 20), 10000), 0.3);
 
 	sig = sig * env;
-	sig = (sig * ~gcdDm3GenePreset[\amp]);
+	sig = (sig * ~gcdDm3GenePreset[\amp] * 0.7);
 	// OffsetOut.ar(out, sig);
 });
 )
@@ -106,4 +106,4 @@ Ndef(\gcdDm3Gene, {
 Ndef(\gcdDm3Gene).play(2);
 
 
-Ndef(\gcdDm3Gene).release(10);
+Ndef(\gcdDm3Gene).release(40);

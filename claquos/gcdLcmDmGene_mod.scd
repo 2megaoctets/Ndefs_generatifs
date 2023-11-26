@@ -1,3 +1,4 @@
+// sept23 à rebosser
 
 (
 ~mod1Preset = (freq: 2.0, freqTo: 2.5, freqSlope: 0.053, iphase: 0.0, iphaseTo: 0.5, iphaseSlope: 0.02, mul: 0.5, mulTo: 1.0, mulSlope: 0.01);
@@ -17,7 +18,7 @@ Ndef(\mod1, {
 });
 )
 
-Ndef(\mod1).fadeTime_(12);
+Ndef(\mod1).fadeTime_(22);
 
 (
 ~mod2Preset = (freq: 0.5, freqTo: 2.5, freqSlope: 0.053, iphase: 0.0, iphaseTo: 0.5, iphaseSlope: 0.10, mul: 0.5, mulTo: 1.0, mulSlope: 0.1);
@@ -37,7 +38,7 @@ Ndef(\mod2, {
 });
 )
 
-Ndef(\mod2).fadeTime_(5);
+Ndef(\mod2).fadeTime_(25);
 
 (
 ~gcdLcmDmGenePreset = (amp: 0.1, spread: 0.5, atk: 0.001, rls: 0.2, sustain: 1, mul1: 1, mul2: 40, mulTanh: 0.0001, modu1: 100, modu2: 300, rate1: 0.6, rate2: 0.06, smooth1: 0.4, smooth2: 0);
@@ -75,8 +76,8 @@ Ndef(\gcdLcmDmGene, {
 	mod2 = TRand.kr(1 * cos(Ndef.kr(\mod2) * 0.5 + 0.5), 300, Dust.kr(~gcdLcmDmGenePreset[\rate2]));
 	mod2 = Lag2.kr(mod2, ~gcdLcmDmGenePreset[\smooth2]);
 
-	sin1 = cos(Ndef.kr(\mod1) * 0.5 + 0.5) + SinOsc.ar(mod1 ).range(1,100) * ~gcdLcmDmGenePreset[\mul1]  ;
-	sin2 = cos(Ndef.ar(\mod2) * 0.5 + 0.5) + SinOsc.ar(mod2 ) * ~gcdLcmDmGenePreset[\mul2];
+	sin1 = cos(Ndef.kr(\mod1) * 0.5 + 0.5) + SinOsc.kr(mod1 ).range(1,100) * ~gcdLcmDmGenePreset[\mul1]  ;
+	sin2 = cos(Ndef.ar(\mod2) * 0.5 + 0.5) + SinOsc.kr(mod2 ) * ~gcdLcmDmGenePreset[\mul2];
 
 	sig1 = gcd(sin1, sin2) % (~gcdLcmDmGenePreset[\modu1] * cos(Ndef.kr(\mod1) * 0.5 + 0.5));
 	sig2 = lcm(sin1, sin2) % (~gcdLcmDmGenePreset[\modu2] * cos(Ndef.kr(\mod2) * 0.5 + 0.5));
@@ -92,7 +93,7 @@ Ndef(\gcdLcmDmGene, {
 
 Ndef(\gcdLcmDmGene).play(2);
 
-Ndef(\gcdLcmDmGene).fadeTime_(18);
+Ndef(\gcdLcmDmGene).fadeTime_(8);
 
-Ndef(\gcdLcmDmGene).release(10);
+Ndef(\gcdLcmDmGene).release(28);
 

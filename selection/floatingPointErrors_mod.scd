@@ -1,14 +1,14 @@
 // 3105 pas fini  : graphe, mod1
 
 (
-Ndef(\mod1).fadeTime_(2);
+Ndef(\mod1).fadeTime_(22);
 )
 
 (~mod1Preset = (freq: , freqTo: , freqSlope: , iphase: , iphaseTo: , iphaseSlope: , width: , widthTo: , widthSlope: , mul: , mulTo: , mulSlope: );)
 
-(~mod1Preset = (freq: , freqTo: , freqSlope: , iphase: , iphaseTo: , iphaseSlope: , width: , widthTo: , widthSlope: , mul: , mulTo: , mulSlope: );)
+(~mod1Preset = (freq: 2, freqTo: 15, freqSlope: 0.6, iphase: 0, iphaseTo: pi, iphaseSlope: 0.1, width: 0.87, widthTo: 1, widthSlope: 0.03, mul: 1, mulTo: 0.99, mulSlope: 0.01);)
 
-(~mod1Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 3), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
+(~mod1Preset = (freq: rrand(0.2, 300), freqTo: rrand(0.2, 1300), freqSlope: rrand(1, 10.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.75, 1), widthTo: rrand(0.75, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod1, {
@@ -31,7 +31,7 @@ Ndef(\mod2).fadeTime_(12);
 
 (~mod2Preset = (freq: , freqTo: , freqSlope: , phase: , phaseTo: , phaseSlope: , mul: , mulTo: , mulSlope: );)
 
-(~mod2Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 2), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.95), mulTo: rrand(0.65, 0.95), mulSlope: rrand(0.01, 0.1));)
+(~mod2Preset = (freq: rrand(0.2, 1300), freqTo: rrand(0.2, 2200), freqSlope: rrand(1, 10.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.95), mulTo: rrand(0.65, 0.95), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod2, {
@@ -53,20 +53,24 @@ Ndef(\mod3).fadeTime_(12);
 Ndef(\mod3, {})
 )
 
+
+Ndef(\floatingPointErrors).fadeTime_(3);
+
+
 (
-~floatingPointErrorsPreset = ( out: 0, amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 30, med5: 50);
+~floatingPointErrorsPreset = (amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 30, med5: 50);
 )
 
 (
-~floatingPointErrorsPreset = ( out: 0, amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 3, med5: 5);
+~floatingPointErrorsPreset = (amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 3, med5: 5);
 )
 
 (
-~floatingPointErrorsPreset = ( out: 0, amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 1.3, med5: 13.5);
+~floatingPointErrorsPreset = (amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 1.3, med5: 13.5);
 )
 
 (
-~floatingPointErrorsPreset = ( out: 0, amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 21, med5: 1.2);
+~floatingPointErrorsPreset = (amp: 0.061, attack: 0, release: 1.4, sustain: 1, curve: (-4), envPow: 1, med4: 21, med5: 1.2);
 )
 
 (
@@ -112,17 +116,15 @@ Ndef(\floatingPointErrors, {
 
 	// sig = sig1 + sig2 + sig3 + sig4 + sig5;
     sig = sig1 + sig2  + sig3 + sig4 + sig5;
-	sig = sig * ~floatingPointErrorsPreset[\amp];
-    sig = Limiter.ar(sig, 0.6);
+	sig = sig * ~floatingPointErrorsPreset[\amp] * 0.65;
+    sig = Limiter.ar(sig, 0.46, 0.05);
 	sig = sig * globalEnv;
 });
 )
 
-Ndef(\floatingPointErrors).fadeTime_(1);
-
 Ndef(\floatingPointErrors).play(2);
 
-Ndef(\floatingPointErrors).release(32);
+Ndef(\floatingPointErrors).release(2);
 
 Ndef(\floatingPointErrors).clear;
 

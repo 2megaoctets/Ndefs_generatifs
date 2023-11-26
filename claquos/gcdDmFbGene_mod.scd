@@ -1,11 +1,11 @@
-// crade
+// sept23 à rebosser
 // copié 2304
 // à finir
 
 Ndef(\mod1).fadeTime_(32);
 
 (
-~mod1Preset = (freq: 2, freqTo: 0.5, freqSlope: 3.5, numharm: 20, numharmTo: 200, numharmSlope: 5.75, mul: 0.75, mulTo: 0.99, mulSlope: 2.0);
+~mod1Preset = (freq: 0.2, freqTo: 0.5, freqSlope: 3.5, numharm: 20, numharmTo: 200, numharmSlope: 5.75, mul: 0.75, mulTo: 0.99, mulSlope: 2.0);
 )
 
 (
@@ -26,10 +26,10 @@ Ndef(\mod1, {
 });
 )
 
-Ndef(\mod1).release(3);
+Ndef(\mod1).release(13);
 
 (
-~mod2Preset = (carfreq: 0.1, carfreqTo: 2, carfreqSlope: 0.1, modfreq: 1, modfreqTo: 2.5, modfreqSlope: 0.05, pmindex: 2, pmindexTo: 0.75, pmindexSlope: 0.03, modphase: 2, modphaseTo: 0.15, modphaseSlope: 0.1, mul: 0.5);
+~mod2Preset = (carfreq: 0.1, carfreqTo: 0.52, carfreqSlope: 0.1, modfreq: 1, modfreqTo: 2.5, modfreqSlope: 0.05, pmindex: 2, pmindexTo: 0.75, pmindexSlope: 0.03, modphase: 2, modphaseTo: 0.15, modphaseSlope: 0.1, mul: 0.5);
 )
 
 (
@@ -50,6 +50,9 @@ Ndef(\mod1).release(3);
 	)
 });
 )
+
+Ndef(\mod2).release(20);
+
 
 (
 ~gcdDmFbGenePreset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, ser1Size: 4, ser2Size: 5, add1: 50, add2: 50.1, mod: 50, sinFmin: 70, div: 10, sigSel: 0, fbSel: 0, ser1:[ 0, 1, 2 ] , ser2: [ 6, 5, 4, 3, 2, 1, 0 ]);
@@ -120,13 +123,13 @@ Ndef(\gcdDmFbGene, {
 	fb = Select.ar(~gcdDmFbGenePreset[\fbSel], [sinFrq.reverse, in.reverse, sig * in, sig]);
 	LocalOut.ar(fb);
 
-	sig = (Limiter.ar(LPF.ar(HPF.ar(sig, 20), 10000), 0.3) * env * ~gcdDmFbGenePreset[\amp]);
+	sig = (Limiter.ar(LPF.ar(HPF.ar(sig, 20), 10000), 0.3) * env * ~gcdDmFbGenePreset[\amp] * 0.9);
 	// OffsetOut.ar(out, sig);
 });
 )
 
-Ndef(\gcdDmFbGene).fadeTime_(19);
+Ndef(\gcdDmFbGene).fadeTime_(9);
 
 Ndef(\gcdDmFbGene).play(2);
 
-Ndef(\gcdDmFbGene).release(20);
+Ndef(\gcdDmFbGene).release(40);

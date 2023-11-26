@@ -18,11 +18,11 @@ Ndef(\mod1).fadeTime_(17);
 Ndef(\mod1, {
 	Vibrato.kr(
 		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\rate], rate: 0.1, resetPos: ~mod1Preset[\rate]),
-		rate: ~mod1Preset[\rate] + (Ndef.kr(\mod2) * 0.5 + 0.5),
+		rate: ~mod1Preset[\rate] + Ndef.kr(\mod2),
 		depth: ~mod1Preset[\depth],
-		delay: ~mod1Preset[\delay] * (Ndef.kr(\mod2) * 0.5 + 0.5),
+		delay: ~mod1Preset[\delay] * Ndef.kr(\mod2),
 		onset: ~mod1Preset[\onset],
-		rateVariation: Phasor.kr(rate: 0.1, start: 1 / ~mod1Preset[\rateVariation], end: ~mod1Preset[\rateVariation], resetPos: ~mod1Preset[\rateVariation]),
+		rateVariation: Phasor.kr(rate: 0.1, start: 0, end: ~mod1Preset[\rateVariation], resetPos: ~mod1Preset[\rateVariation]),
 		depthVariation: LFNoise1.kr(~mod1Preset[\depthVariation], 0.5, 0.5),
 		iphase: ~mod1Preset[\iphase]
 	)
@@ -48,7 +48,7 @@ Ndef(\mod2).fadeTime_(7);
 (
 Ndef(\mod2, {
 	SinOsc.kr(
-		freq: Phasor.kr(end: ~mod2Preset[\freq], start: ~mod2Preset[\freq] * (Ndef.kr(\mod1) * 0.5 + 0.5), rate: 0.1, resetPos: ~mod2Preset[\freq]),
+		freq: Phasor.kr(end: ~mod2Preset[\freq], start: ~mod2Preset[\freq] + Ndef.kr(\mod1), rate: 0.1, resetPos: ~mod2Preset[\freq]),
 		phase: Phasor.kr(rate: 0.1, start: 0, end: ~mod2Preset[\phase], resetPos: ~mod2Preset[\phase]),
 		mul: ~mod2Preset[\mul]
 	);
@@ -60,14 +60,14 @@ Ndef(\mod3).fadeTime_(7);
 )
 
 (
-~mod3Preset = (freq: rrand(0.05, 1), mul: 0.25);
+~mod3Preset = (freq: , mul: );
 )
 
 (
 Ndef(\mod3, {
 	LFNoise1.kr(
-		freq: ~mod3Preset[\freq],
-		mul: ~mod3Preset[\mul],
+		freq: ,
+		mul: ,
 	);
 });
 )
@@ -99,23 +99,20 @@ Ndef(\mod3, {
 Ndef(\padovan, {
 
 	var sig, env, input, mod, grainTr, sinMod;
+	// env = Linen.kr(gate, 0.1, 1, 5, doneAction);
 	env = EnvGen.ar(Env.asr(0,1, 1, 5));
 	sig = SinOsc;
 	mod = Trig.ar(
-		Saw.ar(~padovanPreset[\freq] ),
+		Saw.ar(~padovanPreset[\freq] + Ndef.kr(\mod1)),
 		~padovanPreset[\tridDur]
 	);
-	grainTr = sig.ar(mod * ~padovanPreset[\freq] /** cos(Ndef.kr(\mod1) * 0.5 + 0.5)*/);
-	sinMod = sig.ar(mod + (Ndef.kr(\mod2) * 0.5 + 0.5));
-	sig = GrainIn.ar(1, grainTr, grainTr / 2, sinMod, mod * sinMod , -1, mul: env);
-
+	grainTr = sig.ar(mod * ~padovanPreset[\freq] + cos(Ndef.kr(\mod2)));
+	sinMod = sig.ar(mod);
+	sig = GrainIn.ar(1, grainTr, grainTr / 2, sinMod, mod * sinMod % Ndef.kr(\mod2), -1, mul: env);
 	sig = GVerb.ar(
 		in: sig,
 		roomsize: ~padovanPreset[\roomSize],
-		damping: SinOsc.kr(Ndef.kr(\mod2) * 0.5 + 0.5 , pi/2, 0.5, 0.5),
-		inputbw: SinOsc.kr(Ndef.kr(\mod3) * 0.5 + 0.5, pi, 0.25, 0.5),
-		earlyreflevel: LFNoise1.kr(0.5, 0.5, 0.55),
-		taillevel: LFNoise0.kr(0.25, 0.25, 0.5),
+		damping: SinOsc.kr(Ndef.kr(\mod2) , 0.0, 0.5, 0.5),
 		mul: ~padovanPreset[\amp]);
 	// OffsetOut.ar(out, sig);
 	// OffsetOut.ar(out, DirtPan.ar(sig, ~dirt.numChannels, pan));
@@ -126,6 +123,6 @@ Ndef(\padovan).fadeTime_(12);
 
 Ndef(\padovan).clear;
 
-Ndef(\padovan).play(2);
+Ndef(\padovan).play(0);
 
 Ndef(\padovan).release(12);

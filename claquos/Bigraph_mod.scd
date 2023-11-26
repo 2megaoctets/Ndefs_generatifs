@@ -1,11 +1,11 @@
-Ndef(\mod1).fadeTime_(12);
+Ndef(\mod1).fadeTime_(32);
 
 (
 ~mod1Preset = (freq: 0.2, freqTo: 0.5, freqSlope: 2.5, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 2.3, mul: 1.0, mulTo: 0.75, mulSlope: 0.15);
 )
 
 (
-~mod1Preset = (freq: rrand(0.12, 5), freqTo: rrand(0.15, 5), freqSlope: rrand(0.02, 0.1), iphase: rrand(0.0, pi), iphaseTo: rrand(0.01, pi*2), iphaseSlope: rrand(0.012, 0.1), mul: rrand(0.5, 1.0), mulTo: rrand(0.5, 1), mulSlope: rrand(0.15, 0.1));
+~mod1Preset = (freq: rrand(0.12, 1), freqTo: rrand(0.15, 1), freqSlope: rrand(0.02, 0.1), iphase: rrand(0.0, pi), iphaseTo: rrand(0.01, pi*2), iphaseSlope: rrand(0.012, 0.1), mul: rrand(0.5, 1.0), mulTo: rrand(0.5, 1), mulSlope: rrand(0.15, 0.1));
 )
 
 
@@ -19,14 +19,14 @@ Ndef(\mod1, {
 });
 )
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\mod2).fadeTime_(32);
 
 (
 ~mod2Preset = (freq: 0.2, freqTo: 1, freqSlope: 0.125, width: 0.25, widthTo: 0.75, widthSlope: 0.035, mul: 0.75, mulTo: 0.9, mulSlope: 0.05);
 )
 
 (
-~mod2Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 10), freqSlope: rrand(0.01, 0.18), width: rrand(0.05, 1), widthTo: rrand(0.05, 1), widthSlope: rrand(0.01, 0.12), mul: rrand(0.25, 0.95), mulTo: rrand(0.25, 0.95), mulSlope: rrand(0.01, 0.18));
+~mod2Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 1), freqSlope: rrand(0.01, 0.18), width: rrand(0.05, 1), widthTo: rrand(0.05, 1), widthSlope: rrand(0.01, 0.12), mul: rrand(0.25, 0.95), mulTo: rrand(0.25, 0.95), mulSlope: rrand(0.01, 0.18));
 )
 
 (
@@ -40,11 +40,11 @@ Ndef(\mod2, {
 )
 
 
-Ndef(\bigraph).fadeTime_(18);
+Ndef(\bigraph).fadeTime_(28);
 
 // ok
 (
-~bigraphPreset = ( 'crv': -12, 'atk': 6.8707007169724e-05, 'trig1Freq': 0.045016779899597, 'amp': 0.051, 'modulo2Offset': 96, 'dcy': 0.071771189570427, 'modulo1': 128, 'noteOffset': 30, 'envPow': 0.7401768684387, 'modulo2Mul': 5.7536766052246, 'modulo2Freq': 1.8303462028503, 'stn': 1, 'trig2Freq': 0.054256244897842, 'rls': 1.8505662679672, 'srcFreq': 14, 'modPhaseMul': 2.2369314063435 )
+~bigraphPreset = ( 'crv': -12, 'atk': 6.8707007169724e-05, 'trig1Freq': 0.045016779899597, 'amp': 0.0251, 'modulo2Offset': 96, 'dcy': 0.071771189570427, 'modulo1': 128, 'noteOffset': 30, 'envPow': 0.7401768684387, 'modulo2Mul': 5.7536766052246, 'modulo2Freq': 1.8303462028503, 'stn': 1, 'trig2Freq': 0.054256244897842, 'rls': 1.8505662679672, 'srcFreq': 14, 'modPhaseMul': 2.2369314063435 )
 )
 
 
@@ -82,9 +82,8 @@ Ndef(\bigraph, {
     modPhase = SinOsc.ar(
         midicps(
             (
-				Sweep.ar(trig1, (33..3)) % ~bigraphPreset[\modulo1]  & (Sweep.ar(trig2, (3..9)) % (LFSaw.ar(~bigraphPreset[\modulo2Freq]) * ~bigraphPreset[\modulo2Mul] * (~bigraphPreset[\modulo2Offset] + (Ndef.ar(\mod1) + 0.5 * 0.5) )))
-			) + (~bigraphPreset[\noteOffset] % (Ndef.kr(\mod2) * 0.5 + 0.5))
-        ),
+				Sweep.ar(trig1, (33..3)) % ~bigraphPreset[\modulo1]  & (Sweep.ar(trig2, (3..9)) % (LFSaw.ar(~bigraphPreset[\modulo2Freq]) * ~bigraphPreset[\modulo2Mul] * (~bigraphPreset[\modulo2Offset] + Ndef.kr(\mod1) )))
+			) + (~bigraphPreset[\noteOffset] * Ndef.kr(\mod2))),
         0,
 			~bigraphPreset[\modPhaseMul]
     );
@@ -95,4 +94,4 @@ Ndef(\bigraph, {
 
 Ndef(\bigraph).play(2);
 
-Ndef(\bigraph).release(8);
+Ndef(\bigraph).release(38);

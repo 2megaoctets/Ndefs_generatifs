@@ -3,11 +3,11 @@
 Ndef(\mod1).fadeTime_(12);
 
 (
-~mod1Preset = (freq: 10, freqTo: 0.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
+~mod1Preset = (freq: 1, freqTo: 0.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.75, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
 )
 
 (
-~mod1Preset = (freq: 0.3, freqTo: 0.5, freqSlope: 0.02, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 0.03, width: 0.95, widthTo: 0.25, widthSlope: 0.05, mul: 0.95, mulTo: 0.5, mulSlope: 0.06);
+~mod1Preset = (freq: 5.3, freqTo: 20.5, freqSlope: 1.02, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 0.03, width: 0.95, widthTo: 0.75, widthSlope: 0.05, mul: 0.95, mulTo: 0.5, mulSlope: 0.06);
 )
 
 (
@@ -29,11 +29,11 @@ Ndef(\mod1, {
 Ndef(\mod2).fadeTime_(12);
 
 (
-~mod2Preset = (freq: 0.5, freqTo: 0.25, freqSlope: 0.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
+~mod2Preset = (freq: 1.5, freqTo: 1.25, freqSlope: 0.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
 )
 
 (
-~mod2Preset = (freq: rrand(0.05, 1), freqTo: rrand(0.01, 1), freqSlope: rrand(0.01, 0.10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.010, 0.10), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.10));
+~mod2Preset = (freq: rrand(1.05, 10), freqTo: rrand(2.01, 10), freqSlope: rrand(0.01, 1.10), feedback: rrand(0, pi), feedbackTo: rrand(0, 2*pi), feedbackSlope: rrand(0.010, 0.10), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.10));
 )
 
 (
@@ -47,7 +47,7 @@ Ndef(\mod2, {
 )
 
 
-Ndef(\dannySimple).fadeTime_(9);
+Ndef(\dannySimple).fadeTime_(14);
 
 
 (
@@ -98,6 +98,6 @@ Ndef(\dannySimple, {
 
 Ndef(\dannySimple).play(2);
 
-Ndef(\dannySimple).release(12);
+Ndef(\dannySimple).release(7);
 
 Ndef(\dannySimple).clear;

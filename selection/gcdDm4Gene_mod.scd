@@ -3,7 +3,7 @@
 Ndef(\mod1).fadeTime_(15);
 
 (
-~mod1Preset = (freq: 2 , freqTo: 30.5, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, mul: 1.0, mulTo: 0.75, mulSlope: 0.175);
+~mod1Preset = (freq: 2 , freqTo: 30.5, freqSlope: 2.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, mul: 1.0, mulTo: 0.75, mulSlope: 0.175);
 )
 
 (
@@ -11,7 +11,7 @@ Ndef(\mod1).fadeTime_(15);
 )
 
 (
-~mod1Preset = (freq: rrand(0.12, 2000) , freqTo: rrand(0.05, 2500), freqSlope: rrand(0.015, 0.10), iphase: rrand(0.0, pi), iphaseTo: rrand(0.0, pi), iphaseSlope: rrand(0.013, 0.25), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.01, 0.175));
+~mod1Preset = (freq: rrand(1.12, 2000) , freqTo: rrand(0.05, 2500), freqSlope: rrand(1.015, 20.10), iphase: rrand(0.0, pi), iphaseTo: rrand(0.0, pi), iphaseSlope: rrand(0.013, 0.25), mul: rrand(0.5, 1), mulTo: rrand(0.5, 1), mulSlope: rrand(0.01, 0.175));
 )
 
 (
@@ -27,11 +27,11 @@ Ndef(\mod1, {
 Ndef(\mod2).fadeTime_(12);
 
 (
-~mod2Preset = (carfreq: 1, carfreqTo: 20.5, carfreqSlope: 0.05, modfreq: 49.3, modfreqTo: 20, modfreqSlope: 0.075, pmindex: 10.5, pmindexTo: 34.127, pmindexSlope: 0.10, modphase: 1.0, modphaseTo: 40.1, modphaseSlope: 0.06, mul: 0.5, mulTo: 0.75, mulSlope: 0.16);
+~mod2Preset = (carfreq: 1, carfreqTo: 20.5, carfreqSlope: 1.05, modfreq: 49.3, modfreqTo: 20, modfreqSlope: 0.075, pmindex: 10.5, pmindexTo: 34.127, pmindexSlope: 0.10, modphase: 1.0, modphaseTo: 40.1, modphaseSlope: 0.06, mul: 0.5, mulTo: 0.75, mulSlope: 0.16);
 )
 
 (
-~mod2Preset = ( 'modphase': 2.691894351199, 'carfreq': 1.1959195256233, 'mulSlope': 0.078830008506775, 'modphaseSlope': 0.021869955062866, 'modfreqTo': 1.0483026504517, 'mulTo': 0.69766128063202, 'modfreqSlope': 0.062545585632324, 'pmindex': 3.9818071722984, 'pmindexSlope': 0.069270105361938, 'carfreqSlope': 0.092200808167458, 'pmindexTo': 2.8081195831299, 'modphaseTo': 5.1953068051991, 'mul': 0.53513604402542, 'modfreq': 1.6251531124115,  'carfreqTo': 2.1601283431053 )
+~mod2Preset = ( 'modphase': 2.691894351199, 'carfreq': 11.1959195256233, 'mulSlope': 0.078830008506775, 'modphaseSlope': 0.021869955062866, 'modfreqTo': 100.0483026504517, 'mulTo': 0.69766128063202, 'modfreqSlope': 0.062545585632324, 'pmindex': 103.9818071722984, 'pmindexSlope': 0.069270105361938, 'carfreqSlope': 0.092200808167458, 'pmindexTo': 2.8081195831299, 'modphaseTo': 5.1953068051991, 'mul': 0.53513604402542, 'modfreq': 1.6251531124115,  'carfreqTo': 2.1601283431053 )
 )
 
 (
@@ -42,7 +42,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-~mod2Preset = (carfreq: rrand(0.1, 2100), carfreqTo: rrand(0.1, 3500), carfreqSlope: rrand(0.05, 0.127), modfreq: rrand(0.2, 540), modfreqTo: rrand(0.1, 824), modfreqSlope: rrand(0.05, 0.10), pmindex: rrand(0.5, 350), pmindexTo: rrand(0.4, 350), pmindexSlope: rrand(0.02, 0.10), modphase: rrand(0.0, pi), modphaseTo: rrand(0, pi*2), modphaseSlope: rrand(0.01, 0.10), mul: rrand(0.25, 0.75), mulTo: rrand(0.5, 0.75), mulSlope: rrand(0.06, 0.10));
+~mod2Preset = (carfreq: rrand(0.1, 2100), carfreqTo: rrand(0.1, 3500), carfreqSlope: rrand(90.05, 0.127), modfreq: rrand(0.2, 540), modfreqTo: rrand(0.1, 824), modfreqSlope: rrand(0.05, 0.10), pmindex: rrand(0.5, 350), pmindexTo: rrand(0.4, 350), pmindexSlope: rrand(0.02, 0.10), modphase: rrand(0.0, pi), modphaseTo: rrand(0, pi*2), modphaseSlope: rrand(0.01, 0.10), mul: rrand(0.25, 0.75), mulTo: rrand(0.5, 0.75), mulSlope: rrand(0.06, 0.10));
 )
 
 (
@@ -59,7 +59,7 @@ Ndef(\mod2, {
 
 Ndef(\mod2).release(10);
 
-Ndef(\gcdDm4Gene).fadeTime_(18);
+Ndef(\gcdDm4Gene).fadeTime_(3);
 
 (
 ~gcdDm4GenePreset = (amp: 0.1, atk: 0.001, rls: 0.2, sustain: 1, start: 100, end: 0.1, rate1: 10, mod2: 300, mod3: 101, dev1: 0, dev2: 2, add: 600, add1: 61, mul1: 43, ser: [ 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77 ]);
@@ -121,7 +121,7 @@ Ndef(\gcdDm4Gene, {
 	sig = SinOsc.ar((sig), 0, 1, ~gcdDm4GenePreset[\add]) * 0.1;
 	sig1 = SinOsc.ar((/*(Ndef.ar(\mod2) * 0.5 + 0.5) **/ sig1) * ~gcdDm4GenePreset[\mul1] + ~gcdDm4GenePreset[\add1]) * 0.4;
 
-	sig = (Limiter.ar(LPF.ar(HPF.ar(sig, 50) + sig1, 5000), 0.3) *
+	sig = (Limiter.ar(LPF.ar(HPF.ar(sig, 50) + sig1, 3000), 0.3) *
 		env * ~gcdDm4GenePreset[\amp] * 0.7);
 	// OffsetOut.ar(out, sig);
 });
@@ -129,6 +129,6 @@ Ndef(\gcdDm4Gene, {
 
 Ndef(\gcdDm4Gene).play(2);
 
-Ndef(\gcdDm4Gene).release(10);
+Ndef(\gcdDm4Gene).release(12);
 
 Ndef(\gcdDm4Gene).clear;

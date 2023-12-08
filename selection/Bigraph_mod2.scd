@@ -7,7 +7,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-~mod1Preset = (freq: rrand(0.12, 131.05), freqTo: rrand(0.15, 1320.5), freqSlope: rrand(0.02, 4.1), iphase: rrand(0.0, pi), iphaseTo: rrand(0.01, pi*2), iphaseSlope: rrand(0.012, 1), mul: rrand(0.5, 1.0), mulTo: rrand(0.5, 1), mulSlope: rrand(0.15, 1));
+~mod1Preset = (freq: rrand(1.12, 131.05), freqTo: rrand(6.15, 1320.5), freqSlope: rrand(2, 34.1), iphase: rrand(0.0, pi), iphaseTo: rrand(0.01, pi*2), iphaseSlope: rrand(0.012, 1), mul: rrand(0.5, 1.0), mulTo: rrand(0.5, 1), mulSlope: rrand(0.15, 1));
 )
 
 
@@ -28,7 +28,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-~mod2Preset = (freq: rrand(0.1, 343), freqTo: rrand(0.01, 2100), freqSlope: rrand(0.01, 10.8), width: rrand(0.5, 1), widthTo: rrand(0.5, 1), widthSlope: rrand(0.01, 0.2), mul: rrand(0.75, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.8));
+~mod2Preset = (freq: rrand(0.1, 343), freqTo: rrand(0.01, 2100), freqSlope: rrand(2.01, 50.8), width: rrand(0.75, 1), widthTo: rrand(0.85, 1), widthSlope: rrand(0.1, 0.2), mul: rrand(0.75, 0.95), mulTo: rrand(0.5, 0.95), mulSlope: rrand(0.01, 0.8));
 )
 
 (
@@ -42,7 +42,7 @@ Ndef(\mod2, {
 )
 
 
-Ndef(\bigraph).fadeTime_(18);
+Ndef(\bigraph).fadeTime_(3);
 
 // ok
 (
@@ -97,4 +97,4 @@ Ndef(\bigraph, {
 
 Ndef(\bigraph).play(2);
 
-Ndef(\bigraph).release(10);
+Ndef(\bigraph).release(2);

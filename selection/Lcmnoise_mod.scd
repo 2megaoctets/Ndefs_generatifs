@@ -9,7 +9,7 @@ Ndef(\mod1).fadeTime_(32);
 )
 
 (
-~mod1Preset = (syncFreq: rrand(0.1, 29), syncFreqTo: rrand(0.1, 30), syncFreqSlope: rrand(0.01, 0.10), sawFreq: rrand(0.1, 1), sawFreqTo: rrand(0.1, 3.5), sawFreqSlope: rrand(0.01, 0.10), mul: rrand(0.45, 0.75), mulTo: rrand(0.45, 0.75), mulSlope: rrand(0.01, 0.10), LPFFreq: rrand(20.0, 8000), LPFFreqTo: rrand(20.0, 8000), LPFFreqSlope: rrand(0.01, 0.10), LPFMul: rrand(0.45, 0.95), LPFMulTo: rrand(0.45, 0.95), LPFMulSlope: rrand(0.01, 0.10));
+~mod1Preset = (syncFreq: rrand(0.1, 290), syncFreqTo: rrand(0.1, 730), syncFreqSlope: rrand(1.1, 10), sawFreq: rrand(0.1, 1), sawFreqTo: rrand(0.1, 3.5), sawFreqSlope: rrand(0.01, 0.10), mul: rrand(0.45, 0.75), mulTo: rrand(0.45, 0.75), mulSlope: rrand(0.01, 0.10), LPFFreq: rrand(20.0, 8000), LPFFreqTo: rrand(20.0, 8000), LPFFreqSlope: rrand(0.01, 0.10), LPFMul: rrand(0.45, 0.95), LPFMulTo: rrand(0.45, 0.95), LPFMulSlope: rrand(0.01, 0.10));
 )
 
 (
@@ -32,7 +32,7 @@ Ndef(\mod2).fadeTime_(22);
 Ndef(\mod1).clear;
 
 (
-~mod2Preset = (freq: 120.2, freqTo: 3.1, freqSlope: 0.0125, iphase: 0.0, iphaseTo: 0.25, iphaseSlope: 0.00035, width: 0.35, widthTo: 0.85, widthSlope: 0.045, mul: 0.95, mulTo: 0.85, mulSlope: 0.015);
+~mod2Preset = (freq: 120.2, freqTo: 3.1, freqSlope: 1.25, iphase: 0.0, iphaseTo: 0.25, iphaseSlope: 0.00035, width: 0.35, widthTo: 0.85, widthSlope: 0.045, mul: 0.95, mulTo: 0.85, mulSlope: 0.015);
 )
 
 (
@@ -55,11 +55,11 @@ Ndef(\mod2).clear;
 Ndef(\mod3).fadeTime_(32);
 
 (
-~mod3Preset = (carfreq: 50.1, carfreqTo: 23.65, carfreqSlope: 0.15, modfreq: 154.5, modfreqTo: 430.065, modfreqSlope: 0.85, pmindex: 30.05, pmindexTo: 10.65, pmindexSlope: 0.05, modphase: 2, modphaseTo: 0.25, modphaseSlope: 0.0365, mul: 1.0);
+~mod3Preset = (carfreq: 50.1, carfreqTo: 23.65, carfreqSlope: 1.15, modfreq: 154.5, modfreqTo: 430.065, modfreqSlope: 2.85, pmindex: 30.05, pmindexTo: 10.65, pmindexSlope: 1.05, modphase: 2, modphaseTo: 0.25, modphaseSlope: 0.065, mul: 1.0);
 )
 
 (
-~mod3Preset = (carfreq: rrand(0.1, 50), modfreq: rrand(0.05, 1200), pmindex: rrand(0.01, 50), modphase: rrand(0.0, pi), mul: 0.75, modfreqTo: rrand(0.05, 3000), modfreqSlope: rrand(0.01, 10.10), pmindexTo: rrand(120.1, 3000), pmindexSlope: rrand(0.01, 20.10), modphaseTo: rrand(0.0, pi), modphaseSlope: rrand(0.01, 0.10))
+~mod3Preset = (carfreq: rrand(0.1, 50), modfreq: rrand(0.05, 1200), pmindex: rrand(1, 5.0), modphase: rrand(0.0, pi), mul: 0.75, modfreqTo: rrand(0.05, 3000), modfreqSlope: rrand(0.01, 10.10), pmindexTo: rrand(120.1, 3000), pmindexSlope: rrand(0.01, 20.10), modphaseTo: rrand(0.0, pi), modphaseSlope: rrand(0.01, 0.10))
 )
 
 (
@@ -74,7 +74,7 @@ Ndef(\mod3, {
 });
 )
 
-Ndef(\lcmnoise).fadeTime_(65);
+Ndef(\lcmnoise).fadeTime_(15);
 
 (
 ~lcmnoisePreset =  (amp: 0.0151, atk: 0.001, rls: 0.2, sustain: 1, spread: 1, GHdamp: 0.2, GHsize: 1.6, GHfeedback: 0.9, GHmodDepth: 0.1, GHmodFreq: 2); // default
@@ -145,12 +145,12 @@ Ndef(\lcmnoise, {
 	snd = snd * env * ~lcmnoisePreset[\amp] * 1.6;
 	// rajouter sum
 	snd = Limiter.ar(snd.sum, 0.82);
-	snd = snd * 0.87;
+	snd = snd * 0.92;
 })
 )
 
 Ndef(\lcmnoise).play(2);
 
-Ndef(\lcmnoise).release(18);
+Ndef(\lcmnoise).release(8);
 
 Ndef(\lcmnoise).clear;

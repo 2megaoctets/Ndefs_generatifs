@@ -6,7 +6,7 @@ Ndef(\mod1).fadeTime_(12);
 
 (~mod1Preset = (freq: 0.1, freqTo: 102.5, freqSlope: 0.5, iphase: 0.25, iphaseTo: 0.0, iphaseSlope: 0.005, width: 0.75, widthTo: 0.95, widthSlope: 0.001, mul: 1, mulTo: 0.8, mulSlope: 0.05);)
 
-(~mod1Preset = (freq: 0.25, freqTo: 0.15, freqSlope: 0.01, iphase: 0.0, iphaseTo: 0.0, iphaseSlope: 0.01, width: 0.85, widthTo: 1, widthSlope: 0.005, mul: 0.95, mulTo: 0.995, mulSlope: 0.005);)
+(~mod1Preset = (freq: 0.25, freqTo: 10.15, freqSlope: 1.01, iphase: 0.0, iphaseTo: 0.0, iphaseSlope: 0.01, width: 0.85, widthTo: 1, widthSlope: 0.005, mul: 0.95, mulTo: 0.995, mulSlope: 0.005);)
 
 (~mod1Preset = (freq: rrand(0.2, 300), freqTo: rrand(0.1, 240.03), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
 
@@ -27,9 +27,9 @@ Ndef(\mod2).fadeTime_(12);
 
 (~mod2Preset = (freq: 0.6, freqTo: 20.233, freqSlope: 0.005, phase: 0.0, phaseTo: 0.15, phaseSlope: 0.01, mul: 0.85, mulTo: 0.95, mulSlope: 0.05);)
 
-(~mod2Preset = (freq: 0.1, freqTo: 20.6, freqSlope: 0.05, phase: 0.15, phaseTo: 0.0, phaseSlope: 0.05, mul: 0.9, mulTo: 0.8, mulSlope: 0.01);)
+(~mod2Preset = (freq: 10.1, freqTo: 20.6, freqSlope: 1.05, phase: 0.15, phaseTo: 0.0, phaseSlope: 0.05, mul: 0.9, mulTo: 0.8, mulSlope: 0.01);)
 
-(~mod2Preset = (freq: 2.1, freqTo: 40.055, freqSlope: 0.05, phase: 0.0, phaseTo: 0.001, phaseSlope: 0.0005, mul: 0.95, mulTo: 1, mulSlope: 0.001);)
+(~mod2Preset = (freq: 2.1, freqTo: 40.055, freqSlope: 3.05, phase: 0.0, phaseTo: 0.001, phaseSlope: 0.0005, mul: 0.95, mulTo: 1, mulSlope: 0.001);)
 
 (~mod2Preset = (freq: rrand(0.2, 2100.30), freqTo: rrand(0.2, 2320.652), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.95), mulTo: rrand(0.65, 0.95), mulSlope: rrand(0.01, 0.1));)
 
@@ -124,6 +124,6 @@ Ndef(\circSegs, {
 
 Ndef(\circSegs).play(2);
 
-Ndef(\circSegs).release(39);
+Ndef(\circSegs).release(1);
 
 Ndef(\circSegs).clear;

@@ -10,7 +10,7 @@ Ndef(\mod1).fadeTime_(12);
 
 (~mod1Preset = (freq: 0.65, freqTo: 3, freqSlope: 0.01, iphase: 0.65, iphaseTo: 0.15, iphaseSlope: 0.01, width: 0.99, widthTo: 0.45, widthSlope: 0.03, mul: 0.9, mulTo: 0.8, mulSlope: 0.01);)
 
-(~mod1Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 30), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.1));)
+(~mod1Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 30), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.85, 1), widthTo: rrand(0.85, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod1, {
@@ -33,7 +33,7 @@ Ndef(\mod2).fadeTime_(12);
 
 (~mod2Preset = (freq: 1, freqTo: 0.1, freqSlope: 0.001, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.01, mul: 1, mulTo: 0.95, mulSlope: 0.005);)
 
-(~mod2Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 2000), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.85, 0.95), mulTo: rrand(0.85, 0.95), mulSlope: rrand(0.01, 0.1));)
+(~mod2Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 2000), freqSlope: rrand(0.01, 20.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.85, 0.95), mulTo: rrand(0.85, 0.95), mulSlope: rrand(0.01, 0.1));)
 
 (
 Ndef(\mod2, {
@@ -143,11 +143,12 @@ Ndef(\rungler, {
 	snd = Splay.ar(snd, ~runglerPreset[\spread]);
     snd = snd * globalEnv * -10.dbamp;
 	// OffsetOut.ar(out, snd * amp);
-	snd = snd * ~runglerPreset[\amp] * 0.84;
+	snd = snd * ~runglerPreset[\amp] * 0.95;
 	snd = Limiter.ar(HPF.ar(snd.sum, 70), 0.9);
+	snd = snd * 1.05;
 })
 )
 
 Ndef(\rungler).play(2);
 
-Ndef(\rungler).release(22);
+Ndef(\rungler).release(7);

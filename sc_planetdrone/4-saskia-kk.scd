@@ -22,7 +22,7 @@ Ndef(\skk, {
 		maxroomsize: 100,
 		mul: 1.0,
 		add: 0);
-	sig = Mix.ar(sig) * ~skkPreset[\amp] * 0.5;
+	sig = Mix.ar(sig) * ~skkPreset[\amp] * 0.45;
 	sig = Limiter.ar(sig, 0.5);
 
 });

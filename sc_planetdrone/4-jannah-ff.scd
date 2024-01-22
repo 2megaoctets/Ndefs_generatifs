@@ -1,5 +1,5 @@
 (
-~jffPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~jffPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.35);
 )
 
 // continue à tourner sur 4 canaux
@@ -15,7 +15,11 @@ Ndef(\jff,{
 		durdist: 6,
 		adparam: 3,
 		ddparam: Dust.ar(
-			density: [99 + pd_1a, 98 + pd_2a + SinOsc.ar(freq: 0.000125, phase: 0.0, mul: 4, add: 0.0)],
+			density: [99 + pd_1a, 98 + pd_2a + SinOsc.ar(
+				freq: 0.000125,
+				phase: 0.0,
+				mul: 4,
+				add: 0.0)],
 			mul: 1),
 		minfreq: 18 + abs(pd_3a),
 		maxfreq: 375+abs(pd_4a + SinOsc.ar(
@@ -32,7 +36,7 @@ Ndef(\jff,{
 		mul:0.005)
 	);
 	sig = GVerb.ar(
-		Splay.ar(sig),
+		Mix.ar(sig),
 		// sig,
 		roomsize: 80,
 		revtime: 4.85,
@@ -44,14 +48,14 @@ Ndef(\jff,{
 		taillevel: -11,
 		mul: 0.008);
 	sig = FreqShift.ar(
-		Splay.ar(sig),
+		Mix.ar(sig),
 		// sig,
 		0 + ~jffPreset[\planetDrone_effect_1] * 470) / ((2..9) +   SinOsc.ar(
 		freq: 0.00039 + (~jffPreset[\planetDrone_effect_3]),
 		phase: 0.0,
 		mul: ~jffPreset[\planetDrone_effect_2] * 0.38,
 		add: 0.0) );
-	sig = Mix.ar(sig) * ~jffPreset[\amp] * 0.5;
+	sig = Splay.ar(sig, 1) * ~jffPreset[\amp] * 0.5;
 
 });
 )

@@ -1,6 +1,6 @@
 // sept23 ok + niveaux
 
-Ndef(\mod1).fadeTime_(15);
+Ndef(\gcdDm4GeneMod1).fadeTime_(15);
 
 (
 ~mod1Preset = (freq: 2 , freqTo: 30.5, freqSlope: 2.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.0325, mul: 1.0, mulTo: 0.75, mulSlope: 0.175);
@@ -15,7 +15,7 @@ Ndef(\mod1).fadeTime_(15);
 )
 
 (
-Ndef(\mod1, {
+Ndef(\gcdDm4GeneMod1, {
 	FSinOsc.kr(
 		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo] , rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]) + (Ndef.kr(\mod2) * 0.5 + 0.5),
 		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope], resetPos: ~mod1Preset[\iphaseTo])  * (Ndef.kr(\mod2) * 0.5 + 0.5),
@@ -24,7 +24,7 @@ Ndef(\mod1, {
 })
 )
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\gcdDm4GeneMod2).fadeTime_(12);
 
 (
 ~mod2Preset = (carfreq: 1, carfreqTo: 20.5, carfreqSlope: 1.05, modfreq: 49.3, modfreqTo: 20, modfreqSlope: 0.075, pmindex: 10.5, pmindexTo: 34.127, pmindexSlope: 0.10, modphase: 1.0, modphaseTo: 40.1, modphaseSlope: 0.06, mul: 0.5, mulTo: 0.75, mulSlope: 0.16);
@@ -46,7 +46,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-Ndef(\mod2, {
+Ndef(\gcdDm4GeneMod2, {
 	PMOsc.kr(
 		carfreq:  Phasor.kr(start: ~mod2Preset[\carfreq], end: ~mod2Preset[\carfreqTo], rate: ~mod2Preset[\carfreqSlope], resetPos: ~mod2Preset[\carfreqTo]),
 		modfreq:  Phasor.kr(start: ~mod2Preset[\modfreq], end: ~mod2Preset[\modfreqTo], rate: ~mod2Preset[\modfreqSlope], resetPos: ~mod2Preset[\modfreqTo])  % cos(Ndef.kr(\mod1) * 0.5 + 0.5),
@@ -57,7 +57,7 @@ Ndef(\mod2, {
 })
 )
 
-Ndef(\mod2).release(10);
+Ndef(\gcdDm4GeneMod2).release(10);
 
 Ndef(\gcdDm4Gene).fadeTime_(3);
 
@@ -109,13 +109,13 @@ Ndef(\gcdDm4Gene, {
 
 	// envMod = XLine.kr(start, end, 100);
 
-	envMod = LFTri.kr(Ndef.kr(\mod2), -1).exprange(~gcdDm4GenePreset[\start], ~gcdDm4GenePreset[\end]);
+	envMod = LFTri.kr(Ndef.kr(\gcdDm4GeneMod2), -1).exprange(~gcdDm4GenePreset[\start], ~gcdDm4GenePreset[\end]);
 
 	src1 = TDuty.ar(seq * envMod * SampleDur.ir);
-	src2 = PulseCount.ar(Impulse.ar(~gcdDm4GenePreset[\rate1])) % ~gcdDm4GenePreset[\mod2];
-	src3 = PulseCount.ar(src1) % ~gcdDm4GenePreset[\mod3];
+	src2 = PulseCount.ar(Impulse.ar(~gcdDm4GenePreset[\rate1])) % ~gcdDm4GenePreset[\gcdDm4GeneMod2];
+	src3 = PulseCount.ar(src1) % ~gcdDm4GenePreset[\gcdDm4GeneMod3];
 
-	sig = gcd(src2 % (Ndef.kr(\mod1) * 0.5 + 0.5), src3 % (Ndef.kr(\mod2) * 0.5 + 0.5));
+	sig = gcd(src2 % (Ndef.kr(\gcdDm4GeneMod1) * 0.5 + 0.5), src3 % (Ndef.kr(\gcdDm4GeneMod2) * 0.5 + 0.5));
 	sig1 = gcd(lcm(src2 + [~gcdDm4GenePreset[\dev1], ~gcdDm4GenePreset[\dev2]], src3),sig);
 
 	sig = SinOsc.ar((sig), 0, 1, ~gcdDm4GenePreset[\add]) * 0.1;

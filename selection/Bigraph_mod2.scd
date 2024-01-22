@@ -1,6 +1,6 @@
 // corrigé et ok sept 23
 
-Ndef(\mod1).fadeTime_(12);
+Ndef(\bigraphMod1).fadeTime_(12);
 
 (
 ~mod1Preset = (freq: 0.2, freqTo: 20.5, freqSlope: 2.5, iphase: 0.0, iphaseTo: 0.1, iphaseSlope: 2.3, mul: 1.0, mulTo: 0.75, mulSlope: 0.15);
@@ -12,7 +12,7 @@ Ndef(\mod1).fadeTime_(12);
 
 
 (
-Ndef(\mod1, {
+Ndef(\bigraphMod1, {
 	LFPar.kr(
 		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]) * (Ndef.kr(\mod2).linexp(-1,1,0.1,1)),
 		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope] , resetPos: ~mod1Preset[\iphase]),
@@ -21,10 +21,10 @@ Ndef(\mod1, {
 });
 )
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\bigraphMod2).fadeTime_(12);
 
 (
-~mod2Preset = (freq: 20.2, freqTo: 170, freqSlope: 0.125, width: 0.25, widthTo: 0.75, widthSlope: 0.035, mul: 0.75, mulTo: 0.9, mulSlope: 0.05);
+~mod2Preset = (freq: 20.2, freqTo: 170, freqSlope: 10.125, width: 0.25, widthTo: 0.75, widthSlope: 0.035, mul: 0.75, mulTo: 0.9, mulSlope: 0.05);
 )
 
 (
@@ -32,7 +32,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-Ndef(\mod2, {
+Ndef(\bigraphMod2, {
 	Pulse.kr(
 		freq: Phasor.kr(start: ~mod2Preset[\freq], end: ~mod2Preset[\freqTo], rate:~mod2Preset[\freqSlope] * (Ndef.kr(\mod1).linexp(-1,1,0.01,2))),
 		width: Phasor.kr(start: ~mod2Preset[\width], end: ~mod2Preset[\widthTo], rate: ~mod2Preset[\widthSlope] * cos(Ndef.kr(\mod1)), resetPos: ~mod2Preset[\widthTo]),
@@ -84,8 +84,8 @@ Ndef(\bigraph, {
     modPhase = SinOsc.ar(
         midicps(
             (
-				Sweep.ar(trig1, (33..3)) % ~bigraphPreset[\modulo1] & (Sweep.ar(trig2, (3..9)) % (LFSaw.ar(~bigraphPreset[\modulo2Freq]) * ~bigraphPreset[\modulo2Mul] * (~bigraphPreset[\modulo2Offset] + (Ndef.ar(\mod2) * 0.5 + 0.5))))
-		) + (~bigraphPreset[\noteOffset] % (Ndef.kr(\mod1) * 0.5 + 0.5))
+				Sweep.ar(trig1, (33..3)) % ~bigraphPreset[\modulo1] & (Sweep.ar(trig2, (3..9)) % (LFSaw.ar(~bigraphPreset[\modulo2Freq]) * ~bigraphPreset[\modulo2Mul] * (~bigraphPreset[\modulo2Offset] + (Ndef.ar(\bigraphMod2) * 0.5 + 0.5))))
+		) + (~bigraphPreset[\noteOffset] % (Ndef.kr(\bigraphMod1) * 0.5 + 0.5))
         ),
         0,
 			~bigraphPreset[\modPhaseMul]

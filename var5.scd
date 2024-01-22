@@ -1,4 +1,4 @@
-Ndef(\mod1).fadeTime_(12);
+Ndef(\variation5Mod1).fadeTime_(12);
 
 (
 ~mod1Preset = (freq: 0.031, freqTo: 2.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.5, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
@@ -13,7 +13,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-Ndef(\mod1, {
+Ndef(\variation5Mod1, {
 	LFPulse.kr(
 		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]),
 		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope], resetPos: ~mod1Preset[\iphaseTo]),
@@ -24,7 +24,7 @@ Ndef(\mod1, {
 )
 
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\variation5Mod2).fadeTime_(12);
 
 (
 ~mod2Preset = (freq: 0.5, freqTo: 20.025, freqSlope: 1.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
@@ -35,7 +35,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-Ndef(\mod2, {
+Ndef(\variation5Mod2, {
 	SinOscFB.kr(
 		freq: Phasor.kr(~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqSlope]),
 		feedback: Phasor.kr(~mod2Preset[\feedback], ~mod2Preset[\feedbackTo], ~mod2Preset[\feedbackSlope]),
@@ -67,13 +67,13 @@ Ndef(\variation5).fadeTime_(19);
 Ndef(\variation5, {
 	var sig, env, a, bohlen;
 	env = EnvGen.ar(Env.adsr(~variation5Preset[\atk], ~variation5Preset[\dcy], ~variation5Preset[\stn], ~variation5Preset[\rls]));
-	bohlen = ~variation5Preset[\bohlen] * Ndef.kr(\mod1).linlin(-1,1,0.025,1.3);
+	bohlen = ~variation5Preset[\bohlen] * Ndef.kr(\variation5Mod1).linlin(-1,1,0.025,1.3);
 	sig = {
 		a = LFTri.ar(bohlen.choose * 10/27, 0, 11);
 		~variation5Preset[\iter].do{
-			a = BAllPass.ar(a, PinkNoise.kr(1, Ndef.kr(\mod2).linlin(-1,1,10,30).sum/*30*/ * bohlen.choose), 2,
+			a = BAllPass.ar(a, PinkNoise.kr(1, Ndef.kr(\variation5Mod2).linlin(-1,1,10,30).sum/*30*/ * bohlen.choose), 2,
 				1);
-			a = BAllPass.ar(a, PinkNoise.kr(1, Ndef.kr(\mod1).linlin(-1,1,60,270).sum/*270*/ * bohlen.choose *
+			a = BAllPass.ar(a, PinkNoise.kr(1, Ndef.kr(\variation5Mod1).linlin(-1,1,60,270).sum/*270*/ * bohlen.choose *
 				[27, 3, 9].choose),0.001,17);
 			a = ((a * LFNoise1.ar(bohlen.choose/9, 3, 1)) +
 				WhiteNoise.ar(PinkNoise.ar(0.1) * LFNoise2.ar(3, 0.001))).tanh;

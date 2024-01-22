@@ -1,7 +1,7 @@
 // corrigé + niveaux sept 23
 
 (
-Ndef(\mod1).fadeTime_(12);
+Ndef(\circSegsMod1).fadeTime_(12);
 )
 
 (~mod1Preset = (freq: 0.1, freqTo: 102.5, freqSlope: 0.5, iphase: 0.25, iphaseTo: 0.0, iphaseSlope: 0.005, width: 0.75, widthTo: 0.95, widthSlope: 0.001, mul: 1, mulTo: 0.8, mulSlope: 0.05);)
@@ -11,7 +11,7 @@ Ndef(\mod1).fadeTime_(12);
 (~mod1Preset = (freq: rrand(0.2, 300), freqTo: rrand(0.1, 240.03), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.45, 1), widthTo: rrand(0.45, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod1, {
+Ndef(\circSegsMod1, {
 	LFPulse.kr(
 		freq: Phasor.kr(0.0, ~mod1Preset[\freqSlope], ~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqTo]) * (Ndef.kr(\mod2).cos),
 		iphase: Phasor.kr(0.0, ~mod1Preset[\iphaseSlope], ~mod1Preset[\iphase], ~mod1Preset[\iphaseTo], ~mod1Preset[\iphaseTo]) , // 0..1
@@ -22,7 +22,7 @@ Ndef(\mod1, {
 )
 
 (
-Ndef(\mod2).fadeTime_(12);
+Ndef(\circSegsMod2).fadeTime_(12);
 )
 
 (~mod2Preset = (freq: 0.6, freqTo: 20.233, freqSlope: 0.005, phase: 0.0, phaseTo: 0.15, phaseSlope: 0.01, mul: 0.85, mulTo: 0.95, mulSlope: 0.05);)
@@ -34,7 +34,7 @@ Ndef(\mod2).fadeTime_(12);
 (~mod2Preset = (freq: rrand(0.2, 2100.30), freqTo: rrand(0.2, 2320.652), freqSlope: rrand(0.01, 0.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.95), mulTo: rrand(0.65, 0.95), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod2, {
+Ndef(\circSegsMod2, {
 	SinOsc.kr(
 		freq: Phasor.kr(0.0, ~mod2Preset[\freqSlope], ~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqTo]) , /*/  (Ndef(\mod1)).cos */
 		phase: Phasor.kr(0.0, ~mod2Preset[\phaseSlope], ~mod2Preset[\phase], ~mod2Preset[\phaseTo], ~mod2Preset[\phaseTo]), // radians, 0..8pi
@@ -43,7 +43,7 @@ Ndef(\mod2, {
 })
 )
 
-(Ndef(\mod3).fadeTime_(19);)
+(Ndef(\circSegsMod3).fadeTime_(19);)
 
 (
 ~mod3Preset = ( 'mul': 0.91234159946442, 'freqSlope': 0.018481177091599, 'freqTo': 32.2791907787323, 'iphase': 0.31240141391754, 'iphaseTo': 0.62686514854431, 'freq': 0.41647090911865, 'iphaseSlope': 0.015020462274551, 'mulTo': 0.98722139000893, 'mulSlope': 0.013618535995483 )
@@ -54,7 +54,7 @@ Ndef(\mod2, {
 (~mod3Preset = (freq: rrand(0.2, 1200), freqTo: rrand(0.2, 1294.5), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1),  mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod3, {
+Ndef(\circSegsMod3, {
 	LFTri.kr(
 		freq: Phasor.kr(0.0, ~mod3Preset[\freqSlope], ~mod3Preset[\freq], ~mod3Preset[\freqTo], ~mod3Preset[\freqTo]) * (Ndef.kr(\mod1).cos),
 		iphase: Phasor.kr(0.0, ~mod3Preset[\iphaseSlope], ~mod3Preset[\iphase], ~mod3Preset[\iphaseTo], ~mod3Preset[\iphaseTo]) , // 0..1
@@ -99,14 +99,14 @@ Ndef(\circSegs, {
 	globalEnv = EnvGen.kr(Env.asr(~circSegsPreset[\attack], ~circSegsPreset[\sustain], ~circSegsPreset[\release], ~circSegsPreset[\curve])).pow(~circSegsPreset[\envPow]);
 
     amps = Array.new;
-	xMinor = ~circSegsPreset[\xMajor] + (~circSegsPreset[\rMajor]  + Ndef.kr(\mod1) * SinOsc.ar(~circSegsPreset[\circlefreq] * (Ndef.kr(\mod1) * 2 + 2)));
-	yMinor = ~circSegsPreset[\yMajor] + (~circSegsPreset[\rMajor] * SinOsc.ar(~circSegsPreset[\circlefreq]  * (Ndef.kr(\mod2) * 0.5 + 0.75), [pi, pi/2]));
+	xMinor = ~circSegsPreset[\xMajor] + (~circSegsPreset[\rMajor]  + Ndef.kr(\circSegsMod1) * SinOsc.ar(~circSegsPreset[\circlefreq] * (Ndef.kr(\circSegsMod1) * 2 + 2)));
+	yMinor = ~circSegsPreset[\yMajor] + (~circSegsPreset[\rMajor] * SinOsc.ar(~circSegsPreset[\circlefreq]  * (Ndef.kr(\circSegsMod2) * 0.5 + 0.75), [pi, pi/2]));
     amps = Array.fill(~arraySize,
         {
             arg seg;
 			var x = xMinor   + (~circSegsPreset[\rMinor] * sin(seg*2*pi/~circSegsPreset[\segments]));
 			var y = yMinor + (~circSegsPreset[\rMinor] * cos(seg*2*pi/~circSegsPreset[\segments]));
-			var grey = abs(shuheiKawachi.(x, y, 2*pi , 0.5))/12 * cos(Ndef.kr(\mod2)).tanh;
+			var grey = abs(shuheiKawachi.(x, y, 2*pi , 0.5))/12 * cos(Ndef.kr(\circSegsMod2)).tanh;
             grey
         }
     );
@@ -114,7 +114,7 @@ Ndef(\circSegs, {
 		`[
 			~circSegsPreset[\freqs] * ~circSegsPreset[\tu],
 			amps,
-			~circSegsPreset[\phase] * cos(Ndef.kr(\mod3))
+			~circSegsPreset[\phase] * cos(Ndef.kr(\circSegsMod3))
 		]
 	);
 	sig = sig * ~circSegsPreset[\amp] * 1.175;

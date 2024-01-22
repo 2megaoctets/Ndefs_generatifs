@@ -132,10 +132,13 @@ Ndef(\lcmnoise, {
 
 	revchain = Greyhole.ar(
 		in: revchain,
-		delayTime: LFNoise1.ar().range(0.0001,0.2),
-		damp: SinOsc.kr(~lcmnoisePreset[\GHdamp], rrand(0, pi), 0.5, 0.5),
-		size: LFNoise1.ar( ~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
-		feedback: LFNoise1.kr(~lcmnoisePreset[\GHfeedback], 0.5, 0.5),
+		// delayTime: LFNoise1.ar().range(0.0001,0.2),
+		delayTime: LFNoise1.kr(Ndef.kr(\mod1), 0.86).linexp(-1, 1, 0.3, 1),
+		damp: SinOsc.kr(~lcmnoisePreset[\GHdamp], rrand(0, pi)).linlin(-1,1,0.016,0.5),
+		diff: SinOsc.kr(~lcmnoisePreset[\GHDamp], rrand(0,pi), 0.5).linlin(-1,1,0.3,0.707),
+		// size: LFNoise1.kr( ~lcmnoisePreset[\GHsize]).exprange(0.0001,5),
+		size: SinOscFB.kr(~lcmnoisePreset[\GHsize], feedback: Phasor.kr(0.0, 0.1, 0.0, pi/2, pi/2), 1, 1 ).linlin(-1,1,0.5,1),
+		feedback: LFNoise1.kr(~lcmnoisePreset[\GHfeedback]).linlin(-1,1,,
 		modDepth: LFNoise0.kr(~lcmnoisePreset[\GHmodDepth], 0.5, 0.5),
 		modFreq: LFNoise0.kr(~lcmnoisePreset[\GHmodFreq], 0.5, 0.5)
 	);

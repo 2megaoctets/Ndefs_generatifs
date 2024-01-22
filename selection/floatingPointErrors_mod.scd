@@ -1,7 +1,7 @@
 // 3105 pas fini  : graphe, mod1
 
 (
-Ndef(\mod1).fadeTime_(22);
+Ndef(\floatingPointErrorsMod1).fadeTime_(22);
 )
 
 (~mod1Preset = ( 'iphaseTo': 0.76112425327301, 'mulTo': 0.753338098526, 'freqTo': 7.3651354007721, 'width': 0.99752256274223,
@@ -23,7 +23,7 @@ Ndef(\mod1).fadeTime_(22);
 (~mod1Preset = (freq: rrand(0.2, 13.00), freqTo: rrand(2, 63.00), freqSlope: rrand(0.1, 1.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.75, 1), widthTo: rrand(0.75, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.78, 1), mulTo: rrand(0.75, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod1, {
+Ndef(\floatingPointErrorsMod1, {
 	LFPulse.kr(
 		freq: Phasor.kr(0.0, ~mod1Preset[\freqSlope], ~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqTo]),
 		iphase: Phasor.kr(0.0, ~mod1Preset[\iphaseSlope], ~mod1Preset[\iphase], ~mod1Preset[\iphaseTo], ~mod1Preset[\iphaseTo]) * SinOsc.kr(Ndef.kr(\mod2).cos), // 0..1
@@ -34,7 +34,7 @@ Ndef(\mod1, {
 )
 
 (
-Ndef(\mod2).fadeTime_(12);
+Ndef(\floatingPointErrorsMod2).fadeTime_(12);
 )
 
 (~mod2Preset = ( 'phaseSlope': 0.054374605417252, 'mul': 0.66760340929031, 'freqSlope': 5.333999145031, 'phase': 2.4810985762403,
@@ -53,7 +53,7 @@ Ndef(\mod2).fadeTime_(12);
 (~mod2Preset = (freq: rrand(0.2, 134), freqTo: rrand(0.2, 122), freqSlope: rrand(0.21, 1.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.95), mulTo: rrand(0.65, 0.95), mulSlope: rrand(0.01, 1.1));)
 
 (
-Ndef(\mod2, {
+Ndef(\floatingPointErrorsMod2, {
 	SinOsc.kr(
 		freq: Phasor.kr(0.0, ~mod2Preset[\freqSlope], ~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqTo]) +  (Ndef(\mod1)).cos,
 		phase: Phasor.kr(0.0, ~mod2Preset[\phaseSlope], ~mod2Preset[\phase], ~mod2Preset[\phaseTo], ~mod2Preset[\phaseTo]).mod(pi), // radians, 0..8pi
@@ -63,13 +63,13 @@ Ndef(\mod2, {
 )
 
 (
-Ndef(\mod3).fadeTime_(12);
+Ndef(\floatingPointErrorsMod3).fadeTime_(12);
 )
 
 (~mod3Preset = ;)
 
 (
-Ndef(\mod3, {})
+Ndef(\floatingPointErrorsMod3, {})
 )
 
 
@@ -113,23 +113,23 @@ Ndef(\floatingPointErrors, {
 	pink1 = { PinkNoise.ar().range(1 /*0.08*/, 0.12) } ! 2;
     sig1 = 0.5 * LeakDC.ar(Median.ar(2, Limiter.ar(99999999*(SawDPW.ar(pink1, 0) + SawDPW.ar(pink1, pi)), 0.9)));
 
-	pink2 = { PinkNoise.ar().range(0.0999/3, 0.1001/3 * Ndef.kr(\mod2)) } ! 2;
+	pink2 = { PinkNoise.ar().range(0.0999/3, 0.1001/3 * Ndef.kr(\floatingPointErrorsMod2)) } ! 2;
     sig2 = 0.5*LeakDC.ar(Median.ar(5, Limiter.ar(99999999*(SawDPW.ar(pink2, 0) + SawDPW.ar(pink2, pi)), 0.9)));
 
-	pink3 = { PinkNoise.ar().range(0.00999, 0.01001 + Ndef.kr(\mod1)) } ! 2;
+	pink3 = { PinkNoise.ar().range(0.00999, 0.01001 + Ndef.kr(\floatingPointErrorsMod1)) } ! 2;
 	// sig3 = 0.5 * Median.ar(20, Limiter.ar(999999*LeakDC.ar(SawDPW.ar(pink3, 0+(pi/2)) + SawDPW.ar(pink3 , pi+(pi/2))), 0.1));
-	sig3 = /*0.5 * */Median.ar((20 * (Ndef.kr(\mod1) + Ndef.kr(\mod2).cos)), Limiter.ar(999999*LeakDC.ar(SawDPW.ar(pink3, 0+(pi/2)) + SawDPW.ar(pink3 , pi+(pi/2))), 0.1)) ;
+	sig3 = /*0.5 * */Median.ar((20 * (Ndef.kr(\floatingPointErrorsMod1) + Ndef.kr(\floatingPointErrorsMod2).cos)), Limiter.ar(999999*LeakDC.ar(SawDPW.ar(pink3, 0+(pi/2)) + SawDPW.ar(pink3 , pi+(pi/2))), 0.1)) ;
 
 	sig4 = 0.5 * Median.ar(
-		min(1, ~floatingPointErrorsPreset[\med4] + Ndef.kr(\mod2).cos),
-		Limiter.ar(99999999*LeakDC.ar((SinOsc.ar(0.005, 0) + SinOsc.ar(0.005 * Ndef.kr(\mod1), pi)), 0.05))
+		min(1, ~floatingPointErrorsPreset[\med4] + Ndef.kr(\floatingPointErrorsMod2).cos),
+		Limiter.ar(99999999*LeakDC.ar((SinOsc.ar(0.005, 0) + SinOsc.ar(0.005 * Ndef.kr(\floatingPointErrorsMod1), pi)), 0.05))
 	) ! 2;
 
 	sig5 = 0.5 * SVF.ar((
 		Median.ar(
 			// max(1, ~floatingPointErrorsPreset[\med5] + Ndef.kr(\mod1)),
-			max(1, ~floatingPointErrorsPreset[\med5] + Ndef.kr(\mod1)),
-			Limiter.ar(999999*LeakDC.ar(LFPulse.ar(0.5, 0) + LFPulse.ar(0.5 * Ndef.kr(\mod2).cos, pi)), 0.6)
+			max(1, ~floatingPointErrorsPreset[\med5] + Ndef.kr(\floatingPointErrorsMod1)),
+			Limiter.ar(999999*LeakDC.ar(LFPulse.ar(0.5, 0) + LFPulse.ar(0.5 * Ndef.kr(\floatingPointErrorsMod2).cos, pi)), 0.6)
 		)
 	), 800) ! 2;
 
@@ -141,9 +141,9 @@ Ndef(\floatingPointErrors, {
 });
 )
 
-Ndef(\floatingPointErrors).play(2);
+Ndef(\floatingPointErrors).play(0);
 
-Ndef(\floatingPointErrors).release(7);
+Ndef(\floatingPointErrors).release(1);
 
 Ndef(\floatingPointErrors).clear;
 

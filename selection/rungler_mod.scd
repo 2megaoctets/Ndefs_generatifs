@@ -3,7 +3,7 @@
 Ndef(\rungler).fadeTime_(28);
 
 (
-Ndef(\mod1).fadeTime_(12);
+Ndef(\runglerMod1).fadeTime_(12);
 )
 
 (~mod1Preset = (freq: 0.1, freqTo: 10.5, freqSlope: 0.01, iphase: 0.0, iphaseTo: 0.5, iphaseSlope: 0.01, width: 0.33, widthTo: 0.85, widthSlope: 0.01, mul: 0.85, mulTo: 0.85, mulSlope: 0.01);)
@@ -13,7 +13,7 @@ Ndef(\mod1).fadeTime_(12);
 (~mod1Preset = (freq: rrand(0.2, 3), freqTo: rrand(0.2, 30), freqSlope: rrand(0.01, 0.1), iphase: rrand(0.0, 1), iphaseTo: rrand(0.0, 1), iphaseSlope: rrand(0.01, 0.1), width: rrand(0.85, 1), widthTo: rrand(0.85, 1), widthSlope: rrand(0.01, 0.1), mul: rrand(0.85, 1), mulTo: rrand(0.85, 1), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod1, {
+Ndef(\runglerMod1, {
 	LFPulse.kr(
 		freq: Phasor.kr(0.0, ~mod1Preset[\freqSlope], ~mod1Preset[\freq], ~mod1Preset[\freqTo], ~mod1Preset[\freqTo]) * Ndef.kr(\mod3) * 0.5 + 0.5,
 		iphase: Phasor.kr(0.0, ~mod1Preset[\iphaseSlope], ~mod1Preset[\iphase], ~mod1Preset[\iphaseTo], ~mod1Preset[\iphaseTo]) * Pulse.kr(Ndef.kr(\mod2).cos), // 0..1
@@ -24,7 +24,7 @@ Ndef(\mod1, {
 )
 
 (
-Ndef(\mod2).fadeTime_(12);
+Ndef(\runglerMod2).fadeTime_(12);
 )
 
 (~mod2Preset = (freq: 0.2175, freqTo: 20.175, freqSlope: 0.01, phase: 0.0, phaseTo: 0.0, phaseSlope: 0.01, mul: 1, mulTo: 1, mulSlope: 0.01);)
@@ -36,7 +36,7 @@ Ndef(\mod2).fadeTime_(12);
 (~mod2Preset = (freq: rrand(0.1, 3), freqTo: rrand(0.1, 2000), freqSlope: rrand(0.01, 20.1), phase: rrand(0, pi), phaseTo: rrand(0, pi), phaseSlope: rrand(0.01, 0.1), mul: rrand(0.85, 0.95), mulTo: rrand(0.85, 0.95), mulSlope: rrand(0.01, 0.1));)
 
 (
-Ndef(\mod2, {
+Ndef(\runglerMod2, {
 	SinOsc.kr(
 		freq: Phasor.kr(0.0, ~mod2Preset[\freqSlope], ~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqTo]) +  (Ndef(\mod1) * 0.25 + 0.75),
 		phase: Phasor.kr(0.0, ~mod2Preset[\phaseSlope], ~mod2Preset[\phase], ~mod2Preset[\phaseTo], ~mod2Preset[\phaseTo]).mod(pi), // radians, 0..8pi
@@ -46,7 +46,7 @@ Ndef(\mod2, {
 )
 
 (
-Ndef(\mod3).fadeTime_(12);
+Ndef(\runglerMod3).fadeTime_(12);
 )
 
 (~mod3Preset = (carfreq: 0.1, carfreqTo: 10.6, carfreqSlope: 0.05, modfreq: 0.12, modfreqTo: 6.3, modfreqSlope: 0.15, pmindex: 0.6, pmindexTo: 1.2, pmindexSlope: 0.01, modphase: 0.01, modphaseTo: 0.0, modphaseSlope: 0.01,  mul: 0.95, mulTo: 0.99, mulSlope: 0.01);)
@@ -58,7 +58,7 @@ Ndef(\mod3).fadeTime_(12);
 )
 
 (
-Ndef(\mod3, {
+Ndef(\runglerMod3, {
 	PMOsc.kr(
 		Phasor.kr(0.0, ~mod3Preset[\carfreqSlope], ~mod3Preset[\carfreq], ~mod3Preset[\carfreqTo], ~mod3Preset[\carfreqTo]) + Ndef.kr(\mod1).cos * 0.5,
 		Phasor.kr(0.0, ~mod3Preset[\modfreqSlope], ~mod3Preset[\modfreq], ~mod3Preset[\modfreqTo], ~mod3Preset[\modfreqTo]),
@@ -104,9 +104,9 @@ Ndef(\rungler, {
 
     lfo = {
         var trigger;
-		trigger = Dust.ar(~runglerPreset[\lfoTrigRate] * Ndef.kr(\mod1).pow(2));
+		trigger = Dust.ar(~runglerPreset[\lfoTrigRate] * Ndef.kr(\runglerMod1).pow(2));
         Select.ar(ToggleFF.ar(trigger), [
-			LFNoise2.ar(TExpRand.ar(0.5 * Ndef.kr(\mod2).pow(2), 10 * Ndef.kr(\mod1).pow(2), trigger)),
+			LFNoise2.ar(TExpRand.ar(0.5 * Ndef.kr(\runglerMod2).pow(2), 10 * Ndef.kr(\runglerMod1).pow(2), trigger)),
             TRand.ar(-1, 1, trigger),
         ]);
     };
@@ -124,7 +124,7 @@ Ndef(\rungler, {
         numBits = 8;
         bits = [];
         numBits.do {
-			bit = Latch.ar(bit, clockSignal * Pulse.kr(Ndef.kr(\mod3)).linlin(-1, 1, 0.75, 1));
+			bit = Latch.ar(bit, clockSignal * Pulse.kr(Ndef.kr(\runglerMod3)).linlin(-1, 1, 0.75, 1));
             bits = bits.add(bit);
             bit = Delay1.ar(bit);
         };
@@ -139,7 +139,7 @@ Ndef(\rungler, {
 	snd = LFTri.ar(({ lfo.() } ! 2).linexp(-1, 1, [10, 1], 8000) * (snd * ~runglerPreset[\tu]).midiratio);
     LocalOut.ar(LeakDC.ar(Sanitize.ar(snd)));
     snd = (snd[0] > snd[1]) - 0.5;
-	snd = MoogFF.ar(snd, ({ lfo.() } ! 2).linexp(-1, 1, 100, 8000) * (runglerOut[\out] * (~runglerPreset[\ffreq] ** Ndef.kr(\mod3).linlin(-1, 1, 0.5, 1))).midiratio, 3);
+	snd = MoogFF.ar(snd, ({ lfo.() } ! 2).linexp(-1, 1, 100, 8000) * (runglerOut[\out] * (~runglerPreset[\ffreq] ** Ndef.kr(\runglerMod3).linlin(-1, 1, 0.5, 1))).midiratio, 3);
 	snd = Splay.ar(snd, ~runglerPreset[\spread]);
     snd = snd * globalEnv * -10.dbamp;
 	// OffsetOut.ar(out, snd * amp);

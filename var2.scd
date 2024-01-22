@@ -1,6 +1,6 @@
 todo: suites Array.fib à refaire
 
-(Ndef(\mod1).fadeTime_(9);)
+(Ndef(\var2Mod1).fadeTime_(9);)
 
 (
 ~mod1Preset = (carfreq: 0.5, carfreqTo: 1.5, carfreqSlope: 0.1, modfreq: 5.5, modfreqTo: 0.1, modfreqSlope: 0.1, pmindex: 5, pmindexTo: 0.25, pmindexSlope: 0.1, modphase: 0.0, modphaseTo: 0.5, modphaseSlope: 0.01, mul: 0.85, mulTo: 0.6, mulSlope: 0.05);
@@ -18,7 +18,7 @@ todo: suites Array.fib à refaire
 (~mod1Preset = (carfreq: rrand(0.05, 410), carfreqTo: rrand(0.2, 820.60), carfreqSlope: rrand(0.015, 20.100), modfreq: rrand(0.5, 20.00), modfreqTo: rrand(0.5, 20.0), modfreqSlope: rrand(0.015, 3.1), pmindex: rrand(0.5, 3), pmindexTo: rrand(0.5, 3), pmindexSlope: rrand(0.01, 0.1), modphase: rrand(0.0, pi), modphaseTo: rrand(0.0, pi), modphaseSlope: rrand(0.01, 0.1), mul: rrand(0.5, 0.95), mulTo: rrand(0.5, 0.95), mulSlope:rrand(0.01, 0.1));)
 
 (
-Ndef(\mod1, {
+Ndef(\var2Mod1, {
 	PMOsc.kr(
 		carfreq: Phasor.kr(0.0, ~mod1Preset[\carfreqSlope], ~mod1Preset[\carfreq], ~mod1Preset[\carfreqTo], ~mod1Preset[\carfreqTo]) ,
 		modfreq: Phasor.kr(0.0, ~mod1Preset[\modfreqSlope], ~mod1Preset[\modfreq], ~mod1Preset[\modfreqTo], ~mod1Preset[\modfreqTo]) * Ndef.kr(\mod3).linexp(-1,1,0.01,2).sum, // cps
@@ -29,7 +29,7 @@ Ndef(\mod1, {
 });
 )
 
-(Ndef(\mod2).fadeTime_(12);)
+(Ndef(\var2Mod2).fadeTime_(12);)
 
 (
 ~mod2Preset = (freq: 0.5, freqTo: 0.2, freqSlope: 0.05, feedback: 0.1, feedbackTo: pi, feedbackSlope: 0.02, mul: 1, mulTo: 0.5, mulSlope: 0.05);
@@ -55,7 +55,7 @@ Ndef(\mod1, {
 ~mod2Preset = (freq: rrand(10.02, 800.5), freqTo: rrand(20.2, 912.00), freqSlope: rrand(0.01, 90.1), feedback: rrand(0.0, 0.5), feedbackTo: rrand(0.0, 0.95), feedbackSlope: rrand(0.01, 0.1), mul: rrand(0.65, 0.85), mulTo: rrand(0.65, 0.85), mulSlope: rrand(0.01, 0.1));
 )
 
-(Ndef(\mod2, {
+(Ndef(\var2Mod2, {
 	SinOscFB.kr(
 		freq: Phasor.kr(0.0, ~mod2Preset[\freqSlope], ~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqTo]) * (Ndef.kr(\mod3).linexp(-1,1,0.25,1)),
 		feedback: Phasor.kr(0.0, ~mod2Preset[\feedbackSlope], ~mod2Preset[\feedback], ~mod2Preset[\feedbackTo], ~mod2Preset[\feedbackTo]) * SinOsc.kr(Ndef.kr(\mod1)).linexp(-1,1,0.01,0.6),
@@ -64,7 +64,7 @@ Ndef(\mod1, {
 });)
 
 (
-Ndef(\mod3).fadeTime_(12);
+Ndef(\var2Mod3).fadeTime_(12);
 )
 
 (~mod3Preset = (carfreq: 0.1, carfreqTo: 10.6, carfreqSlope: 0.05, modfreq: 0.12, modfreqTo: 6.3, modfreqSlope: 0.15, pmindex: 0.6, pmindexTo: 1.2, pmindexSlope: 0.01, modphase: 0.01, modphaseTo: 0.0, modphaseSlope: 0.01,  mul: 0.95, mulTo: 0.99, mulSlope: 0.01);)
@@ -76,7 +76,7 @@ Ndef(\mod3).fadeTime_(12);
 )
 
 (
-Ndef(\mod3, {
+Ndef(\var2Mod3, {
 	PMOsc.kr(
 		Phasor.kr(0.0, ~mod3Preset[\carfreqSlope], ~mod3Preset[\carfreq], ~mod3Preset[\carfreqTo], ~mod3Preset[\carfreqTo]) + Ndef.kr(\mod1).cos * 0.5,
 		Phasor.kr(0.0, ~mod3Preset[\modfreqSlope], ~mod3Preset[\modfreq], ~mod3Preset[\modfreqTo], ~mod3Preset[\modfreqTo]),
@@ -111,12 +111,12 @@ Ndef(\variation2, {
 	sig = {
 		a = LFTri.ar(bohlen.choose/3);
 		~variation2Preset[\iter].do{
-			a = BAllPass.ar(a, PinkNoise.kr(/*11*/Ndef.kr(\mod1).linexp(-1,1,0.2,[3.1,31,3100].choose).sum, 30 *
+			a = BAllPass.ar(a, PinkNoise.kr(/*11*/Ndef.kr(\var2Mod1).linexp(-1,1,0.2,[3.1,31,3100].choose).sum, 30 *
 				~variation2Preset[\bohlen2].choose),0.01);
-			a = BAllPass.ar(a, PinkNoise.kr(/*23*/ Ndef.kr(\mod2).linexp(-1,1,2.1,[2.3,23,230].choose).sum , 270 * ~variation2Preset[\bohlen3].choose *
+			a = BAllPass.ar(a, PinkNoise.kr(/*23*/ Ndef.kr(\var2Mod2).linexp(-1,1,2.1,[2.3,23,230].choose).sum , 270 * ~variation2Preset[\bohlen3].choose *
 				bohlen.choose), 0.003);
 			a = ((a * LFNoise0.ar(bohlen.choose/7, 7, 3)) +
-				WhiteNoise.ar(Lag.ar(Dust2.ar(LFNoise1.kr(Ndef.kr(\mod1).linexp(-1,1,0.2,[0.8,0.6,1]).sum,25,3), 1,
+				WhiteNoise.ar(Lag.ar(Dust2.ar(LFNoise1.kr(Ndef.kr(\var2Mod1).linexp(-1,1,0.2,[0.8,0.6,1]).sum,25,3), 1,
 					PinkNoise.kr(0.001)), 0.02), 0)).tanh;
 			a = LPF.ar(LeakDC.ar(a, 0.996), 10000)
 		};

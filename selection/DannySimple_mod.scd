@@ -1,6 +1,6 @@
 // sept23 : ok + niveaux
 
-Ndef(\mod1).fadeTime_(12);
+Ndef(\dannySimpleMod1).fadeTime_(12);
 
 (
 ~mod1Preset = (freq: 1, freqTo: 0.1, freqSlope: 0.025, iphase: 0.0, iphaseTo: pi, iphaseSlope: 0.1325, width: 0.75, widthTo: 0.95, widthSlope: 0.045, mul: 0.5, mulTo: 0.95, mulSlope: 0.05);
@@ -15,7 +15,7 @@ Ndef(\mod1).fadeTime_(12);
 )
 
 (
-Ndef(\mod1, {
+Ndef(\dannySimpleMod1, {
 	LFPulse.kr(
 		freq: Phasor.kr(start: ~mod1Preset[\freq], end: ~mod1Preset[\freqTo], rate: ~mod1Preset[\freqSlope], resetPos: ~mod1Preset[\freqTo]),
 		iphase: Phasor.kr(start: ~mod1Preset[\iphase], end: ~mod1Preset[\iphaseTo], rate: ~mod1Preset[\iphaseSlope], resetPos: ~mod1Preset[\iphaseTo]),
@@ -26,7 +26,7 @@ Ndef(\mod1, {
 )
 
 
-Ndef(\mod2).fadeTime_(12);
+Ndef(\dannySimpleMod2).fadeTime_(12);
 
 (
 ~mod2Preset = (freq: 1.5, freqTo: 1.25, freqSlope: 0.05, feedback: 0.0, feedbackTo: pi, feedbackSlope: 0.06, mul: 0.47, mulTo: 0.75, mulSlope: 0.07);
@@ -37,7 +37,7 @@ Ndef(\mod2).fadeTime_(12);
 )
 
 (
-Ndef(\mod2, {
+Ndef(\dannySimpleMod2, {
 	SinOscFB.kr(
 		freq: Phasor.kr(~mod2Preset[\freq], ~mod2Preset[\freqTo], ~mod2Preset[\freqSlope]),
 		feedback: Phasor.kr(~mod2Preset[\feedback], ~mod2Preset[\feedbackTo], ~mod2Preset[\feedbackSlope]),
@@ -84,11 +84,11 @@ Ndef(\dannySimple, {
 	thr = 0.03;
 	env = EnvGen.kr(Env.asr(~dannySimplePreset[\atk], 1, ~dannySimplePreset[\rls]), timeScale: ~dannySimplePreset[\sustain]);
 
-	frq1 = (Ndef.kr(\mod1) * 0.5 + 0.5) * ~dannySimplePreset[\freq1] ;
-	frq2 = ~dannySimplePreset[\freq2] * (Ndef.kr(\mod2) + (Ndef.kr(\mod1))).cos;
+	frq1 = (Ndef.kr(\dannySimpleMod1) * 0.5 + 0.5) * ~dannySimplePreset[\freq1] ;
+	frq2 = ~dannySimplePreset[\freq2] * (Ndef.kr(\dannySimpleMod2) + (Ndef.kr(\dannySimpleMod1))).cos;
 
-	sig1 = SinOsc.ar(Ndef.kr(\mod1) * frq1 + ~dannySimplePreset[\add1] / ~dannySimplePreset[\div1]).range(~dannySimplePreset[\rng1Lo], ~dannySimplePreset[\rng1Hi]);
-	sig2 = SinOsc.ar(Ndef.kr(\mod2) * frq2 + ~dannySimplePreset[\add2] / ~dannySimplePreset[\div2]).range(~dannySimplePreset[\rng2Lo], ~dannySimplePreset[\rng2Hi]);
+	sig1 = SinOsc.ar(Ndef.kr(\dannySimpleMod1) * frq1 + ~dannySimplePreset[\add1] / ~dannySimplePreset[\div1]).range(~dannySimplePreset[\rng1Lo], ~dannySimplePreset[\rng1Hi]);
+	sig2 = SinOsc.ar(Ndef.kr(\dannySimpleMod2) * frq2 + ~dannySimplePreset[\add2] / ~dannySimplePreset[\div2]).range(~dannySimplePreset[\rng2Lo], ~dannySimplePreset[\rng2Hi]);
 
 	sig = gcd(sig1.product.round(1), sig2.round(1));
 	sig = Limiter.ar(LeakDC.ar(Splay.ar(sig)), thr).clip2(thr);

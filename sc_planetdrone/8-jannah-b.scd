@@ -15,48 +15,60 @@ mix, room, damp, amp
 }).add;*/
 
 Ndef(\jb,{
-	var sig;
+	var sig, mix1, mix2, mix3, mix4;
+	mix1 = Pulse.ar(
+		freq: ~jbPreset[\hz] + 50 + (~jbPreset[\planetDrone_1a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) + (SinOsc.ar(0.075) * (~jbPreset[\planetDrone_effect_3] * 8)),
+		width:  SinOsc.ar(0.005 * (~jbPreset[\planetDrone_1b] * 200)) + 0.25,
+		mul: 1.7,
+	);
+	mix1 = BRF.ar(
+		mix1,
+		2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.15) * 1100),
+		0.5);
+	mix1 = Pan2.ar(
+			mix1,
+			SinOsc.ar(0.015) - 0.5);
+ 	mix2 = Pulse.ar(
+		freq: ~jbPreset[\hz] + 123 + (~jbPreset[\planetDrone_2a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) - (SinOsc.ar(0.05) * (~jbPreset[\planetDrone_effect_3] * 8)),
+		width: SinOsc.ar(0.012 * (~jbPreset[\planetDrone_2b] * 100)) + 0.25,
+		mul: 1.8,
+	);
+	mix2 = BRF.ar(
+		mix2,
+		2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.08) * 1100),
+		0.5);
+	mix2 = Pan2.ar(
+			mix2,
+			SinOsc.ar(0.055));
+	mix3 = Pulse.ar(
+		freq: ~jbPreset[\hz] - 27 + (~jbPreset[\planetDrone_3a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) + (SinOsc.ar(0.075) * (~jbPreset[\planetDrone_effect_3] * 8)),
+		width: SinOsc.ar(0.0005 * (~jbPreset[\planetDrone_3b] * 500)) + 0.25,
+		mul: 1.9,
+	);
+	mix3 = BRF.ar(
+		mix3,
+		2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.02) * 1100),
+		0.5);
+	mix3 = Pan2.ar(
+			mix3 ,
+			SinOsc.ar(0.15)-0.5);
+	mix4 = Pulse.ar(
+		freq: ~jbPreset[\hz] - 13 + (~jbPreset[\planetDrone_4a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) - (SinOsc.ar(0.05) * (~jbPreset[\planetDrone_effect_3] * 8)),
+		width: SinOsc.ar(0.0005 * (~jbPreset[\planetDrone_4b] * 50)) + 0.25,
+		mul: 2.0,
+	);
+	mix4 = BRF.ar(
+		mix4,
+		2000 + (~jbPreset[\planetDrone_effect_1] * 200) -(SinOsc.ar(0.005) * 1100), 0.5);
+	mix4 = Pan2.ar(
+			mix4 ,
+			SinOsc.ar(0.005));
 
 	sig = Mix.ar([
-		Pan2.ar( BRF.ar( Pulse.ar(
-			freq: ~jbPreset[\hz] + 50 + (~jbPreset[\planetDrone_1a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) + (SinOsc.ar(0.075) * (~jbPreset[\planetDrone_effect_3] * 8)),
-			width: SinOsc.ar(0.005 * (~jbPreset[\planetDrone_1b] * 200)) + 0.25,
-			mul: 1.7,
-		),
-		2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.15) * 1100), 0.5, 1.0, 0.0),
-		SinOsc.ar(0.015) - 0.5),
-
-		Pan2.ar(
-			BRF.ar(
-				Pulse.ar(
-					freq: ~jbPreset[\hz] + 123 + (~jbPreset[\planetDrone_2a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) - (SinOsc.ar(0.05) * (~jbPreset[\planetDrone_effect_3] * 8)),
-					width: SinOsc.ar(0.012 * (~jbPreset[\planetDrone_2b] * 100)) + 0.25,
-					mul: 1.8,
-				),
-				2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.08) * 1100), 0.5, 1.0, 0.0
-			),
-			SinOsc.ar(0.055)),
-
-		Pan2.ar(
-			BRF.ar(
-				Pulse.ar(
-					freq: ~jbPreset[\hz] - 27 + (~jbPreset[\planetDrone_3a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) + (SinOsc.ar(0.075) * (~jbPreset[\planetDrone_effect_3] * 8)),
-					width: SinOsc.ar(0.0005 * (~jbPreset[\planetDrone_3b] * 500)) + 0.25,
-					mul: 1.9,
-				),
-				2000 + (~jbPreset[\planetDrone_effect_1] * 200) - (SinOsc.ar(0.02) * 1100), 0.5, 1.0, 0.0
-			) ,
-			SinOsc.ar(0.15)-0.5),
-
-		Pan2.ar(
-			BRF.ar(
-				Pulse.ar(
-					freq: ~jbPreset[\hz] - 13 + (~jbPreset[\planetDrone_4a] * 450) + (~jbPreset[\planetDrone_effect_2] * 350) - (SinOsc.ar(0.05) * (~jbPreset[\planetDrone_effect_3] * 8)),
-					width: SinOsc.ar(0.0005 * (~jbPreset[\planetDrone_4b] * 50)) + 0.25,
-					mul: 2.0,
-				),
-				2000 + (~jbPreset[\planetDrone_effect_1] * 200) -(SinOsc.ar(0.005) * 1100), 0.5, 1.0, 0.0) ,
-			SinOsc.ar(0.005))
+		mix1,
+		mix2,
+		mix3,
+		mix4
 	]);
 
 	// spread the signal

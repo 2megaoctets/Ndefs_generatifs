@@ -1,14 +1,18 @@
+Ndef(\jii).fadeTime_(3);
 
 (
 ~jiiPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
 )
 
 (
+~jiiPreset = (planetDrone_1a: rrand(0.01, 0.99), planetDrone_2a: rrand(0.1, 0.95), planetDrone_3a: rrand(0.1, 1), planetDrone_4a: rrand(0.1, 0.9), planetDrone_1b: rrand(0.1, 1), planetDrone_2b: rrand(0.1, 0.95), planetDrone_3b: rrand(0.1, 0.92), planetDrone_4b: rrand(0.1, 0.9),  planetDrone_effect_1: rrand(0.1, 0.93), planetDrone_effect_2: rrand(0.1, 0.925), planetDrone_effect_3: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.1);
+)
+
+(
 Ndef(\jii, {
 
 	var seed = thisThread.randSeed = 100000000.rand.debug('seed'),
-	gamma= {[rrand(30, 50), rrand(50, 70),
-		rrand(50, 70), rrand(70, 100)].choose.midicps*LFNoise2.kr(1, 0.01, 1)}!24,
+	gamma= {[rrand(30, 50), rrand(50, 70), rrand(50, 70), rrand(70, 100)].choose.midicps*LFNoise2.kr(1, 0.01, 1)}!24,
 	pd_1a = ~jiiPreset[\planetDrone_1a] * 10, pd_2a = ~jiiPreset[\planetDrone_2a] * 0.5, pd_3a = ~jiiPreset[\planetDrone_3a] * 0.5, pd_4a = ~jiiPreset[\planetDrone_4a] * 0.25, sig;
 
 	sig = FreqShift.ar(

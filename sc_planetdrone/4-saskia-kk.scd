@@ -20,7 +20,7 @@ Ndef(\skk, {
 		GVerb.ar([Impulse.kr(rrand(0.5,3) + (~skkPreset[\planetDrone_4a] * rrand(60,90))) + Impulse.kr(rrand(1.0,6) + ~skkPreset[\planetDrone_3a] * (~skkPreset[\planetDrone_4a] * rrand(1.0,10)), 0.5)].lag * Blip.ar(5.9 + (~skkPreset[\planetDrone_3a] * rrand(30.0, 50)), 7, 0.4)!2, 1, 1) * 5);
 
 	sig = GVerb.ar(
-		Splay.ar(sig, 1),
+		Mix.ar(sig), 1,
 		roomsize: 26, // 2, foutre un dseq dessus
 		revtime: rrand(0.55, 0.8) + (~skkPreset[\planetDrone_effect_1] * rrand(0.15, 0.4)),
 		damping: 0.165,
@@ -34,7 +34,7 @@ Ndef(\skk, {
 		add: 0);
 	sig = HPF.ar(sig, 300);
 	sig = Mix.ar(sig) * ~skkPreset[\amp] * 0.1;
-	sig = Limiter.ar(sig, 0.35);
+	sig = Limiter.ar(Mix.ar(sig), 0.35);
 
 });
 )

@@ -1,3 +1,5 @@
+// on le garde, à bosser
+
 Ndef(\skk).fadeTime_(3);
 
 (
@@ -17,24 +19,27 @@ Ndef(\skk, {
 	var sig;
 	sig = tanh(Impulse.kr(rrand(6.0,12) + (~skkPreset[\planetDrone_1a] * rrand(6.0,12))).lag * Crackle.ar(LFSaw.kr(rrand(3.0, 7) + (~skkPreset[\planetDrone_2a] * rrand(10.0, 20))).abs.lag * 1.8)
 		+
-		GVerb.ar([Impulse.kr(rrand(0.5,3) + (~skkPreset[\planetDrone_4a] * rrand(60,90))) + Impulse.kr(rrand(1.0,6) + ~skkPreset[\planetDrone_3a] * (~skkPreset[\planetDrone_4a] * rrand(1.0,10)), 0.5)].lag * Blip.ar(5.9 + (~skkPreset[\planetDrone_3a] * rrand(30.0, 50)), 7, 0.4)!2, 1, 1) * 5);
+		GVerb.ar([
+			Impulse.kr(rrand(0.5,3) + (~skkPreset[\planetDrone_4a] * rrand(60,90))) + Impulse.kr(rrand(1.0,6) + ~skkPreset[\planetDrone_3a] * (~skkPreset[\planetDrone_4a] * rrand(1.0,10)), 0.5)
+	].lag * Blip.ar(5.9 + (~skkPreset[\planetDrone_3a] * rrand(30.0, 50)), 7, 0.4)!2, 1, 1) * 5);
 
 	sig = GVerb.ar(
-		Mix.ar(sig), 1,
+		Mix.ar(sig),
 		roomsize: 26, // 2, foutre un dseq dessus
-		revtime: rrand(0.55, 0.8) + (~skkPreset[\planetDrone_effect_1] * rrand(0.15, 0.4)),
+		/*revtime: rrand(0.55, 0.8) + (~skkPreset[\planetDrone_effect_1] * rrand(0.15, 0.4)),
 		damping: 0.165,
 		inputbw: 0.46,
 		spread:  17, // 25,
 		drylevel: -6 + (~skkPreset[\planetDrone_effect_2] * rrand(30, 70)),
 		earlyreflevel: -10.47 + (~skkPreset[\planetDrone_effect_3] * rrand(50,80)),
 		taillevel: -10.076,
-		maxroomsize: 100,
+		maxroomsize: 100,*/
 		mul: 0.25, // .0,
-		add: 0);
+		add: 0
+	);
 	sig = HPF.ar(sig, 300);
-	sig = Mix.ar(sig) * ~skkPreset[\amp] * 0.1;
-	sig = Limiter.ar(Mix.ar(sig), 0.35);
+	sig = Mix.ar(Mix.ar(sig)) * ~skkPreset[\amp] * 0.4;
+	sig = Limiter.ar(sig, 0.35);
 
 });
 )

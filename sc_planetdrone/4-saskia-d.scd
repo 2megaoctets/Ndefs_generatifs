@@ -1,3 +1,5 @@
+// fabien l'a fait, rebircoler
+
 Ndef(\sd).fadeTime_(3);
 
 (
@@ -13,7 +15,9 @@ Ndef(\sd).fadeTime_(3);
 Ndef(\sd, {
 
 	var sig, n = rrand(3,99);
+
 	sig = EnvGen.ar(Env({0.65.rand2 ** 3}!n, {exprand((1 + ~sdPreset[\planetDrone_3a]) * 1e-4, 4 - (~sdPreset[\planetDrone_1a] * 4) )} ! (n - 1), 0.05, n - 2, 0.0));
+
 	sig = ({
 		sig * Blip.ar((1 + (~sdPreset[\planetDrone_4a] * 0.75)) * 9e2.rand2,(1 + (~sdPreset[\planetDrone_2a] * 250)) * sig * 9 % [9,7])
 	}!4).mean;

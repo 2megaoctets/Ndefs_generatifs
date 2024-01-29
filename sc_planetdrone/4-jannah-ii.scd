@@ -1,7 +1,51 @@
 // freqShifter et pan2 décalés
 // passer BPeakEQ dans les args? Arrays de 4 freq, 4 rq, 4 db
 
-Ndef(\jii).fadeTime_(3);
+(
+~modJiiPreset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: , widthSlope: , widthStart: , widthEnd: );
+)
+
+(
+~modJiiPreset = (freqSlope: 0.15, freqStart: rrand(0.2, 10), freqEnd: rrand(0.5, 20), iphaseSlope: 0.051, iphaseStart: rrand(0.0,0.5), iphaseEnd: rrand(0.0,1), widthSlope: 0.05, widthStart: rrand(0.25, 0.85), widthEnd: rrand(0.35, 0.75));
+)
+
+
+(
+Ndef(\modJii, {
+	SinOsc.kr(
+		LFPulse.kr(
+			Phasor.kr(0.0, ~modJiiPreset[\freqSlope], ~modJiiPreset[\freqStart], ~modJiiPreset[\freqEnd]),
+			Phasor.kr(0.0, ~modJiiPreset[\iphaseSlope], ~modJiiPreset[\iphaseStart], ~modJiiPreset[\iphaseEnd]),
+			Phasor.kr(0.0, ~modJiiPreset[\widthSlope], ~modJiiPreset[\widthStart], ~modJiiPreset[\widthEnd])
+		)
+	).scope
+});
+)
+
+Ndef(\modJii2).fadeTime_(3);
+
+(
+(~modJii2Preset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: ));
+)
+
+(
+(~modJii2Preset = (freqSlope: 0.15, freqStart: rrand(0.2, 10), freqEnd: rrand(0.5, 20), iphaseSlope: 0.051, iphaseStart: rrand(0.0,pi/2), iphaseEnd: rrand(0.0,pi/2)));
+)
+
+
+(
+Ndef(\modJii2, {
+	LFCub.kr(
+		Phasor.kr(0.0, ~modJii2Preset[\freqSlope], ~modJii2Preset[\freqStart], ~modJii2Preset[\freqEnd]),
+		Phasor.kr(0.0, ~modJii2Preset[\iphaseSlope], ~modJii2Preset[\iphaseStart], ~modJii2Preset[\iphaseEnd])
+	).scope
+});
+)
+
+Ndef(\modJii).release;
+
+
+Ndef(\jii).fadeTime_(7);
 
 (
 ~jiiPreset = (verbMod: 0.13, select1: 0.145, select2: 0.2, panMod: 0.1, verbMix: 0.3, verbRoom: 0.25, fshift: 0.0625, amp: 0.1);
@@ -15,7 +59,7 @@ Ndef(\jii).fadeTime_(3);
 Ndef(\jii, {
 
 	var seed = thisThread.randSeed = 100000000.rand.debug('seed'),
-	gamma= {[rrand(30, 50), rrand(50, 70), rrand(50, 70), rrand(70, 100)].choose.midicps*LFNoise2.kr(1, 0.01, 1)}!24,
+	gamma= {[rrand(30, 50), rrand(50, 70), rrand(50, 70), rrand(70, 100)].choose.midicps * LFNoise2.kr(1, 0.01, 1)} ! 24,
 	pd_1a = ~jiiPreset[\verbMod],
 	pd_2a = ~jiiPreset[\select1] * 0.5,
 	pd_3a = ~jiiPreset[\select2] * 0.5,
@@ -38,7 +82,7 @@ Ndef(\jii, {
 
 	sig = RLPF.ar(
 		LFSaw.ar(gamma)/4,
-		gamma*LFCub.kr(rrand(0.01, 0.1), 0, 2, 3),
+		gamma * LFCub.kr(rrand(0.01, 0.1), 0, 2, 3),
 		LFNoise2.kr(1/8, 0.6, 0.7)
 	);
 
@@ -46,36 +90,39 @@ Ndef(\jii, {
 		sig,
 		0.12 + SinOsc.kr(pd_1a).linexp(-1,1,0.01,0.5),
 		0.32 ,
-		0.52
+		0.32 + Ndef.kr(\modJii).linexp(-1,1,0.01,0.28)
 	);
 
 	sig = BPeakEQ.ar(
 		sig,
-		[100.rrand(200), 1000.rrand(2000), 5000.rrand(7000), 10000.rrand(15000)].debug("BPeakEQ freq"),
-		Array.rand(4, 0, 6).debug("BPeakEQ rq"),
-		Array.rand(4, 0, 6).debug("BPeakEQ db")
+		[100.rrand(200), 1000.rrand(2000), 5000.rrand(7000), 7100.rrand(15000)].debug("BPeakEQ freq"),
+		Array.rand(4, 0.01, 4).debug("BPeakEQ rq"),
+		Array.rand(4, 0.1, 6).debug("BPeakEQ db")
 	).mean;
 
 	sig = LeakDC.ar(
 		Normalizer.ar(
 			sig,
-			0.8, 0.1
+			0.8,
+			0.1
 		)
 	);
 	sig = FreqShift.ar(
 		sig,
-		(0 + (~jiiPreset[\fshift] * 2)) / (1..17));
+		(0.01 + (~jiiPreset[\fshift] * Ndef.kr(\modJii2).abs)) / (1..17)
+	);
 
 	sig = Pan2.ar(
 		sig,
-		LFNoise2.kr(0.1.exprand(10)).range(-0.25, 0.25) + LFNoise1.kr(pd_4a)
+		LFNoise2.kr(0.1.exprand(10)).range(-0.25, 0.25) + (LFNoise1.kr(pd_4a)) //  * Ndef.kr(\modJii))
 	);
 
 	sig = FreeVerb.ar(
 		sig,
 		0.05 + ~jiiPreset[\verbMix],
 		0.25 + ~jiiPreset[\verbRoom],
-		1
+		0.5,
+		0.5 // 1
 	);
 
 	sig = Mix.ar(sig) * ~jiiPreset[\amp] * 0.5;

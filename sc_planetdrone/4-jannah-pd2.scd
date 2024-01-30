@@ -1,7 +1,7 @@
 Ndef(\jpd2).fadeTime_(3);
 
 (
-~jpd2Preset = (serie1: 0.13, serie2: 0.145, serie3: 0.2, serie4: 0.1,  verbmix: 0.3, panpos: 0.5, panmul: 0.625, amp: 0.33);
+~jpd2Preset = (serie1: 0.13, serie2: 0.145, serie3: 0.2, serie4: 0.1,  verbmix: 0.3, panpos: 0.5, panmul: 0.625, amp: 0.5);
 )
 
 
@@ -24,16 +24,16 @@ Ndef(\jpd2, {
 			snd =LPF.ar(LeakDC.ar(snd, 0.996), 10000 + (~jpd2Preset[\serie3] * 4500)  )};
 		snd = (snd / 2)}!8};
 	sig = FreeVerb.ar(sig, 0.15 + ~jpd2Preset[\verbmix], 1, 1);
-	sig = Splay.ar(sig, 1);
-	Pan2.ar(
+	sig = Mix.ar(sig);
+	sig = Pan2.ar(
 		sig,
 		pos:SinOsc.ar(
 			freq: 0.005 + (SinOsc.kr(abs(~jpd2Preset[\panpos] * 3), 0, 20, 50)),
 			phase: 0.125,
-			mul: (~jpd2Preset[\panmul] * 0.75),
+			mul: ~jpd2Preset[\panmul] * 0.75,
 			add: 0.15)
 	);
-	sig = sig * ~jpd2Preset[\amp] * 0.5;
+	sig = sig * ~jpd2Preset[\amp] * 0.55;
 	sig = Limiter.ar(sig, 0.5);
 	sig = HPF.ar(sig, SinOsc.kr(1, 0, 0.5, 80));
 

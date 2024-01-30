@@ -18,7 +18,7 @@ Ndef(\modJii, {
 			Phasor.kr(0.0, ~modJiiPreset[\iphaseSlope], ~modJiiPreset[\iphaseStart], ~modJiiPreset[\iphaseEnd]),
 			Phasor.kr(0.0, ~modJiiPreset[\widthSlope], ~modJiiPreset[\widthStart], ~modJiiPreset[\widthEnd])
 		)
-	).scope
+	)
 });
 )
 
@@ -38,7 +38,7 @@ Ndef(\modJii2, {
 	LFCub.kr(
 		Phasor.kr(0.0, ~modJii2Preset[\freqSlope], ~modJii2Preset[\freqStart], ~modJii2Preset[\freqEnd]),
 		Phasor.kr(0.0, ~modJii2Preset[\iphaseSlope], ~modJii2Preset[\iphaseStart], ~modJii2Preset[\iphaseEnd])
-	).scope
+	)
 });
 )
 

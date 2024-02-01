@@ -1,4 +1,5 @@
 // 0102 : bonnes valeurs, sans facteurs
+// ajout mod, pas convaincu pour l'instant
 // presets validés, voir si on rajoute des mods
 
 Ndef(\jbMod).fadeTime_(7);
@@ -46,6 +47,19 @@ Ndef(\jb).fadeTime_(3);
 ~jbPreset = ( 'freqPulse1': 330.41622698307, 'freqPulse3': 289.9096673727, 'freqPulse2': 61.709952950478, 'hz': 108.92707596302, 'planetDrone_effect_2': 88.718477487563, 'pulseWidth2': 0.83428972363472, 'pulseWidth3': 0.78778732061386, 'brf': 118.47548890114, 'amp': 0.35, 'pulseWidth4': 0.40330772399902, 'freqPulse4': 258.6726665505, 'pulseWidth1': 0.77961468696594, 'planetDrone_effect_3':  1.1721312880516)
 ) // controle fiscal de l'angoisse
 
+
+(
+~jbPreset = ( 'brf': 197.10433331013, 'hz': 266.90051404357, 'planetDrone_effect_2': 209.58455272913, 'freqPulse2': 279.60722652674,
+  'freqPulse1': 376.14806695223, 'amp': 0.35, 'planetDrone_effect_3': 4.2149395808578, 'pulseWidth2': 0.26936638355255, 'freqPulse3': 847.66782822609,
+  'pulseWidth3': 0.42332327365875, 'pulseWidth1': 0.55059802532196, 'freqPulse4': 920.66878509521, 'pulseWidth4': 0.26954197883606 );
+)
+
+(
+~jbPreset = ( 'brf': 127.36667049527, 'hz': 84.641014688015, 'planetDrone_effect_2': 56.868106368184, 'freqPulse2': 241.8301843524,
+  'freqPulse1': 320.41999649525, 'amp': 0.35, 'planetDrone_effect_3': 1.5654154035449, 'pulseWidth2': 0.31256300210953, 'freqPulse3': 584.63140890598,
+  'pulseWidth3': 0.30383098125458, 'pulseWidth1': 0.56578725576401, 'freqPulse4': 209.17822036743, 'pulseWidth4': 0.62760746479034 );
+)
+
 (
 ~jbPreset = (freqPulse1: rrand(50.0, 440.99), freqPulse2: rrand(50.1, 300.95), freqPulse3: rrand(50.1, 1000), freqPulse4: rrand(50.1, 990.9), pulseWidth1: rrand(0.25, 0.75), pulseWidth2: rrand(0.25, 0.75), pulseWidth3: rrand(0.25, 0.75), pulseWidth4: rrand(0.25, 0.75),  brf: rrand(40.1, 200.93), planetDrone_effect_2: rrand(50.1, 300.925), planetDrone_effect_3: rrand(0.51, 10.9625), hz: rrand(65.41, 300), amp: 0.35);
 )
@@ -53,10 +67,10 @@ Ndef(\jb).fadeTime_(3);
 
 (
 Ndef(\jb,{
-	var sig, mix1, mix2, mix3, mix4;
-	mix1 = Pulse.ar(
+	var sig, mix1, mix2, mix3, mix4, mix5;
+	mix1 = Impulse.ar(
 		freq: ~jbPreset[\hz] + 50 + ~jbPreset[\freqPulse1] + ~jbPreset[\planetDrone_effect_2] + (SinOsc.ar(0.075) * ~jbPreset[\planetDrone_effect_3]),
-		width:  SinOsc.ar(~jbPreset[\pulseWidth1]) + 0.25,
+		// width:  SinOsc.ar(~jbPreset[\pulseWidth1]) + 0.25,
 		mul: 1.7,
 	);
 	mix1 = BRF.ar(
@@ -108,23 +122,25 @@ Ndef(\jb,{
 		SinOsc.ar(0.005)
 	);
 
+	mix5 = LPF.ar(PinkNoise.ar(Ndef.ar(\jbMod)), SinOsc.kr(0.1, 0.0, 4000, 8800), 7.5, 0.0);
+
 	sig = Mix.ar([
 		mix1,
 		mix2,
 		mix3,
 		mix4,
-		Ndef.ar(\jbMod)
+		mix5
 	]);
 
 	// spread the signal
 
 	sig = DFM1.ar(
 		sig,
-		LFPar.kr(0.15, 0.0, 4000, 4400), // 6200,
-		LFTri.kr(0.25, 0.0, 0.5, 0.5)
+		LFPar.kr(0.15, 0.0, 800, 2400), // 6200,
+		LFTri.kr(0.25, 0.0, 0.15, 0.65)
 	);
 
-	sig = Greyhole.ar(sig, delayTime:0.25 + abs(~jbPreset[\brf]));
+	sig = Greyhole.ar(sig, delayTime:0.25 + abs(Ndef.kr(\jpMod, 1) * ~jbPreset[\brf]));
 
 	sig = Splay.ar(sig)* ~jbPreset[\amp] * 0.051;
 	sig = Limiter.ar(sig, 0.15);

@@ -90,7 +90,7 @@ Ndef(\jii, {
 		sig,
 		0.12 + SinOsc.kr(pd_1a).linexp(-1,1,0.01,0.5),
 		0.32 ,
-		0.32 + Ndef.kr(\modJii).linexp(-1,1,0.01,0.28)
+		0.32 + Ndef.kr(\modJii2).linexp(-1,1,0.01,0.28)
 	);
 
 	sig = BPeakEQ.ar(
@@ -114,14 +114,14 @@ Ndef(\jii, {
 
 	sig = Pan2.ar(
 		sig,
-		LFNoise2.kr(0.1.exprand(10)).range(-0.25, 0.25) + (LFNoise1.kr(pd_4a)) //  * Ndef.kr(\modJii))
+		LFNoise2.kr(0.1.exprand(10)).range(-0.25, 0.25) + (LFNoise1.kr(pd_4a) * Ndef.kr(\modJii))
 	);
 
 	sig = FreeVerb.ar(
 		sig,
-		0.05 + ~jiiPreset[\verbMix],
-		0.25 + ~jiiPreset[\verbRoom],
-		0.5,
+		~jiiPreset[\verbMix],
+		~jiiPreset[\verbRoom],
+		LFPar.kr(Ndef.kr(\modJii, 1), 0.0, 0.35, 0.5),
 		0.5 // 1
 	);
 

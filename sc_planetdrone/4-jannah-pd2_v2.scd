@@ -1,3 +1,5 @@
+// 0202: correc graphe
+
 Ndef(\jpd2Mod).fadeTime_(5);
 
 (
@@ -28,18 +30,18 @@ Ndef(\jpd2Mod, {
 )
 
 (
-~jpd2Mod2Preset = (syncFreqSlope: , syncFreqStart: , syncFreqEnd: , sawfreqSlope: , sawfreqStart: , sawFreqEnd: );
+~jpd2Mod2Preset = (syncFreqSlope: 0.5, syncFreqStart: 50, syncFreqEnd: 120, sawFreqSlope: 0.75, sawFreqStart: 175, sawFreqEnd: 150);
 )
 
 (
-~jpd2Mod2Preset = (syncFreqSlope: , syncFreqStart: , syncFreqEnd: , sawFreqSlope: , sawFreqStart: , sawFreqEnd: );
+~jpd2Mod2Preset = (syncFreqSlope: rrand(0.15,0.75), syncFreqStart: rrand(5.0,60), syncFreqEnd: rrand(5.0,60), sawFreqSlope: rrand(0.15,0.75), sawFreqStart: rrand(65.0,440), sawFreqEnd: rrand(65.0,440));
 )
 
 (
 Ndef(\jpd2Mod2, {
 	SyncSaw.kr(
 		Phasor.kr(0.0, ~jpd2Mod2Preset[\syncFreqSlope], ~jpd2Mod2Preset[\syncFreqStart], ~jpd2Mod2Preset[\syncFreqEnd]),
-		Phasor.kr(0.0, ~jpd2Mod2Preset[\sawFreqSlope], ~jpd2Mod2Preset[\sawFreqStart], ~jpd2Mod2Preset[\sawFreqEnd]),
+		Phasor.kr(0.0, ~jpd2Mod2Preset[\sawFreqSlope], ~jpd2Mod2Preset[\sawFreqStart], ~jpd2Mod2Preset[\sawFreqEnd])
 	)
 });
 )
@@ -52,7 +54,7 @@ Ndef(\jpd2).fadeTime_(7);
 
 
 (
-~jpd2Preset = (bohlen: Array.interpolation(rrand(10,15), rrand(0.99,1.01), rrand(2.99,3.01)), noiseMul1: Array.interpolation(rrand(4,7), 30.0, 83.333), noiseMul2: Array.interpolation(rrand(3, 5), 270, 2430), noiseMul3: Array.interpolation(rrand(3, 5), 360, 1080), serie1: rrand(0.1, 16.99), serie2: rrand(0.3, 280.95), serie3: rrand(1, 4500), serie4: rrand(1.0, 125), verbmix: rrand(0.1, 0.83), panmul: rrand(1.0, 2.0), panpos: rrand(0.1, 2.9625), amp: 0.5);
+~jpd2Preset = (bohlen: Array.interpolation(rrand(10,15), rrand(0.99,1.01), rrand(2.99,3.01)), noiseMul1: Array.interpolation(rrand(4,7), 30.0, 83.333), noiseMul2: Array.interpolation(rrand(3, 5), 270, 2430), noiseMul3: Array.interpolation(rrand(3, 5), 360, 1080), serie1: rrand(0.1, 16.99), serie2: rrand(0.3, 280.95), serie3: rrand(1, 4500), serie4: rrand(1.0, 125), verbmix: rrand(0.1, 0.83), panmul: rrand(0.05, 1), panpos: rrand(0.1, 2.9625), amp: 0.5);
 )
 
 
@@ -73,8 +75,13 @@ Ndef(\jpd2, {
 				WhiteNoise.ar(
 					Lag.ar(
 						Dust2.ar(
-							(Ndef.ar(\jpd2Mod2, 1) * LFNoise1.kr(1, 25, 3)),
-							1, PinkNoise.kr(0.001)), 0.02), 0)
+							LFNoise1.kr(1, 25, 3), //(Ndef.ar(\jpd2Mod2, 1) + LFNoise1.kr(1, 25, 3)),
+							1,
+							PinkNoise.kr(0.001)
+						), // Dust
+						0.02
+					), // Lag
+					0) // WhiteNoise
 			).tanh;
 			snd =LPF.ar(LeakDC.ar(snd, 0.996), 10000 + ~jpd2Preset[\serie3]   )
 		}; // fin 4.do
@@ -94,9 +101,9 @@ Ndef(\jpd2, {
 	sig = Pan2.ar(
 		sig,
 		SinOsc.ar(
-			freq: 0.005 + (SinOsc.kr(abs(~jpd2Preset[\panpos]), 0, 20 * Ndef.kr(\jpd2Mod, 1), 50)),
+			freq: 0.005 + (SinOsc.kr(abs(~jpd2Preset[\panpos]), 0, 20 * Ndef.kr(\jpd2Mod, 1), 40.5)),
 			phase: 0.125,
-			mul: LFPulse.kr(~jpd2Preset[\panmul] * 0.75, 0.0, Phasor.kr(0.0, 0.05, 0.25, 0.85), 0.75, 0.15).scope, // ~jpd2Preset[\panmul] * 0.75,
+			mul: LFPulse.kr(~jpd2Preset[\panmul], 0.0, Phasor.kr(0.0, 0.05, 0.25, 0.85), 0.75, 0.25), // ~jpd2Preset[\panmul] * 0.75,
 			add: 0.15)
 	);
 	sig = sig * ~jpd2Preset[\amp] * 0.55;

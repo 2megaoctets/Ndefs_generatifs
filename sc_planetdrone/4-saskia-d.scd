@@ -1,36 +1,87 @@
-// fabien l'a fait, rebircoler
+// fabien l'a fait
+// 0202 ajout HPF en amont de gverb, args nommés, ajout envs dans les args, moins d'opérations, edit gverb, ajout mod (?)
 
-Ndef(\sd).fadeTime_(3);
+Ndef(\sdMod).fadeTime_(7);
 
 (
-~sdPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~sdModPreset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: );
 )
 
 (
-~sdPreset = (planetDrone_1a: rrand(0.01, 0.99), planetDrone_2a: rrand(0.1, 0.95), planetDrone_3a: rrand(0.1, 1), planetDrone_4a: rrand(0.1, 0.9), planetDrone_1b: rrand(0.1, 1), planetDrone_2b: rrand(0.1, 0.95), planetDrone_3b: rrand(0.1, 0.92), planetDrone_4b: rrand(0.1, 0.9),  planetDrone_effect_1: rrand(0.1, 0.93), planetDrone_effect_2: rrand(0.1, 0.925), planetDrone_effect_3: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.1);
+~sdModPreset = (freqSlope: 0.025, freqStart: 1.0, freqEnd: 30, iphaseSlope: 0.05, iphaseStart: 0.01, iphaseEnd: 2.0);
+)
+
+(
+~sdModPreset = (freqSlope: rrand(0.025, 0.5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(0.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
+)
+
+(
+Ndef(\sdMod, {
+	LFCub.kr(
+		Phasor.kr(0.0, ~sdModPreset[\freqSlope], ~sdModPreset[\freqStart], ~sdModPreset[\freqEnd]),
+		Phasor.kr(0.0, ~sdModPreset[\iphaseSlope], ~sdModPreset[\iphaseStart], ~sdModPreset[\iphaseEnd])
+	)
+});
+)
+
+Ndef(\sd).fadeTime_(7);
+
+(
+~sdPreset = (random2: 0.4120153, random4: 37.25, random1: 0.00012, random3: 1.075,  dryLevel: -2.8, earlyRef: -2.2, tailLevel: 2.12265625, envs: 68, hpfLfo: 0.125, hpfFreq: 975, amp: 0.3);
+)
+
+(
+~sdPreset = ( 'random4': 166.71161150932, 'random3': 1.8330188798904, 'hz': 234.63791787148, 'dryLevel': -2.25,   'earlyRef': 0.2449935555458, 'amp': 0.3, 'tailLevel': 1.8750575162, 'random2': 0.6004249215126, envs: 43, hpfLfo: 0.0625, hpfFreq: 1027, 'random1': 0.00010452611684799 );
+)
+
+(
+~sdPreset = ( 'dryLevel': -2.9293020057678, 'tailLevel': 1.626927190423, 'earlyRef': -1.627618971467, 'hz': 118.84280915976, 'random2': 0.69399229884148, 'random1': 0.00010575314164162, 'random3': 1.0151849246025, 'envs': 79, 'amp': 0.3, hpfFreq: 124, hpfLfo: 0.15, 'random4': 129.59043478966 ) ;
+)
+
+(
+~sdPreset = ( 'hpfFreq': 420, 'hz': 79.447018175125, 'random2': 0.59548714756966, 'random1': 0.0001445009803772, 'hpfLfo': 2.2932776784897, 'random3': 1.0393334960937, 'earlyRef': -1.488172724843, 'random4': 14.983815908432, 'dryLevel': -3.4241995668411, 'tailLevel': 1.7820497608185, 'amp': 0.3, 'envs': 64 );
+)
+
+(
+~sdPreset = (random2: rrand(0.25, 0.8), random4: rrand(1.0, 251), random1: rrand(0.0001, 0.00021), random3: rrand(1.01, 1.9), dryLevel: rrand(-3.96, 0.0), earlyRef: rrand(-3, 0.925), tailLevel: rrand(0.90125, 2.15), hz: rrand(65.41, 300), envs: rrand(30,99), hpfLfo: rrand(0.01, 3), hpfFreq: rrand(150, 1500), amp: 0.3);
 )
 
 
 (
 Ndef(\sd, {
 
-	var sig, n = rrand(3,99);
+	var sig;
 
-	sig = EnvGen.ar(Env({0.65.rand2 ** 3}!n, {exprand((1 + ~sdPreset[\planetDrone_3a]) * 1e-4, 4 - (~sdPreset[\planetDrone_1a] * 4) )} ! (n - 1), 0.05, n - 2, 0.0));
+	sig = EnvGen.ar(
+		Env(
+			{0.65.rand2 ** 3}!~sdPreset[\envs],
+			{exprand(~sdPreset[\random1], ~sdPreset[\random2]  )} ! (~sdPreset[\envs] - 1),
+			0.05,
+			~sdPreset[\envs] - 2,
+			0.0
+		)
+	);
 
 	sig = ({
-		sig * Blip.ar((1 + (~sdPreset[\planetDrone_4a] * 0.75)) * 9e2.rand2,(1 + (~sdPreset[\planetDrone_2a] * 250)) * sig * 9 % [9,7])
+		sig * Blip.ar(
+			LFPulse.kr(~sdPreset[\random3]) * [9e2.rand2, 7.35e2.rand],
+			~sdPreset[\random4] * sig * 9 % [9,7,5.5]
+		)
 	}!4).mean;
+
+	sig = HPF.ar(sig, SinOsc.kr(~sdPreset[\hpfLfo], LFPulse.kr(0.51), ~sdPreset[\hpfFreq], (~sdPreset[\hpfFreq] * 1.32051282)), 1.15);
 
 	sig = GVerb.ar(
 		sig,
-		roomsize:200,
-		revtime:385,
-		damping:0.5, inputbw:0.5,
-		spread:50,
-		drylevel:-4.0 + (~sdPreset[\planetDrone_effect_1] * 4),
-		earlyreflevel:-3.2+(~sdPreset[\planetDrone_effect_2] * 4),
-		taillevel:0.9+(~sdPreset[\planetDrone_effect_3] * 1.25));
+		roomsize: 100, // 200,
+		revtime: 23, // 385,
+		damping: Ndef.kr(\sdMod, 1).linexp(-1,1,0.15,0.85), //0.15, //0.5,
+		inputbw: 0.5,
+		spread: 20, // 50,
+		drylevel: ~sdPreset[\dryLevel],
+		earlyreflevel:~sdPreset[\earlyRef],
+		taillevel: ~sdPreset[\tailLevel]
+	);
 	sig = Mix.ar(sig) * ~sdPreset[\amp] * 0.3;
 	sig = Limiter.ar(sig, 0.5);
 });

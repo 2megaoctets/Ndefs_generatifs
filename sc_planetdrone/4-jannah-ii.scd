@@ -1,12 +1,14 @@
 // freqShifter et pan2 décalés
 // passer BPeakEQ dans les args? Arrays de 4 freq, 4 rq, 4 db
 
+Ndef(\modJii).fadeTime_(7);
+
 (
 ~modJiiPreset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: , widthSlope: , widthStart: , widthEnd: );
 )
 
 (
-~modJiiPreset = (freqSlope: 0.15, freqStart: rrand(0.2, 10), freqEnd: rrand(0.5, 20), iphaseSlope: 0.051, iphaseStart: rrand(0.0,0.5), iphaseEnd: rrand(0.0,1), widthSlope: 0.05, widthStart: rrand(0.25, 0.85), widthEnd: rrand(0.35, 0.75));
+~modJiiPreset = (freqSlope: 0.15, freqStart: rrand(0.2, 10), freqEnd: rrand(0.5, 30), iphaseSlope: 0.051, iphaseStart: rrand(0.0,0.5), iphaseEnd: rrand(0.0,1), widthSlope: 0.05, widthStart: rrand(0.25, 0.85), widthEnd: rrand(0.35, 0.75));
 )
 
 
@@ -18,11 +20,11 @@ Ndef(\modJii, {
 			Phasor.kr(0.0, ~modJiiPreset[\iphaseSlope], ~modJiiPreset[\iphaseStart], ~modJiiPreset[\iphaseEnd]),
 			Phasor.kr(0.0, ~modJiiPreset[\widthSlope], ~modJiiPreset[\widthStart], ~modJiiPreset[\widthEnd])
 		)
-	)
+	).scope
 });
 )
 
-Ndef(\modJii2).fadeTime_(3);
+Ndef(\modJii2).fadeTime_(7);
 
 (
 (~modJii2Preset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: ));
@@ -90,7 +92,7 @@ Ndef(\jii, {
 		sig,
 		0.12 + SinOsc.kr(pd_1a).linexp(-1,1,0.01,0.5),
 		0.32 ,
-		0.32 + Ndef.kr(\modJii2).linexp(-1,1,0.01,0.28)
+		0.32 - Ndef.kr(\modJii2).linexp(-1,1,0.01,0.28)
 	);
 
 	sig = BPeakEQ.ar(
@@ -109,7 +111,7 @@ Ndef(\jii, {
 	);
 	sig = FreqShift.ar(
 		sig,
-		(0.01 + (~jiiPreset[\fshift] * Ndef.kr(\modJii2).abs)) / (1..17)
+		(0.01 + (~jiiPreset[\fshift] * Ndef.kr(\modJii2).abs)) / Array.interpolation(17, rrand(0.99, 1.1), rrand(16.9, 17.01)).debug("ArraySize")
 	);
 
 	sig = Pan2.ar(

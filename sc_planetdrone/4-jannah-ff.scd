@@ -89,7 +89,7 @@ Ndef(\jff,{
 
 	sig = FreqShift.ar(
 		sig,
-		0 + ~jffPreset[\planetDrone_effect_1] * (Ndef.kr(\jffModTest1).linexp(0,1,10,170)) // 170
+		1 + ~jffPreset[\planetDrone_effect_1] * (Ndef.kr(\jffModTest1).linexp(0,1,100,170)) // 170
 	) / ((2..9) + mod);
 
 	sig = GVerb.ar(
@@ -97,10 +97,10 @@ Ndef(\jff,{
 		// sig,
 		roomsize: 10, // 80,
 		revtime: 3, // 4.85,
-		damping: 0.75, // 0.81,
-		inputbw: 0.75, // 0.97,
+		damping: 0.15, // 0.81,
+		inputbw: 0.15, // 0.97,
 		spread: 20, // 40,
-		drylevel: -0,
+		drylevel: 0.5, // -0,
 		earlyreflevel: 0.17, // 0,
 		taillevel: 0.31, // -11,
 		maxroomsize: 300, // 170,

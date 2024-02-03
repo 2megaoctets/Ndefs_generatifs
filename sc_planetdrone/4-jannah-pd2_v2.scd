@@ -108,7 +108,7 @@ Ndef(\jpd2, {
 	);
 	sig = sig * ~jpd2Preset[\amp] * 0.55;
 	sig = Limiter.ar(sig, 0.5);
-	sig = HPF.ar(sig, LFPulse.kr(1, 0, 80, 80));
+	sig = HPF.ar(sig, LFPulse.kr(0.25, 0, 100, 160));
 
 });
 )

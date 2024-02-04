@@ -14,15 +14,15 @@ Ndef(\so).fadeTime_(8);
 )
 
 (
-~soPreset = ( 'impulseFreq3': 1.6314856648445, 'decTime4': 4.7802492380142, 'amp': 0.1, 'ringzFreq4': 2021.4903221846,   'ringzFreq2': 167.37881863117, 'verbMix': 0.56481478214264, 'impulseFreq1': 0.52543658018112, 'ringzFreq1': 13.430479621887, 'decTime1': 3.6744107961655,   'ringzFreq3': 18.954051506519, 'decTime3': 14.509682095051, 'verbRoom': 0.7553838133812, 'impulseFreq2': 1.7603520750999, 'freqShift': 6.2172504782677, lpfRreq: 4000,  'impulseFreq4': 2.9696991443634, 'decTime2': 8.1985654473305 );
+~soPreset = ( 'impulseFreq3': 1.6314856648445, 'decTime4': 4.7802492380142, 'amp': 0.1, 'ringzFreq4': 2021.4903221846,   'ringzFreq2': 167.37881863117, 'verbMix': 0.56481478214264, 'impulseFreq1': 0.52543658018112, 'ringzFreq1': 13.430479621887, 'decTime1': 3.6744107961655,   'ringzFreq3': 18.954051506519, 'decTime3': 14.509682095051, 'verbRoom': 0.7553838133812, 'impulseFreq2': 1.7603520750999, 'freqShift': 6.2172504782677, 'lpfFreq': 4000,  'impulseFreq4': 2.9696991443634, 'decTime2': 8.1985654473305 );
 )
 
 (
-~soPreset = ( 'impulseFreq1': 2.093001947403,'impulseFreq2': 1.8356354951859,  'impulseFreq3': 0.19212594032288, 'impulseFreq4': 0.87129695415497, 'decTime4': 19.048883116245, 'amp': 0.1, 'ringzFreq4': 3741.6549161911,  'ringzFreq2': 59.166047632694, 'verbMix': 0.81814384460449, 'ringzFreq1': 9.533673286438, 'decTime1': 10.212671530247, 'ringzFreq3': 20.550584459305, 'decTime3': 2.3211903214455, 'verbRoom': 0.88140196800232, 'freqShift': 5.7593709230423, lpfReq: 2500, 'decTime2': 12.866828644276 );
+~soPreset = ( 'impulseFreq1': 2.093001947403,'impulseFreq2': 1.8356354951859,  'impulseFreq3': 0.19212594032288, 'impulseFreq4': 0.87129695415497, 'decTime4': 19.048883116245, 'amp': 0.1, 'ringzFreq4': 3741.6549161911,  'ringzFreq2': 59.166047632694, 'verbMix': 0.81814384460449, 'ringzFreq1': 9.533673286438, 'decTime1': 10.212671530247, 'ringzFreq3': 20.550584459305, 'decTime3': 2.3211903214455, 'verbRoom': 0.88140196800232, 'freqShift': 5.7593709230423, 'lpfFreq': 2500, 'decTime2': 12.866828644276 );
 )
 
 (
-~soPreset = ( 'impulseFreq3': 0.7340164899826, 'decTime4': 5.8875451207161, 'amp': 0.1, 'ringzFreq4': 568.96771802902,  'ringzFreq2': 1361.1444695592, 'verbMix': 0.66200258731842, 'impulseFreq1': 1.2195501804352, 'ringzFreq1': 17.413083362579, 'decTime1': 22.292819941044, 'ringzFreq3': 19.792308557034, 'decTime3': 11.636413145065, 'verbRoom': 0.36161170005798, 'impulseFreq2': 0.11912944316864, 'freqShift': 2.3738852143288, 'impulseFreq4': 1.8583229422569, lpfFreq: 4000, 'decTime2': 20.149031305313 );
+~soPreset = ( 'impulseFreq3': 0.7340164899826, 'decTime4': 5.8875451207161, 'amp': 0.1, 'ringzFreq4': 568.96771802902,  'ringzFreq2': 1361.1444695592, 'verbMix': 0.66200258731842, 'impulseFreq1': 1.2195501804352, 'ringzFreq1': 17.413083362579, 'decTime1': 22.292819941044, 'ringzFreq3': 19.792308557034, 'decTime3': 11.636413145065, 'verbRoom': 0.36161170005798, 'impulseFreq2': 0.11912944316864, 'freqShift': 2.3738852143288, 'impulseFreq4': 1.8583229422569, 'lpfFreq': 4000, 'decTime2': 20.149031305313 );
 )
 
 

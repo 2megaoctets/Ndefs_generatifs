@@ -25,6 +25,8 @@ Ndef(\jpd2Mod, {
 )
 
 
+Ndef(\jpd2Mod2).fadeTime_(7);
+
 (
 ~jpd2Mod2Preset = (syncFreqSlope: 1, syncFreqStart: 120, syncFreqEnd: 90, sawFreqSlope: 0.5, sawFreqStart: 440, sawFreqEnd: 500);
 )
@@ -63,7 +65,7 @@ Ndef(\jpd2).fadeTime_(7);
 Ndef(\jpd2, {
 
 	var sig, snd;
-	sig = {{snd = LFTri.ar(~jpd2Preset[\bohlen].choose/3);
+	sig = {snd = LFTri.ar(~jpd2Preset[\bohlen].choose/3);
 		4.do{
 			snd = BAllPass.ar(snd, PinkNoise.kr(11, ~jpd2Preset[\noiseMul1].choose + (~jpd2Preset[\serie1] )), 0.01);
 			snd =BAllPass.ar(snd, PinkNoise.kr(23, ~jpd2Preset[\noiseMul2].choose * ~jpd2Preset[\bohlen].choose) + (~jpd2Preset[\serie2]), 0.003);
@@ -85,7 +87,7 @@ Ndef(\jpd2, {
 			).tanh;
 			snd =LPF.ar(LeakDC.ar(snd, 0.996), 10000 + ~jpd2Preset[\serie3]   )
 		}; // fin 4.do
-		snd = (snd / 2)}!8};
+		snd = (snd / 2)}!8;
 
 	// sig = sig + (GlitchBRF.ar(sig, LFPulse.kr(Ndef.kr(\jpd2Mod), 0.0, 0.95, 0.25), ~jpd2Preset[\bohlen]) );
 	/*sig = sig * 0.5; */

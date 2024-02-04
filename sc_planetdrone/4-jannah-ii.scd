@@ -1,5 +1,6 @@
 // freqShifter et pan2 décalés
 // passer BPeakEQ dans les args? Arrays de 4 freq, 4 rq, 4 db
+// 0402 fabien: randseed
 
 Ndef(\modJii).fadeTime_(7);
 
@@ -20,7 +21,7 @@ Ndef(\modJii, {
 			Phasor.kr(0.0, ~modJiiPreset[\iphaseSlope], ~modJiiPreset[\iphaseStart], ~modJiiPreset[\iphaseEnd]),
 			Phasor.kr(0.0, ~modJiiPreset[\widthSlope], ~modJiiPreset[\widthStart], ~modJiiPreset[\widthEnd])
 		)
-	).scope
+	)
 });
 )
 
@@ -59,14 +60,16 @@ Ndef(\jii).fadeTime_(7);
 
 (
 Ndef(\jii, {
-
-	var seed = thisThread.randSeed = 100000000.rand.debug('seed'),
-	gamma= {[rrand(30, 50), rrand(50, 70), rrand(50, 70), rrand(70, 100)].choose.midicps * LFNoise2.kr(1, 0.01, 1)} ! 24,
-	pd_1a = ~jiiPreset[\verbMod],
+var gamma, pd_1a = ~jiiPreset[\verbMod],
 	pd_2a = ~jiiPreset[\select1] * 0.5,
 	pd_3a = ~jiiPreset[\select2] * 0.5,
 	pd_4a = ~jiiPreset[\panMod],
 	sig, select;
+	thisThread.randSeed = 100000000; // anciennement stocké dans une var, dont on n'a pas besoin
+
+	gamma= {[rrand(30, 50), rrand(50, 70), rrand(50, 70), rrand(70, 100)].choose.midicps * LFNoise2.kr(1, 0.01, 1)} ! 24;
+
+
 	select = SelectX.kr(
 		[SinOsc,LFTri].choose.kr(2.rrand(25).reciprocal).range(0,2) - pd_2a,
 		[
@@ -127,7 +130,7 @@ Ndef(\jii, {
 		0.5 // 1
 	);
 
-	sig = Mix.ar(sig) * ~jiiPreset[\amp] * 0.5;
+	sig = Mix.ar(sig) * ~jiiPreset[\amp] * 0.25;
 	sig = Limiter.ar(sig, 0.5);
 
 

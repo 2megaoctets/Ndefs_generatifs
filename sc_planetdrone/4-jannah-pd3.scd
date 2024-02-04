@@ -1,4 +1,4 @@
-Ndef(\jpd3).fadeTime_(2);
+Ndef(\jpd3).fadeTime_(7);
 
 (
 ~jpd3Preset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, hz: 65.41, amp: 0.5, amplag: 0.02, hzlag: 0.02);

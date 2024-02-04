@@ -1,23 +1,23 @@
-// 0201: noms args, moins d'opérateurs, ajout freeverb
+// 0402 ON LE GARDE
 
-// pour fabien
+// 0201: noms args, moins d'opérateurs, ajout freeverb
 
 Ndef(\jz).fadeTime_(7);
 
 (
-~jzPreset = (freq1: 6.5, freq2: 7.25, num: 1.2, delTime: 4.7,  fshiftFreq: 67.5, fshiftGain: 0.7875, fshiftFreq2: 1.40625, amp: 0.1);
+~jzPreset = (freq1: 6.5, freq2: 7.25, num: 1.2, delTime: 4.7,  fshiftFreq: 67.5, divFreqs: (2..8), fshiftGain: 0.7875, fshiftFreq2: 1.40625, amp: 0.1);
 )
 
 (
-~jzPreset = ( 'freq1': 7.803, 'amp': 0.1, 'fshiftFreq': 133.881, 'freq2': 27.59175, 'delTime': 15.72277365, 'num': 2.1022, 'fshiftGain': 0.68259253501892, 'fshiftFreq2': 2.173415 )
+~jzPreset = ( 'freq1': 7.803, 'amp': 0.1, 'fshiftFreq': 133.881, divFreqs: Array.linrand(6,2,8),  'freq2': 27.59175, 'delTime': 15.72277365, 'num': 2.1022, 'fshiftGain': 0.68259253501892, 'fshiftFreq2': 2.173415 )
 )
 
 (
-~jzPreset = ( 'freq2': 39.780776941776, 'fshiftGain': 0.72961859703064, 'amp': 0.1, 'fshiftFreq2': 1.7638877302408, 'delTime': 28.713978396654, 'fshiftFreq': 132.53770248592, 'num': 1.2154594016075, 'freq1': 7.8461987376213 );
+~jzPreset = ( 'freq2': 39.780776941776, 'fshiftGain': 0.72961859703064, 'amp': 0.1, 'fshiftFreq2': 1.7638877302408, 'delTime': 28.713978396654, 'fshiftFreq': 132.53770248592, 'num': 1.2154594016075, divFreqs: Array.interpolation(6, rrand(1.2,2.4), rrand(7.2,8.2)),  'freq1': 7.8461987376213 );
 )
 
 (
-~jzPreset = (freq1: rrand(0.5,50), freq2: rrand(0.1,50), num: rrand(0.06,6), delTime: rrand(0.41,47),  fshiftFreq: rrand(0.225,225), fshiftGain: rrand(0.5,0.75), fshiftFreq2: rrand(0.225,2.25), amp: 0.1);
+~jzPreset = (freq1: rrand(0.5,50), freq2: rrand(0.1,50), num: rrand(0.06,6), delTime: rrand(0.41,47),  fshiftFreq: rrand(0.225,225), fshiftGain: rrand(0.5,0.75), fshiftFreq2: rrand(0.225,2.25), divFreqs: Array.geom(6,rrand(0.8,1.2),rrand(1.1,4.4)) ,   amp: 0.1);
 )
 
 (
@@ -47,11 +47,17 @@ Ndef(\jz,{
 
 	sig = FreqShift.ar(
 		sig,
-		0 + ~jzPreset[\fshiftFreq] ) / ((2..8) + SinOsc.ar(freq: 0.025 + ~jzPreset[\fshiftFreq2] , phase: 0.0, mul: ~jzPreset[\fshiftGain], add: 0.0) );
+		0 + ~jzPreset[\fshiftFreq] ) / (~jzPreset[\divFreqs]
+		+ SinOsc.ar(
+			freq: 0.025 + ~jzPreset[\fshiftFreq2] ,
+			phase: 0.0,
+			mul: ~jzPreset[\fshiftGain]
+		)
+	);
 
 	sig = FreeVerb.ar(
 		sig,
-		Phasor.kr(0.0, 15, 0.5, 0.81),
+		Phasor.kr(0.0, 50, 0.5, 0.81),
 		LFPulse.kr(Phasor.kr(0.0,100,0.1,0.5), 0.0, 0.5, 0.35, 0.25),
 		Phasor.kr(0.0,500,0.85,0.15)
 	);

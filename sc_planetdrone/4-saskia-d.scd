@@ -12,7 +12,7 @@ Ndef(\sdMod).fadeTime_(7);
 )
 
 (
-~sdModPreset = (freqSlope: rrand(0.025, 0.5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(0.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
+~sdModPreset = (freqSlope: rrand(0.25, 5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(0.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
 )
 
 (
@@ -40,6 +40,10 @@ Ndef(\sd).fadeTime_(7);
 
 (
 ~sdPreset = ( 'hpfFreq': 420, 'hz': 79.447018175125, 'random2': 0.59548714756966, 'random1': 0.0001445009803772, 'hpfLfo': 2.2932776784897, 'random3': 1.0393334960937, 'earlyRef': -1.488172724843, 'random4': 14.983815908432, 'dryLevel': -3.4241995668411, 'tailLevel': 1.7820497608185, 'amp': 0.3, 'envs': 64 );
+)
+
+(
+~sdPreset = ( 'hpfFreq': 1353, 'hz': 135.57551516056, 'random2': 0.67252621650696, 'random1': 0.00016268412590027, 'hpfLfo': 2.5256552696228, 'random3': 1.0688130867481, 'earlyRef': -2.5699128478765, 'random4': 238.69688606262, 'dryLevel': -1.8587717914581, 'tailLevel': 1.5515693694353, 'amp': 0.3, 'envs': 87 );
 )
 
 (

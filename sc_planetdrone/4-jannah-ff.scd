@@ -100,11 +100,11 @@ Ndef(\jff,{
 		damping: 0.15, // 0.81,
 		inputbw: 0.15, // 0.97,
 		spread: 20, // 40,
-		drylevel: 0.5, // -0,
+		drylevel: 1, // 0.5, // -0,
 		earlyreflevel: 0.17, // 0,
 		taillevel: 0.31, // -11,
 		maxroomsize: 300, // 170,
-		mul: 0.3 //0.008
+		mul: 0.23 //0.008
 	);
 
 	sig = sig * ~jffPreset[\amp] * 0.5;

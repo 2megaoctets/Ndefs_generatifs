@@ -10,7 +10,7 @@ Ndef(\so).fadeTime_(8);
 )
 
 (
-~soPreset = ( 'ringzFreq3': 5.2508779644966, 'freqShift': 6.6301471829414, 'amp': 0.1, 'decTime2': 7.0314254403114,  'decTime4': 1.2212558507919, 'verbMix': 0.54674935340881, 'verbRoom': 0.44258635044098, 'impulseFreq3': 3.0099483370781, 'decTime3': 24.348577368259, 'impulseFreq2': 1.8354434847832, 'lpfFreq': 7214, 'impulseFreq4': 0.99219098091125, 'ringzFreq1'19.058267307281, 'ringzFreq4': 2037.6204398632,  'decTime1': 13.104228246212, 'impulseFreq1': 3.3875318264961, 'ringzFreq2': 1208.2647934556 );
+~soPreset = ( 'ringzFreq3': 5.2508779644966, 'freqShift': 6.6301471829414, 'amp': 0.1, 'decTime2': 7.0314254403114,  'decTime4': 1.2212558507919, 'verbMix': 0.54674935340881, 'verbRoom': 0.44258635044098, 'impulseFreq3': 3.0099483370781, 'decTime3': 24.348577368259, 'impulseFreq2': 1.8354434847832, 'lpfFreq': 7214, 'impulseFreq4': 0.99219098091125, 'ringzFreq1' : 19.058267307281, 'ringzFreq4': 2037.6204398632,  'decTime1': 13.104228246212, 'impulseFreq1': 3.3875318264961, 'ringzFreq2': 1208.2647934556 );
 )
 
 (
@@ -27,7 +27,7 @@ Ndef(\so).fadeTime_(8);
 
 
 (
-~soPreset = (impulseFreq1: rrand(0.01,4), impulseFreq2: rrand(0.1,4), impulseFreq3: rrand(0.1,4), impulseFreq4: rrand(0.1,4), ringzFreq1: rrand(0.2,25), ringzFreq2: rrand(0.5,4000), ringzFreq3: rrand(0.1,25), ringzFreq4: rrand(0.2,4000), decTime1: rrand(0.1,25), decTime2: rrand(0.1,25), decTime3: rrand(0.1,25), decTime4: rrand(0.1,25), verbMix: rrand(0.3,0.9), verbRoom: rrand(0.25,0.95), freqShift: rrand(0.1,8), lpfFreq: rrand(2000, 8000), amp: 0.1);
+~soPreset = (impulseFreq1: rrand(0.01,4), impulseFreq2: rrand(0.1,4), impulseFreq3: rrand(0.1,4), impulseFreq4: rrand(0.1,4), ringzFreq1: rrand(0.2,25), ringzFreq2: rrand(0.5,4000), ringzFreq3: rrand(0.1,25), ringzFreq4: rrand(0.2,4000), decTime1: rrand(0.1,25), decTime2: rrand(0.1,25), decTime3: rrand(0.1,25), decTime4: rrand(0.1,25), verbMix: rrand(0.3,0.9), verbRoom: rrand(0.25,0.95), freqShift: rrand(0.1,8), lpfFreq: rrand(2000, 8000), amp: 0.15);
 )
 
 

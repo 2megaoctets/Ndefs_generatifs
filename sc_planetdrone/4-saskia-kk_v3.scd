@@ -1,7 +1,7 @@
 // 0202 correc niveaux
 // edit du graphe, ajout mod
 
-Ndef(\skkMod).fadeTime_(2);
+Ndef(\skkMod).fadeTime_(7);
 
 (
 ~skkModPreset = (carfreqSlope: 0.1, carfreqStart: 1, carfreqEnd: 3, modfreqSlope: 0.2, modfreqStart: 4, modfreqEnd: 1, pmindexSlope: 0.5, pmindexStart: 20, pmindexEnd: 40, modphaseSlope: 0.1, modphaseStart: 0.0, modphaseEnd: 1);
@@ -26,19 +26,19 @@ Ndef(\skkMod, {
 Ndef(\skk).fadeTime_(7);
 
 (
-~skkPreset = (impulseFreq1: 0.13, impulseFreq2: 0.145, impulseFreq4: 0.2, impulseFreq3: 0.1,  revTime: 0.3, dryLev: 0.25, earlyRef: 0.0625, amp: 0.1);
+~skkPreset = (impulseFreq1: 0.13, impulseFreq2: 0.145, impulseFreq4: 0.2, impulseFreq3: 0.1,  revTime: 0.3, dryLev: 0.25, earlyRef: 0.0625, amp: 0.051);
 )
 
 (
-~skkPreset = ( 'impulseFreq1': 0.036643483638763, 'impulseFreq4': 0.91807374954224, 'impulseFreq2': 0.90726962089539, 'hz': 254.37983075738, 'dryLev': 0.43022047579288, 'revTime': 0.48992212295532, 'amp': 0.1, 'impulseFreq3': 0.62125587463379, 'earlyRef': 0.33623322546482 );
+~skkPreset = ( 'impulseFreq1': 0.036643483638763, 'impulseFreq4': 0.91807374954224, 'impulseFreq2': 0.90726962089539, 'hz': 254.37983075738, 'dryLev': 0.43022047579288, 'revTime': 0.48992212295532, 'amp': 0.051, 'impulseFreq3': 0.62125587463379, 'earlyRef': 0.33623322546482 );
 )
 
 (
-~skkPreset = ('impulseFreq2': 0.24010162353516, 'impulseFreq3': 0.59688158035278, 'hz': 207.11387521863, 'impulseFreq1': 0.90060613155365, 'impulseFreq4': 0.46581425666809, 'dryLev': 0.75231163203716, 'earlyRef': 0.6411688297987, 'amp': 0.1, 'revTime': 0.34243049383163 );
+~skkPreset = ('impulseFreq2': 0.24010162353516, 'impulseFreq3': 0.59688158035278, 'hz': 207.11387521863, 'impulseFreq1': 0.90060613155365, 'impulseFreq4': 0.46581425666809, 'dryLev': 0.75231163203716, 'earlyRef': 0.6411688297987, 'amp': 0.051, 'revTime': 0.34243049383163 );
 )
 
 (
-~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.1);
+~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.051);
 )
 
 (

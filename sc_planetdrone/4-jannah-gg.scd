@@ -1,3 +1,5 @@
+// reprendre le graphe
+
 Ndef(\jgg).fadeTime_(3);
 
 

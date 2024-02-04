@@ -1,5 +1,7 @@
 // fabien edit en cours
 
+Ndef(\dll).fadeTime_(7);
+
 (
 ~dllPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.35);
 )
@@ -14,7 +16,7 @@ Ndef(\dll, {
 	var output, filtFreq, noise, noiseAmp, chain, env, segments;
 	var tardRate = 0.36 + (~dllPreset[\planetDrone_1a] * 4), combs, sig;
 	segments = 4;
-	env = EnvGen.kr(
+	/*env = EnvGen.kr(
 		Env(
 			levels: { rrand(0.3, 1) } ! segments,
 			times: { 0.5.rand } ! segments - 1,
@@ -26,7 +28,15 @@ Ndef(\dll, {
 		~dllPreset[\planetDrone_3a],
 		0.0,
 		~dllPreset[\planetDrone_4a] * 0.01
-	);
+	);*/
+
+	env = Env(
+		levels: { rrand(0.3, 1) } ! segments * ~dllPreset[\planetDrone_3a],
+		times: ({ 0.5.rand } ! (segments - 1)) * ~dllPreset[\planetDrone_4a] * 0.01,
+		curve: ({ 4.0.rand2 } ! segments - 1) * ~dllPreset[\planetDrone_1a],
+		releaseNode: segments - 2,
+		loopNode: 0
+	).kr(0, 1); // <- raccourcis EnvGen ndef
 	noiseAmp = LFNoise1.kr(env * 100).abs;
 
 	noise = BrownNoise.ar(LinXFade2.kr(noiseAmp, env, env));

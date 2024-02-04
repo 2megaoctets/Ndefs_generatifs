@@ -1,4 +1,4 @@
-Ndef(\dooModTest1).fadeTime_(3);
+Ndef(\dooModTest1).fadeTime_(7);
 
 (
 ~dooModTest1Preset = (freqstart: , freqend: , freqslope: , modfreqstart: , modfreqend: , modfreqslope: , pmstart: , pmend: , pmslope: , modphasestart: , modphaseend: , modphaseslope: );
@@ -19,7 +19,7 @@ Ndef(\dooModTest1, {
 		carfreq: Phasor.kr(0.0, ~dooModTest1Preset[\freqslope], ~dooModTest1Preset[\freqstart], ~dooModTest1Preset[\freqend]),
 		modfreq: Phasor.kr(0.0, ~dooModTest1Preset[\modfreqslope], ~dooModTest1Preset[\modfreqstart], ~dooModTest1Preset[\modfreqend]),
 		pmindex: Phasor.kr(0.0, ~dooModTest1Preset[\pmindexslope], ~dooModTest1Preset[\pmindexstart], ~dooModTest1Preset[\pmindexend]),
-		modphase: Phasor.kr(0.0, ~dooModTest1Preset[\modphaseslope], ~dooModTest1Preset[\modphasestart], ~dooModTest1Preset[\modphaseend])
+		modphase: Phasor.kr(0.0, ~dooModTest1Preset[\modphaseslope], ~dooModTest1Preset[\modphasestart], ~dooModTest1Preset[\modphaseend]),
 	)
 });
 )

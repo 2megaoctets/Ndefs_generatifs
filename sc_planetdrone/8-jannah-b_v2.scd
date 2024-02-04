@@ -1,4 +1,5 @@
 // 0302 : valeurs des args, dé-factorisation
+// comparo 8-jannah-b
 
 Ndef(\jb).fadeTime_(7);
 
@@ -22,7 +23,7 @@ Ndef(\jb).fadeTime_(7);
 
 
 (
-~jbPreset = ( 'planetDrone_1a': 370.46782708168, 'planetDrone_2a': 387.24766552448,  'planetDrone_3a': 411.91687524319, 'planetDrone_4a': 306.09467983246,  'planetDrone_1b': 150.56587934494,  'planetDrone_2b': 94.839679002762, 'planetDrone_3b': 178.42485308647,  'planetDrone_4b': 43.195476531983, 'planetDrone_effect_1': 34.018780231476, 'planetDrone_effect_2': 254.21176478267, 'planetDrone_effect_3': 2.6953571081162, 'hz': 157.48465546131, 'amp': 0.1);
+~jbPreset = ( 'freqPulse1': 370.46782708168, 'freqPulse2': 387.24766552448,  'freqPulse3': 411.91687524319, 'freqPulse4': 306.09467983246,  'pulseWidth1': 150.56587934494,  'pulseWidth2': 94.839679002762, 'pulseWidth3': 178.42485308647,  'pulseWidth4': 43.195476531983, 'brf': 34.018780231476, 'planetDrone_effect_2': 254.21176478267, 'planetDrone_effect_3': 2.6953571081162, 'hz': 157.48465546131, 'amp': 0.1);
 ) // photek 2
 
 (

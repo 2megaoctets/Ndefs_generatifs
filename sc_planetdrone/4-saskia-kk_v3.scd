@@ -30,7 +30,7 @@ Ndef(\skk).fadeTime_(7);
 )
 
 (
-~skkPreset = ( 'impulseFreq1': 0.036643483638763, 'impulseFreq4': 0.91807374954224, 'impulseFreq2': 0.90726962089539, 'hz': 254.37983075738, 'dryLev': 0.43022047579288, 'revTime': 0.48992212295532, 'amp': 0.051, 'impulseFreq3': 0.62125587463379, 'earlyRef': 0.33623322546482 );
+~skkPreset = ( 'impulseFreq1': 0.036643483638763, 'impulseFreq4': 0.91807374954224, 'impulseFreq2': 0.90726962089539, 'hz': 154.37983075738, 'dryLev': 0.43022047579288, 'revTime': 0.48992212295532, 'amp': 0.051, 'impulseFreq3': 0.62125587463379, 'earlyRef': 0.33623322546482 );
 )
 
 (
@@ -38,12 +38,15 @@ Ndef(\skk).fadeTime_(7);
 )
 
 (
-~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.051);
+~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.051, randSeed: 10000000.rand);
 )
 
 (
 Ndef(\skk, {
 	var sig;
+	~skkPreset[\randSeed] ?? 10000000; // si randSeed = nil, appairer la valeur
+	thisThread.randSeed = ~skkPreset[\randSeed].debug("randSeed");
+
 	sig = tanh(Impulse.kr(rrand(6.0,12) + (~skkPreset[\impulseFreq1] * rrand(6.0,12))).lag * Crackle.ar(LFSaw.kr(rrand(3.0, 7) + (~skkPreset[\impulseFreq2] * rrand(10.0, 20))).abs.lag * 1.8)
 		+
 		GVerb.ar([

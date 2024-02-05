@@ -1,3 +1,4 @@
+// todo sem6: modulateurs
 // 0402: presets, args, valeurs, graphe
 
 Ndef(\sf).fadeTime_(7);

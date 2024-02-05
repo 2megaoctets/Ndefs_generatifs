@@ -44,7 +44,7 @@ Ndef(\skk).fadeTime_(7);
 (
 Ndef(\skk, {
 	var sig;
-	~skkPreset[\randSeed] ?? 10000000; // si randSeed = nil, appairer la valeur
+	~skkPreset[\randSeed] ?? ({ ~skkPreset[\randSeed] = 10000000; });
 	thisThread.randSeed = ~skkPreset[\randSeed].debug("randSeed");
 
 	sig = tanh(Impulse.kr(rrand(6.0,12) + (~skkPreset[\impulseFreq1] * rrand(6.0,12))).lag * Crackle.ar(LFSaw.kr(rrand(3.0, 7) + (~skkPreset[\impulseFreq2] * rrand(10.0, 20))).abs.lag * 1.8)

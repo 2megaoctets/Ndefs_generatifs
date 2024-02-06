@@ -60,6 +60,8 @@ Ndef(\doo).fadeTime_(7);
 (
 Ndef(\doo, {
 	var sig, mod, rndWform;
+	thisThread.randSeed = 100000000; // anciennement stocké dans une var, dont on n'a pas besoin
+
 	rndWform = {
 		var waves;
 		waves = [SinOsc, LFTri, LFCub, LFSaw];
@@ -108,7 +110,7 @@ Ndef(\doo, {
 			add: 0.0
 		)
 	);
-	sig= HPF.ar(sig, 120);
+	sig= HPF.ar(sig, 180);
 	sig = sig * ~dooPreset[\amp] * 0.35;
 	sig = Limiter.ar(sig);
 	sig;

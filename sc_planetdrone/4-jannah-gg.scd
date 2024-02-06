@@ -23,7 +23,10 @@ Ndef(\jgg, {
 
 	srcA = Splay.ar(
 		SinOscFB.ar(
-			SinOscFB.ar(1 / (10..15), 2) < 1 * 450 + 90
+			SinOscFB.ar(
+				1 / (10..15),
+				Phasor.kr(0.0, 10.0, 0.0, 8.0, 8.0)  // test fb mod // 2
+			) < 1 * 450 + 90
 			+ SinOsc.ar (
 				freq: ~jggPreset[\sine1Freq] % 0.0173 , // 0.0173 + ~jggPreset[\sine1Freq],
 				phase: 0.0,

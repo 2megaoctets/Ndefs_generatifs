@@ -14,10 +14,10 @@ Ndef(\jzMod1).fadeTime_(10);
 )
 
 (
-~jzMod1Preset = (freqSlope: , freqStart: , freqEnd: , iphaseSlope: , iphaseStart: , iphaseEnd: , widthSlope: , widthStart: , widthEnd: , mulSlope: , mulStart: , mulEnd: , addSlope: , addStart: , addEnd: );
+~jzMod1Preset = (freqSlope: 16.1, freqStart: 10.6719, freqEnd: 2.2253, iphaseSlope: 13.63, iphaseStart: 0.19, iphaseEnd: 0.549, widthSlope: 14.2 , widthStart: 0.25, widthEnd: 0.75, mulSlope: 16.34, mulStart: 1, mulEnd: 1, addSlope: 19.4, addStart: 0, addEnd: -0.1);
 )
 (
-~jzMod1Preset = (freqSlope: rrand(10, 20.0), freqStart: rrand(1.0, 440), freqEnd: rrand(1.0, 440), iphaseSlope: rrand(10,30.0), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(10.0,30), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(10.0, 20), mulStart: rrand(0.75,1.5), mulEnd: rrand(0.75,1.6), addSlope: rrand(10.0, 20), addStart: rrand(-0.1,0.4), addEnd: rrand(-0.1,0.4));
+~jzMod1Preset = (freqSlope: rrand(10, 20.0), freqStart: rrand(0.02, 4.40), freqEnd: rrand(0.20, 4.40), iphaseSlope: rrand(10,30.0), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(10.0,30), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(10.0, 20), mulStart: rrand(0.75,1.5), mulEnd: rrand(0.75,1.6), addSlope: rrand(10.0, 20), addStart: rrand(-0.1,0.4), addEnd: rrand(-0.1,0.4));
 )
 
 (
@@ -29,7 +29,7 @@ Ndef(\jzMod1, {
 		// Phasor.kr(0.0, ~jzMod1Preset[\mulSlope], ~jzMod1Preset[\mulStart], ~jzMod1Preset[\mulEnd], ~jzMod1Preset[\mulEnd]),
 		// Phasor.kr(0.0, ~jzMod1Preset[\addSlope], ~jzMod1Preset[\addStart], ~jzMod1Preset[\addEnd], ~jzMod1Preset[\addEnd])
 	)
-});
+}).scope;
 )
 
 
@@ -42,7 +42,7 @@ Ndef(\jz).fadeTime_(7);
 // ?? Server 'localhost' exited with exit code 0.
 // server 'localhost' disconnected shared memory interface sur ce preset (à checker)
 (
-~jzPreset = ( 'freq1': 7.803, 'amp': 0.1, 'fshiftFreq': 133.881, divFreqs: Array.linrand(6,2,8),  'freq2': 27.59175, 'delTime': 15.72277365, 'num': 2.1022, 'fshiftGain': 0.68259253501892, 'fshiftFreq2': 2.173415 )
+~jzPreset = ( 'freq1': 7.803, 'amp': 0.1, 'fshiftFreq': 133.881, divFreqs: Array.linrand(6,2.0,8.0),  'freq2': 27.59175, 'delTime': 15.72277365, 'num': 2.1022, 'fshiftGain': 0.68259253501892, 'fshiftFreq2': 2.173415 )
 )
 
 (
@@ -72,15 +72,16 @@ Ndef(\jz,{
 
 	sig = GVerb.ar(
 		sig,
-		roomsize: abs(Ndef.kr(\jzMod1)), // Phasor.kr(0.0, 2.5, 100.0, 30.0), // 400,
+		roomsize:  Phasor.kr(0.0, 2.5, 100.0, 30.0), // 400,
 		revtime:  Phasor.kr(0.0, 25, 2.0, 4), // 4,
 		damping: 0.765,
 		inputbw: 0.62, // 0.46,
 		spread: 16,
 		drylevel: -3,
 		earlyreflevel: -4.47,
-		taillevel: 0.65,
-		maxroomsize: 401);
+		taillevel:  0.65,
+		maxroomsize: 401
+	);
 
 	sig = FreqShift.ar(
 		sig,
@@ -94,9 +95,9 @@ Ndef(\jz,{
 
 	sig = FreeVerb.ar(
 		sig,
-		Phasor.kr(0.0, 50, 0.5, 0.81), // mix
+		(Ndef.kr(\jzMod1).linlin(-1,1,0.3,0.65)), // Phasor.kr(0.0, 50, 0.5, 0.81), // mix
 		LFPulse.kr(Phasor.kr(0.0,100,0.1,0.5), 0.0, 0.5, 0.35, 0.25), // room
-		Phasor.kr(0.0,500,0.85,0.15) // damp
+		Phasor.kr(0.0,500,0.75,0.15) // damp
 	);
 
 	sig = HPF.ar(sig, 150);

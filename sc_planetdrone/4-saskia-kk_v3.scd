@@ -4,11 +4,11 @@
 Ndef(\skkMod).fadeTime_(7);
 
 (
-~skkModPreset = (carfreqSlope: 0.1, carfreqStart: 1, carfreqEnd: 3, modfreqSlope: 0.2, modfreqStart: 4, modfreqEnd: 1, pmindexSlope: 0.5, pmindexStart: 20, pmindexEnd: 40, modphaseSlope: 0.1, modphaseStart: 0.0, modphaseEnd: 1);
+~skkModPreset = (carfreqSlope: 20.1, carfreqStart: 1, carfreqEnd: 3, modfreqSlope: 30.2, modfreqStart: 4, modfreqEnd: 1, pmindexSlope: 10.5, pmindexStart: 20, pmindexEnd: 40, modphaseSlope: 20.1, modphaseStart: 0.0, modphaseEnd: 1);
 )
 
 (
-~skkModPreset = (carfreqSlope: rrand(0.051, 0.1), carfreqStart: rrand(0.1,2), carfreqEnd: rrand(0.1,2), modfreqSlope: rrand(0.05,0.2), modfreqStart: rrand(0.2,30), modfreqEnd: rrand(0.4,50), pmindexSlope: 1, pmindexStart: rrand(1,127), pmindexEnd: rrand(1,127), modphaseSlope: 0.1, modphaseStart: rrand(0.0,1), modphaseEnd: rrand(0.0,1));
+~skkModPreset = (carfreqSlope: rrand(0.051, 10.1), carfreqStart: rrand(0.1,2), carfreqEnd: rrand(0.1,2), modfreqSlope: rrand(0.05,10.2), modfreqStart: rrand(0.2,30), modfreqEnd: rrand(0.4,50), pmindexSlope: 1, pmindexStart: rrand(1,127), pmindexEnd: rrand(1,127), modphaseSlope: 10.1, modphaseStart: rrand(0.0,1), modphaseEnd: rrand(0.0,1));
 )
 
 
@@ -26,11 +26,11 @@ Ndef(\skkMod, {
 Ndef(\skk).fadeTime_(7);
 
 (
-~skkPreset = (impulseFreq1: 0.13, impulseFreq2: 0.145, impulseFreq4: 0.2, impulseFreq3: 0.1,  revTime: 0.3, dryLev: 0.25, earlyRef: 0.0625, amp: 0.051);
+~skkPreset = ( 'earlyRef': 0.78317119777203, 'hz': 225.03538643003, 'revTime': 0.91426666378975, 'amp': 0.051,  'randSeed': 4506856, 'impulseFreq2': 0.55979113578796, 'impulseFreq4': 0.46136404275894, 'dryLev': 0.7639681905508, 'impulseFreq1': 0.59683083772659, 'impulseFreq3': 0.44538822174072 );
 )
 
 (
-~skkPreset = ( 'impulseFreq1': 0.036643483638763, 'impulseFreq4': 0.91807374954224, 'impulseFreq2': 0.90726962089539, 'hz': 154.37983075738, 'dryLev': 0.43022047579288, 'revTime': 0.48992212295532, 'amp': 0.051, 'impulseFreq3': 0.62125587463379, 'earlyRef': 0.33623322546482 );
+~skkPreset = (impulseFreq1: 0.13, impulseFreq2: 0.145, impulseFreq4: 0.2, impulseFreq3: 0.1,  revTime: 0.3, dryLev: 0.25, earlyRef: 0.0625, amp: 0.051);
 )
 
 (
@@ -38,7 +38,7 @@ Ndef(\skk).fadeTime_(7);
 )
 
 (
-~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.051, randSeed: 10000000.rand);
+~skkPreset = (impulseFreq1: rrand(0.01, 0.99), impulseFreq2: rrand(0.1, 0.95), impulseFreq4: rrand(0.1, 1), impulseFreq3: rrand(0.1, 0.9), revTime: rrand(0.1, 0.93), dryLev: rrand(0.1, 0.925), earlyRef: rrand(0.1, 0.9625), hz: rrand(45.41, 800), amp: 0.051, randSeed: 10000000.rand);
 )
 
 (
@@ -60,8 +60,8 @@ Ndef(\skk, {
 		damping: 0.165,
 		inputbw: 0.46,
 		spread:  17, // 25,
-		drylevel: lcm( Ndef.kr([\skkMod]).tanh ,  SinOsc.kr(~skkPreset[\dryLev]))  , // -6 + (~skkPreset[\dryLev] * rrand(30, 70)).debug("drylevel"),
-		earlyreflevel: LFPulse.kr(~skkPreset[\earlyRef], 0.0, Phasor.kr(0.0, 0.05, 0.25, 0.75)), // -10.47 + (~skkPreset[\planetDrone_effect_3] * rrand(50,80)),
+		drylevel:  Ndef.kr([\skkMod]).cos +  SinOsc.kr(~skkPreset[\dryLev]) , // -6 + (~skkPreset[\dryLev] * rrand(30, 70)).debug("drylevel"),
+		earlyreflevel: LFPulse.kr(~skkPreset[\earlyRef], 0.0, Phasor.kr(0.0, 10.05, 0.25, 0.75)), // -10.47 + (~skkPreset[\planetDrone_effect_3] * rrand(50,80)),
 		taillevel: -10.15, // + LFPulse.kr(Ndef.kr(\skkMod, 1), 0, 0.5, 5, 0), // -10.076,
 		maxroomsize: 3, // 100,
 		mul: 0.25, // .0,

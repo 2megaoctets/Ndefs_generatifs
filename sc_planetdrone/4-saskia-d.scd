@@ -12,14 +12,16 @@ Ndef(\sdMod).fadeTime_(7);
 )
 
 (
-~sdModPreset = (freqSlope: rrand(0.25, 5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(0.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
+~sdModPreset = (freqSlope: rrand(20.25, 5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(20.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
 )
 
 (
 Ndef(\sdMod, {
 	LFCub.kr(
 		Phasor.kr(0.0, ~sdModPreset[\freqSlope], ~sdModPreset[\freqStart], ~sdModPreset[\freqEnd]),
-		Phasor.kr(0.0, ~sdModPreset[\iphaseSlope], ~sdModPreset[\iphaseStart], ~sdModPreset[\iphaseEnd])
+		Phasor.kr(0.0, ~sdModPreset[\iphaseSlope], ~sdModPreset[\iphaseStart], ~sdModPreset[\iphaseEnd]),
+		3,
+		6
 	)
 });
 )
@@ -43,11 +45,11 @@ Ndef(\sd).fadeTime_(7);
 )
 
 (
-~sdPreset = ( 'hpfFreq': 1353, 'hz': 135.57551516056, 'random2': 0.67252621650696, 'random1': 0.00016268412590027, 'hpfLfo': 2.5256552696228, 'random3': 1.0688130867481, 'earlyRef': -2.5699128478765, 'random4': 238.69688606262, 'dryLevel': -1.8587717914581, 'tailLevel': 1.5515693694353, 'amp': 0.3, 'envs': 87 );
+~sdPreset = ( 'hpfFreq': 1353, 'hz': 135.57551516056, 'random2': 0.67252621650696, 'random1': 0.00016268412590027, 'hpfLfo': 2.5256552696228, 'random3': 1.0688130867481, 'earlyRef': -2.5699128478765, 'random4': 238.69688606262, 'dryLevel': -1.8587717914581, 'tailLevel': 1.5515693694353, 'amp': 0.3, 'randSeed': 206854, 'envs': 87 );
 )
 
 (
-~sdPreset = (random2: rrand(0.25, 0.8), random4: rrand(1.0, 251), random1: rrand(0.0001, 0.00021), random3: rrand(1.01, 1.9), dryLevel: rrand(-3.96, 0.0), earlyRef: rrand(-3, 0.925), tailLevel: rrand(0.90125, 2.15), hz: rrand(65.41, 300), envs: rrand(30,99), hpfLfo: rrand(0.01, 3), hpfFreq: rrand(150, 1500), amp: 0.3);
+~sdPreset = (random2: rrand(0.25, 0.8), random4: rrand(1.0, 251), random1: rrand(0.0001, 0.00021), random3: rrand(1.01, 1.9), dryLevel: rrand(-3.96, 0.0), earlyRef: rrand(-3, 0.925), tailLevel: rrand(0.90125, 2.15), hz: rrand(65.41, 300), envs: rrand(30,99), hpfLfo: rrand(0.01, 3), hpfFreq: rrand(150, 1500), randSeed: 10000000.rand, amp: 0.3);
 )
 
 
@@ -55,6 +57,8 @@ Ndef(\sd).fadeTime_(7);
 Ndef(\sd, {
 
 	var sig;
+	~sdPreset[\randSeed] ?? ({ ~sdPreset[\randSeed] = 10000000; });
+	thisThread.randSeed = ~sdPreset[\randSeed].debug("randSeed");
 
 	sig = EnvGen.ar(
 		Env(
@@ -73,13 +77,19 @@ Ndef(\sd, {
 		)
 	}!4).mean;
 
-	sig = HPF.ar(sig, SinOsc.kr(~sdPreset[\hpfLfo], LFPulse.kr(0.51), ~sdPreset[\hpfFreq], (~sdPreset[\hpfFreq] * 1.32051282)), 1.15);
+	sig = HPF.ar(sig, SinOsc.kr(
+		~sdPreset[\hpfLfo],
+		LFPulse.kr(0.51),
+		~sdPreset[\hpfFreq],
+		(~sdPreset[\hpfFreq] * 1.32051282)
+	),
+	1.15);
 
 	sig = GVerb.ar(
 		sig,
 		roomsize: 100, // 200,
-		revtime: 23, // 385,
-		damping: Ndef.kr(\sdMod, 1).linexp(-1,1,0.15,0.85), //0.15, //0.5,
+		revtime: LFPulse.kr(Ndef.kr(\sdMod), 0.0, 0.5, 10, 13), // 23, // 385,
+		damping: Ndef.kr(\sdMod, 1).linexp(-3,3,0.15,0.85), //0.15, //0.5,
 		inputbw: 0.5,
 		spread: 20, // 50,
 		drylevel: ~sdPreset[\dryLevel],

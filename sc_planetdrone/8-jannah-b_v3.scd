@@ -17,23 +17,28 @@ Ndef(\jbMod).fadeTime_(7);
 )
 
 (
-~jbModPreset = (tension: rrand(0.05, 0.1), loss: rrand(0.89,0.99999), freqSlope: rrand(0.1, 0.5), freqStart: rrand(10, 440), freqEnd: rrand(10, 440));
+~jbModPreset = (tension: rrand(0.05, 0.1), loss: rrand(0.89,0.99999), freqSlope: rrand(0.1, 50), freqStart: rrand(10, 440), freqEnd: rrand(10, 440));
 )
 
 (
 Ndef(\jbMod, {
-	MembraneHexagon.ar(
+	var sig;
+	sig = MembraneHexagon.ar(
 		SawDPW.ar(
 			// ~jbModPreset[\freqStart]
 			Phasor.kr(0.0, ~jbModPreset[\freqSlope], ~jbModPreset[\freqStart], ~jbModPreset[\freqEnd])
 		),
 		~jbModPreset[\tension],
-		~jbModPreset[\loss]
-	)
-});
+		~jbModPreset[\loss],
+		15,
+		10
+	);
+	sig = LeakDC.ar(sig);
+	sig;
+}).scope;
 )
 
-Ndef(\jb).fadeTime_(3);
+Ndef(\jb).fadeTime_(7);
 
 (
 ~jbPreset = (freqPulse1: 58.5, freqPulse2: 65.25, freqPulse3: 90, freqPulse4: 45, pulseWidth1: 0.13, pulseWidth2: 0.145, pulseWidth3: 0.2, pulseWidth4: 0.1,  brf: 60, planetDrone_effect_2: 87.5, planetDrone_effect_3: 0.5, hz: 100, amp: 0.35);
@@ -49,15 +54,19 @@ Ndef(\jb).fadeTime_(3);
 
 
 (
-~jbPreset = ( 'brf': 197.10433331013, 'hz': 266.90051404357, 'planetDrone_effect_2': 209.58455272913, 'freqPulse2': 279.60722652674,
-  'freqPulse1': 376.14806695223, 'amp': 0.35, 'planetDrone_effect_3': 4.2149395808578, 'pulseWidth2': 0.26936638355255, 'freqPulse3': 847.66782822609,
-  'pulseWidth3': 0.42332327365875, 'pulseWidth1': 0.55059802532196, 'freqPulse4': 920.66878509521, 'pulseWidth4': 0.26954197883606 );
+~jbPreset = ( 'brf': 197.10433331013, 'hz': 266.90051404357, 'planetDrone_effect_2': 209.58455272913, 'freqPulse2': 279.60722652674, 'freqPulse1': 376.14806695223, 'amp': 0.35, 'planetDrone_effect_3': 4.2149395808578, 'pulseWidth2': 0.26936638355255, 'freqPulse3': 847.66782822609, 'pulseWidth3': 0.42332327365875, 'pulseWidth1': 0.55059802532196, 'freqPulse4': 920.66878509521, 'pulseWidth4': 0.26954197883606 );
 )
 
 (
-~jbPreset = ( 'brf': 127.36667049527, 'hz': 84.641014688015, 'planetDrone_effect_2': 56.868106368184, 'freqPulse2': 241.8301843524,
-  'freqPulse1': 320.41999649525, 'amp': 0.35, 'planetDrone_effect_3': 1.5654154035449, 'pulseWidth2': 0.31256300210953, 'freqPulse3': 584.63140890598,
-  'pulseWidth3': 0.30383098125458, 'pulseWidth1': 0.56578725576401, 'freqPulse4': 209.17822036743, 'pulseWidth4': 0.62760746479034 );
+~jbPreset = ( 'brf': 127.36667049527, 'hz': 84.641014688015, 'planetDrone_effect_2': 56.868106368184, 'freqPulse2': 241.8301843524, 'freqPulse1': 320.41999649525, 'amp': 0.35, 'planetDrone_effect_3': 1.5654154035449, 'pulseWidth2': 0.31256300210953, 'freqPulse3': 584.63140890598, 'pulseWidth3': 0.30383098125458, 'pulseWidth1': 0.56578725576401, 'freqPulse4': 209.17822036743, 'pulseWidth4': 0.62760746479034 );
+)
+
+(
+~jbPreset = ( 'freqPulse1': 370.46782708168, 'freqPulse2': 387.24766552448,  'freqPulse3': 411.91687524319, 'freqPulse4': 306.09467983246,  'pulseWidth1': 150.56587934494,  'pulseWidth2': 94.839679002762, 'pulseWidth3': 178.42485308647,  'pulseWidth4': 43.195476531983, 'brf': 34.018780231476, 'planetDrone_effect_2': 254.21176478267, 'planetDrone_effect_3': 2.6953571081162, 'hz': 157.48465546131, 'amp': 0.35);
+) // photek 2
+
+(
+~jbPreset = ( 'freqPulse1': 184.17928183079, 'freqPulse2': 387.24766552448, 'freqPulse3': 411.91687524319, 'freqPulse4': 306.09467983246, 'pulseWidth1': 150.56587934494, 'pulseWidth2': 94.839679002762, 'pulseWidth3': 178.42485308647, 'pulseWidth4': 38.195476531983, 'brf': 156.41414856911,  'planetDrone_effect_2': 220.84672480822, 'planetDrone_effect_3':  4.9143203377724, 'hz': 134.17719386816, 'amp': 0.35); // demi-photek
 )
 
 (
@@ -122,14 +131,14 @@ Ndef(\jb,{
 		SinOsc.ar(0.005)
 	);
 
-	mix5 = LPF.ar(PinkNoise.ar(Ndef.ar(\jbMod)), SinOsc.kr(0.1, 0.0, 4000, 8800), 7.5, 0.0);
+	// mix5 = LPF.ar(PinkNoise.ar(Ndef.ar(\jbMod)), SinOsc.kr(0.1, 0.0, 4000, 8800), 7.5, 0.0);
 
 	sig = Mix.ar([
 		mix1,
 		mix2,
 		mix3,
-		mix4,
-		mix5
+		mix4 //,
+		// mix5
 	]);
 
 	// spread the signal
@@ -140,7 +149,10 @@ Ndef(\jb,{
 		LFTri.kr(0.25, 0.0, 0.15, 0.65)
 	);
 
-	sig = Greyhole.ar(sig, delayTime:0.25 + abs(Ndef.kr(\jpMod, 1) * ~jbPreset[\brf]));
+	sig = Greyhole.ar(
+		sig,
+		delayTime:0.25 + (Ndef.kr(\jpMod, 1) * ~jbPreset[\brf])
+	);
 
 	sig = Splay.ar(sig)* ~jbPreset[\amp] * 0.051;
 	sig = Limiter.ar(sig, 0.15);

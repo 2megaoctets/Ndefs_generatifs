@@ -82,8 +82,8 @@ Ndef(\jgg, {
 	srcA = Splay.ar(
 		SinOscFB.ar(
 			SinOscFB.ar(
-				  ~jggPreset[\sine1Div1] , // (10..15),
-				LFPulse.kr(Ndef.kr(\jggMod1))// Phasor.kr(0.0, 10.0, 0.0, 8.0, 8.0)   // 2
+				~jggPreset[\sine1Div1] , // (10..15),
+				Phasor.kr(0.0, 10.0, 0.0, 8.0, 8.0) //LFPulse.kr(Ndef.kr(\jggMod1))   // 2
 			) < 1 * 450 + 90
 			+ SinOsc.ar (
 				freq: ~jggPreset[\sine1Freq] % ~jggPreset[\sine1FreqMod] , // 0.0173 + ~jggPreset[\sine1Freq],

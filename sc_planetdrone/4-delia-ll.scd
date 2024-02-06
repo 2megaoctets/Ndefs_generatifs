@@ -1,3 +1,4 @@
+// 0602 todo: noms et val des args, modulateurs, clean graphe
 // fabien edit en cours
 
 Ndef(\dll).fadeTime_(7);
@@ -17,17 +18,17 @@ Ndef(\dll, {
 	var tardRate = 0.36 + (~dllPreset[\planetDrone_1a] * 4), combs, sig;
 	segments = 4;
 	/*env = EnvGen.kr(
-		Env(
-			levels: { rrand(0.3, 1) } ! segments,
-			times: { 0.5.rand } ! segments - 1,
-			curve: ({ 4.0.rand2 } ! segments - 1) * ~dllPreset[\planetDrone_1a],
-			releaseNode: segments - 2,
-			loopNode: 0
-		),
-		1,
-		~dllPreset[\planetDrone_3a],
-		0.0,
-		~dllPreset[\planetDrone_4a] * 0.01
+	Env(
+	levels: { rrand(0.3, 1) } ! segments,
+	times: { 0.5.rand } ! segments - 1,
+	curve: ({ 4.0.rand2 } ! segments - 1) * ~dllPreset[\planetDrone_1a],
+	releaseNode: segments - 2,
+	loopNode: 0
+	),
+	1,
+	~dllPreset[\planetDrone_3a],
+	0.0,
+	~dllPreset[\planetDrone_4a] * 0.01
 	);*/
 
 	env = Env(
@@ -57,14 +58,20 @@ Ndef(\dll, {
 	) * 1.2;
 	output = (noise + combs) * ~dllPreset[\amp];
 	output = HPF.ar(output, 80);
-	sig = FreeVerb.ar(
-		output ! 2,
-		0.1 + ~dllPreset[\planetDrone_effect_1],
-		0.1 + ~dllPreset[\planetDrone_effect_2]
+	/*	sig = FreeVerb.ar(
+	output ! 2,
+	0.1 + ~dllPreset[\planetDrone_effect_1],
+	0.1 + ~dllPreset[\planetDrone_effect_2]
+	);*/
+	output = FreqShift.ar(
+		Mix.ar(output), // sig ,
+		(10 * (~dllPreset[\planetDrone_effect_3])) / Array.geom(7, 2, 1.3) // (2..8)
 	);
-	sig = FreqShift.ar(
-		sig ,
-		(0 + (~dllPreset[\planetDrone_effect_3] * 0.75)) / (2..8)
+
+	sig = FreeVerb.ar(
+		output,
+		0.1 + ~dllPreset[\planetDrone_effect_1], // mix
+		0.1 + ~dllPreset[\planetDrone_effect_2] // room
 	);
 	sig = Splay.ar(sig) * ~dllPreset[\amp] * 0.5;
 	sig = Limiter.ar(sig, 0.5);

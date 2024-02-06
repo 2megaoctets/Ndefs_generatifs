@@ -1,15 +1,17 @@
+// 0602 changé le graphe, wip rajouter des modulateurs
+
 Ndef(\dooModTest1).fadeTime_(7);
 
 (
-~dooModTest1Preset = (freqstart: , freqend: , freqslope: , modfreqstart: , modfreqend: , modfreqslope: , pmstart: , pmend: , pmslope: , modphasestart: , modphaseend: , modphaseslope: );
+~dooModTest1Preset = ( 'modfreqslope': 52.5, 'pmindexslope': 19, 'modphasestart': 2.0783035340729, 'freqend': 1329, 'freqstart': 3578, 'modfreqstart': 239, 'modphaseend': 0.88910065755973, 'freqslope': 10, 'modphaseslope': 0.15707963267949, 'modfreqend': 804, 'pmindexend': 1046, 'pmindexstart': 147 );
 )
 
 (
-~dooModTest1Preset = (freqstart: 30.1, freqend: 128, freqslope: 3.2, modfreqstart: 20.3, modfreqend: 1, modfreqslope: 1, pmindexstart: 3, pmindexend: 0.1, pmindexslope: pi/10, modphasestart: 3, modphaseend: 2, modphaseslope: 0.25);
+~dooModTest1Preset = (freqstart: 30.1, freqend: 128, freqslope: 43.2, modfreqstart: 20.3, modfreqend: 1, modfreqslope: 100, pmindexstart: 3, pmindexend: 0.1, pmindexslope: 10, modphasestart: 3, modphaseend: 2, modphaseslope: 50.25);
 )
 
 (
-~dooModTest1Preset = (freqstart: rrand(120,4200), freqend: rrand(320,3000), freqslope: 10, modfreqstart: rrand(10,1000), modfreqend: rrand(30,1000), modfreqslope: 2.5, pmindexstart: rrand(10,300), pmindexend: rrand(80,2200), pmindexslope: 1, modphasestart: rrand(0,2pi), modphaseend: rrand(0,3pi), modphaseslope: pi/20);
+~dooModTest1Preset = (freqstart: rrand(120,4200), freqend: rrand(320,3000), freqslope: 10, modfreqstart: rrand(10,1000), modfreqend: rrand(30,1000), modfreqslope: 52.5, pmindexstart: rrand(10,300), pmindexend: rrand(80,2200), pmindexslope: 19, modphasestart: rrand(0,2pi), modphaseend: rrand(0,3pi), modphaseslope: pi/20);
 )
 
 
@@ -115,4 +117,4 @@ Ndef(\doo, {
 
 Ndef(\doo).play(0);
 
-Ndef(\doo).clear(0);
+Ndef(\doo).clear(10);

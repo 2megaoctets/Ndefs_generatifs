@@ -1,30 +1,62 @@
-// reprendre le graphe
+// 0602 correc graphe, valeurs (défactorisation), args: noms et rajouts
+// todo: SinOscFB > moduler feedbacks et phases
+// todo: GVerb > modulateurs kr
 
-Ndef(\jgg).fadeTime_(3);
+Ndef(\jgg).fadeTime_(7);
 
 
 (
-~jggPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1, planetDrone_1b: 0.13, planetDrone_2b: 0.145, planetDrone_3b: 0.2, planetDrone_4b: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~jggPreset = (sine2Freq2: 97.5, sine2Freq1: 0.073, sine2Mul: 119.625, sine1Mul: 3.4, sine1Freq: 0.025, freqShift1: 150, freqDiv: (2..8), freqShift2Mul: 0.125, freqShift2: 80.625, amp: 0.1);
 )
 
 (
-~jggPreset = (planetDrone_1a: rrand(0.01, 0.99), planetDrone_2a: rrand(0.1, 0.95), planetDrone_3a: rrand(0.1, 1), planetDrone_4a: rrand(0.1, 0.9), planetDrone_1b: rrand(0.1, 1), planetDrone_2b: rrand(0.1, 0.95), planetDrone_3b: rrand(0.1, 0.92), planetDrone_4b: rrand(0.1, 0.9),  planetDrone_effect_1: rrand(0.1, 0.93), planetDrone_effect_2: rrand(0.1, 0.925), planetDrone_effect_3: rrand(0.1, 0.9625), hz: rrand(65.41, 300), amp: 0.1, amplag: rrand(0.02, 0.1), hzlag: rrand(0.02, 0.1));
+~jggPreset = (sine2Freq2: rrand(0.01, 750), sine2Freq1: rrand(0.001,1), sine2Mul: rrand(0.1, 825), sine1Mul: rrand(0.1, 17), sine1Freq: rrand(0.1, 0.25),  freqShift1: rrand(0.1, 500), freqDiv: Array.interpolation(7, rrand(1.5,2.7), rrand(7.5,8.5)), freqShift2Mul: rrand(0.1, 0.5), freqShift2: rrand(0.1, 100), amp: 0.1);
 )
 
 
 (
 Ndef(\jgg, {
 
-	var pd_1a = ~sggPreset[\planetDrone_1a] * 750, pd_2a = ~sggPreset[\planetDrone_2a] * 825, pd_3a = ~sggPreset[\planetDrone_3a] * 17, pd_4a = ~sggPreset[\planetDrone_4a] * 0.25, sig, srcA, srcB;
-	srcA = SinOscFB;
-	srcB = 1;
+	var
+	sig, srcA;
 
-	srcA = Splay.ar(srcA.ar(srcA.ar(srcB / (10..15), 2) < srcB * 450 + 90
-		+ SinOsc.ar (freq: 0.0173 + pd_4a, phase: 0.0, mul: pd_3a, add: 0.0)) / 7 + srcA.ar(SinOsc.ar(freq: 0.0073, phase: 0.0, mul: pd_2a, add: 0.0)
-		+ pd_1a + 600 * srcB , srcA.ar(srcA.ar(srcB, 1) > 0.1 + 1, 1.05) % srcB, srcA.ar( 0.1 - srcB, 1.744).min(0)))/2;
 
-	sig = GVerb.ar(
+	srcA = Splay.ar(
+		SinOscFB.ar(
+			SinOscFB.ar(1 / (10..15), 2) < 1 * 450 + 90
+			+ SinOsc.ar (
+				freq: ~jggPreset[\sine1Freq] % 0.0173 , // 0.0173 + ~jggPreset[\sine1Freq],
+				phase: 0.0,
+				mul: ~jggPreset[\sine1Mul],
+				add: 0.0
+			)
+		) / 7
+		+ SinOscFB.ar(
+			SinOsc.ar(
+				freq: ~jggPreset[\sine2Freq1], // 0.0073,
+				phase: 0.0,
+				mul: ~jggPreset[\sine2Mul],
+				add: 0.0
+			)
+			+ ~jggPreset[\sine2Freq2] + 600 ,
+			SinOscFB.ar(
+				SinOscFB.ar(1, 1) > 0.1 + 1, 1.05
+			) % 1,
+			SinOscFB.ar( 0.1 - 1, 1.744).min(0)
+		)
+	)/2;
+
+	srcA = FreqShift.ar(
 		srcA,
+		0.1 + ~jggPreset[\freqShift1]) / (~jggPreset[\freqDiv] +   SinOsc.ar(
+		freq: 0.00025 + (~jggPreset[\freqShift2]),
+		phase: 0.0,
+		mul: ~jggPreset[\freqShift2Mul],
+		add: 0.0
+	)
+	);
+	sig = GVerb.ar(
+		Mix.ar(srcA * 0.5),
 		roomsize: 180,
 		revtime: 30,
 		damping: 0.47,
@@ -36,10 +68,10 @@ Ndef(\jgg, {
 		mul: 0.3
 	);
 
-	sig = FreqShift.ar(
-		Mix.ar(sig * 0.5),
-		0 + ~sggPreset[\planetDrone_effect_1] * 500) / ((2..8)+   SinOsc.ar(freq: 0.00025 + (~sggPreset[\planetDrone_effect_3]), phase: 0.0, mul: ~sggPreset[\planetDrone_effect_2] * 0.25, add: 0.0) );
-	sig = Splay.ar(sig, 1) * ~sggPreset[\amp] * 0.25;
+	sig = HPF.ar(sig, 200);
+
+	sig = Splay.ar(sig, 1) * ~jggPreset[\amp] * 0.15;
+	sig = Limiter.ar(sig, 0.5);
 });
 
 )

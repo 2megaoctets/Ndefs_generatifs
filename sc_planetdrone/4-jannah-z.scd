@@ -14,10 +14,10 @@ Ndef(\jzMod1).fadeTime_(10);
 )
 
 (
-~jzMod1Preset = (freqSlope: 16.1, freqStart: 10.6719, freqEnd: 2.2253, iphaseSlope: 13.63, iphaseStart: 0.19, iphaseEnd: 0.549, widthSlope: 14.2 , widthStart: 0.25, widthEnd: 0.75, mulSlope: 16.34, mulStart: 1, mulEnd: 1, addSlope: 19.4, addStart: 0, addEnd: -0.1);
+~jzMod1Preset = (freqSlope: 16.1, freqStart: 1.6719, freqEnd: 0.22253, iphaseSlope: 13.63, iphaseStart: 0.019, iphaseEnd: 0.549, widthSlope: 14.2 , widthStart: 0.25, widthEnd: 0.75, mulSlope: 16.34, mulStart: 1, mulEnd: 1, addSlope: 19.4, addStart: 0, addEnd: -0.1);
 )
 (
-~jzMod1Preset = (freqSlope: rrand(10, 20.0), freqStart: rrand(0.02, 4.40), freqEnd: rrand(0.20, 4.40), iphaseSlope: rrand(10,30.0), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(10.0,30), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(10.0, 20), mulStart: rrand(0.75,1.5), mulEnd: rrand(0.75,1.6), addSlope: rrand(10.0, 20), addStart: rrand(-0.1,0.4), addEnd: rrand(-0.1,0.4));
+~jzMod1Preset = (freqSlope: rrand(10, 20.0), freqStart: rrand(0.02, 4.40), freqEnd: rrand(0.20, 64.40), iphaseSlope: rrand(10,30.0), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(10.0,30), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(10.0, 20), mulStart: rrand(0.75,1.5), mulEnd: rrand(0.75,1.6), addSlope: rrand(10.0, 20), addStart: rrand(-0.1,0.4), addEnd: rrand(-0.1,0.4));
 )
 
 (
@@ -25,11 +25,11 @@ Ndef(\jzMod1, {
 	VarSaw.kr(
 		Phasor.kr(0.0, ~jzMod1Preset[\freqSlope], ~jzMod1Preset[\freqStart], ~jzMod1Preset[\freqEnd], ~jzMod1Preset[\freqEnd]),
 		Phasor.kr(0.0, ~jzMod1Preset[\iphaseSlope], ~jzMod1Preset[\iphaseStart], ~jzMod1Preset[\iphaseEnd], ~jzMod1Preset[\iphaseEnd]),
-		Phasor.kr(0.0, ~jzMod1Preset[\widthSlope], ~jzMod1Preset[\widthStart], ~jzMod1Preset[\widthEnd], ~jzMod1Preset[\widthEnd]) // ,
-		// Phasor.kr(0.0, ~jzMod1Preset[\mulSlope], ~jzMod1Preset[\mulStart], ~jzMod1Preset[\mulEnd], ~jzMod1Preset[\mulEnd]),
-		// Phasor.kr(0.0, ~jzMod1Preset[\addSlope], ~jzMod1Preset[\addStart], ~jzMod1Preset[\addEnd], ~jzMod1Preset[\addEnd])
+		Phasor.kr(0.0, ~jzMod1Preset[\widthSlope], ~jzMod1Preset[\widthStart], ~jzMod1Preset[\widthEnd], ~jzMod1Preset[\widthEnd])  ,
+		Phasor.kr(0.0, ~jzMod1Preset[\mulSlope], ~jzMod1Preset[\mulStart], ~jzMod1Preset[\mulEnd], ~jzMod1Preset[\mulEnd]),
+		Phasor.kr(0.0, ~jzMod1Preset[\addSlope], ~jzMod1Preset[\addStart], ~jzMod1Preset[\addEnd], ~jzMod1Preset[\addEnd])
 	)
-}).scope;
+});
 )
 
 
@@ -85,7 +85,7 @@ Ndef(\jz,{
 
 	sig = FreqShift.ar(
 		sig,
-		0 + ~jzPreset[\fshiftFreq] ) / (~jzPreset[\divFreqs]
+		10 + ~jzPreset[\fshiftFreq] * Ndef.kr(\jzMod1, 1)) / (~jzPreset[\divFreqs]
 		+ SinOsc.ar(
 			freq: 0.025 + ~jzPreset[\fshiftFreq2] ,
 			phase: 0.0,  //  (abs(Ndef.kr(\jzMod1)) % 1).scope, // 0.0,
@@ -100,7 +100,7 @@ Ndef(\jz,{
 		Phasor.kr(0.0,500,0.75,0.15) // damp
 	);
 
-	sig = HPF.ar(sig, 150);
+	sig = HPF.ar(sig, 130);
 
 	sig = Mix.ar(sig) * ~jzPreset[\amp] * 0.15;
 	sig = Limiter.ar(sig, 0.5);

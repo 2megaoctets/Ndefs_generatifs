@@ -18,10 +18,10 @@ Ndef(\dooMod1).fadeTime_(7);
 (
 Ndef(\dooMod1, {
 	PMOsc.kr(
-		carfreq: Phasor.kr(0.0, ~dooMod1Preset[\freqslope], ~dooMod1Preset[\freqstart], ~dooMod1Preset[\freqend]),
-		modfreq: Phasor.kr(0.0, ~dooMod1Preset[\modfreqslope], ~dooMod1Preset[\modfreqstart], ~dooMod1Preset[\modfreqend]),
-		pmindex: Phasor.kr(0.0, ~dooMod1Preset[\pmindexslope], ~dooMod1Preset[\pmindexstart], ~dooMod1Preset[\pmindexend]),
-		modphase: Phasor.kr(0.0, ~dooMod1Preset[\modphaseslope], ~dooMod1Preset[\modphasestart], ~dooMod1Preset[\modphaseend]),
+		carfreq: Phasor.kr(0.0, ~dooMod1Preset[\freqslope], ~dooMod1Preset[\freqstart], ~dooMod1Preset[\freqend], ~dooMod1Preset[\freqend]),
+		modfreq: Phasor.kr(0.0, ~dooMod1Preset[\modfreqslope], ~dooMod1Preset[\modfreqstart], ~dooMod1Preset[\modfreqend], ~dooMod1Preset[\modfreqend]),
+		pmindex: Phasor.kr(0.0, ~dooMod1Preset[\pmindexslope], ~dooMod1Preset[\pmindexstart], ~dooMod1Preset[\pmindexend], ~dooMod1Preset[\pmindexend]),
+		modphase: Phasor.kr(0.0, ~dooMod1Preset[\modphaseslope], ~dooMod1Preset[\modphasestart], ~dooMod1Preset[\modphaseend], ~dooMod1Preset[\modphaseend),
 	)
 });
 )

@@ -1,21 +1,62 @@
+// 1002 refonte, pas ouf
+
+Ndef(\jh).fadeTime_(10);
+
 (
-~jhPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~jhPreset = ( 'freq2_2': 248.1715965271, 'freqFactor1': 30.970663397312, 'freqFactor2': 43.801362544298, 'freq1_1': 245.29930114746, 'freq1_2': 310.42667961121, 'freq2_1': 160.68777751923, 'modFreq': 0.07014747440815, 'fbLfo1': 0.95554893016815, 'fbLfo2': 0.73493455648422, 'panLfo': 2.4287336349487, 'amp': 0.1 );
+)
+
+(
+~jhPreset = (freq1_1: rrand(60.0, 260), freq1_2: rrand(51.0, 362), freq2_1: rrand(121.0, 242), freq2_2: rrand(160.0,320),  freqFactor1: rrand(0.03, 120), freqFactor2: rrand(0.25, 80), modFreq: rrand(0.045, 0.09), fbLfo1: rrand(0.1,1), fbLfo2: rrand(0.1,1), panLfo: rrand(0.1,2.5), amp: 0.1);
 )
 
 (
 Ndef(\jh,{
-	var sig;
-	l=LFNoise2;
-	sig = FreeVerb2.ar( * XFade2.ar(
-		SinOscFB.ar(
-			[80 + (~jhPreset[\planetDrone_1a] * 80) + (SinOsc.ar(0.0075 * (1 + ~jhPreset[\planetDrone_effect_3] * 6)) * (~jhPreset[\planetDrone_effect_1] * 160)) ,
-				81 + (~jhPreset[\planetDrone_2a] * 81) - (SinOsc.ar(0.0075 * (1 + ~jhPreset[\planetDrone_effect_3] * 6)) * (~jhPreset[\planetDrone_effect_1] * 121)) ], l.kr(1) + 1/2), SinOscFB.ar(
-			[121+(~jhPreset[\planetDrone_3a] * 121) + (SinOsc.ar(0.0075 * (1 + ~jhPreset[\planetDrone_effect_3] * 6)) * (~jhPreset[\planetDrone_effect_2] * 81)) ,
-				160 + (~jhPreset[\planetDrone_4a] * 160) - (SinOsc.ar(0.0075 * (1 + ~jhPreset[\planetDrone_effect_3] * 6)) * (~jhPreset[\planetDrone_effect_2] * 80)) ], l.kr(1) + 1/2),l.kr(1)));
+	var sig1, sig2, sig;
+
+	sig1 = SinOscFB.ar(
+		[
+			~jhPreset[\freq1_1]
+			+
+			(SinOsc.ar(~jhPreset[\modFreq] )
+			* (~jhPreset[\freqFactor1] * 1.5)
+			) ,
+			~jhPreset[\freq1_2]
+			-
+			(SinOsc.ar(~jhPreset[\modFreq] )
+			* (~jhPreset[\freqFactor1] + 1)
+			)
+		], // freq
+		LFNoise2.kr(~jhPreset[\fbLfo1], 0.5, 0.5) //+ 1/2 // feedback
+	);
+
+	sig2 = SinOscFB.ar(
+		[
+			~jhPreset[\freq2_1]
+			+
+			(SinOsc.ar(~jhPreset[\modFreq])
+			* (~jhPreset[\freqFactor2] + 1)
+			) ,
+			~jhPreset[\freq2_2]
+			-
+			(SinOsc.ar(~jhPreset[\modFreq])
+			* ~jhPreset[\freqFactor2]
+			)
+		], // freq
+		LFNoise2.kr(~jhPreset[\fbLfo2], 0.5, 0.5) // + 1/2 // feedback
+	);
+
+	sig = FreeVerb2.ar(
+		* XFade2.ar(
+			sig1,
+			sig2,
+			LFNoise2.kr(~jhPreset[\panLfo]) // pan
+		)
+	);
 
 	// Ndef('jh'): wrapped channels from 2 to 1 channels
-
-	sig = Splay.ar(sig, 2, 1, 0.5);
+	sig= Splay.ar(sig, 1);
+	// sig = Splay.ar(sig, 2, 1, 0.5);
 
 	sig = sig * ~jhPreset[\amp] * 0.5;
 });

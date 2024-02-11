@@ -1,22 +1,78 @@
+// 1002 graphe, args, range
+
+Ndef(\dpp).fadeTime_(10);
+
 (
-~dppPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~dppPreset = ( 'freqDivArray': [ 4.4749206224682, 4.7794763345813, 6.1969742817072, 4.656883172788, 7.5378502406348, 3.7080457222534 ], 'filterDiv': [ 8.1898486895714 ], 'verbMix': 0.60674115419388, 'filterFreq1': 0.016161677837372, 'freqArray': [ 4.0608569537844, 6.6641133595435, 2.548936683098, 4.5630779756183 ], 'amp': 0.25, 'freqShift1': 263, 'filterFreq3': 1.7298840975761, 'decayTime': 3.7049140930176, 'verbRoom': 0.47707213163376, 'filterFreq2': 27.742013931274, 'freqShiftLfo': 2.3634232473373, 'freqShift2': 5.6978397369385 );
+)
+
+(
+~dppPreset = ( 'freqDivArray': [ 5.9184138142506, 3.3936378068786, 3.3112209641515, 3.007798296852, 3.4065304806991, 3.8002960596875, 2.5910823476137, 4.2542476443493, 2.7745238918426 ], 'filterDiv': [ 6.7513216444908, 8.4517676911554 ], 'verbMix': 0.21527725458145, 'filterFreq1': 0.29263737797737, 'freqArray': [ 5.8233305095959, 5.0020883653019 ], 'amp': 0.25, 'freqShift1': 22, 'filterFreq3': 2.2581126081944, 'decayTime': 12.28006196022, 'verbRoom': 0.58604066371918, 'filterFreq2': 30.968594789505, 'freqShiftLfo': 0.90126663804054, 'freqShift2': 7.8353214263916 );
+)
+
+(
+~dppPreset = ( 'freqDivArray': [ 5.159002615399, 4.9744054380461, 4.0869878241147, 4.7509872205191, 5.4752087445202, 5.9756690556798, 5.4241627370145 ], 'filterDiv': [ 8.140913733261, 10.123351384178 ], 'verbMix': 0.14972410202026, 'filterFreq1': 0.7850957596302, 'freqArray': [ 5.297789927541, 4.212414865972, 6.3336749253635 ], 'amp': 0.25, 'freqShift1': 31, 'filterFreq3': 0.24542597174644, 'decayTime': 7.2907735109329, 'verbRoom': 0.73424540758133, 'filterFreq2': 92.192507743835, 'freqShiftLfo': 0.95303933024406, 'freqShift2': 1.3186931610107 );
+)
+
+(
+~dppPreset = ( 'freqDivArray': [ 3.6302051122754, 6.1470895027859, 6.3492406334529, 3.1593567512027, 3.0058722467307 ], 'filterDiv': [ 8.3826489753459, 8.8630836543838 ], 'verbMix': 0.60417634248734, 'filterFreq1': 0.40796319246292, 'freqArray': [ 4.7083842054425, 3.6294683655345, 6.2311351695123, 5.7085082038451 ], 'amp': 0.25, 'freqShift1': 107, 'filterFreq3': 2.346172015667, 'decayTime': 4.2137583494186, 'verbRoom': 0.1025664806366, 'filterFreq2': 1.9133269786835, 'freqShiftLfo': 0.20844437479973, 'freqShift2': 6.8919010162354 );
+)
+
+(
+~dppPreset = ( 'freqDivArray': [ 5.0279458254154, 3.7630193568439, 4.7549211543042, 4.5524609575486, 4.0170930566865, 3.7708469283048, 4.5356620301704, 3.7012529933645 ], 'filterDiv': [ 9.4400297923485, 7.9771385378437, 8.1036934514408 ], 'verbMix': 0.29120572805405, 'filterFreq1': 0.41111413359642, 'freqArray': [ 8.590148537212, 8.0222728976182, 6.8247345071293, 5.9607654478754 ], 'amp': 0.25, 'freqShift1': 480, 'filterFreq3': 0.56741235375404, 'decayTime': 11.819364786148, 'verbRoom': 0.72569998502731, 'filterFreq2': 97.151791810989, 'freqShiftLfo': 1.5977966189384, 'freqShift2': 4.8496742248535 );
+)
+
+(
+Post << ~dppPreset = (filterFreq1: rrand(0.01,1), filterFreq2: rrand(1.0,99), decayTime: rrand(3.0,14), freqShift2: rrand(0.0,8),  verbMix: rrand(0.1,0.8), verbRoom: rrand(0.1,0.8), freqShift1: rrand(0,500), freqArray: Array.rand(rrand(2,5),rrand(2.0,5),rrand(6.0,10)), freqDivArray: Array.rand(rrand(5,9), rrand(2.0,4), rrand(5.0,10)), freqShiftLfo: rrand(0.01,2.5), amp: 0.25, filterDiv: Array.rand(rrand(1,3), rrand(5.0,8), rrand(10.0,13)), filterFreq3: rrand(0.01,2.5));
 )
 
 (
 Ndef(\dpp,{
 	var sig ;
-	a=LFTri;
-	b=[3,4,8];
+	sig = Formlet.ar(
+		LFTri.ar(~dppPreset[\freqArray] * 99 + 99), // in
+		LFTri.ar(~dppPreset[\freqArray]
+			+ SinOsc.ar(
+			freq: ~dppPreset[\filterFreq3] ,
+			phase: 0.0,
+			mul: abs(~dppPreset[\freqShift2] * 4),
+			add: 0.0)
+		)
+		+ (LFTri.ar(
+			0.05 + ~dppPreset[\filterFreq1] ,
+			0.0,
+			9,
+			20 ) // 175 )
+		)
+		+ (~dppPreset[\filterFreq2]), // freq
+		1 , // attacktime
+		LFTri.ar(~dppPreset[\freqArray] / 6.011 + ~dppPreset[\decayTime] ) % 1 // decaytime
+	) / ~dppPreset[\filterDiv];
+
+	sig = Mix.ar(sig);
+
 	sig = FreqShift.ar(
-		FreeVerb.ar(
-				Formlet.ar(a.ar(b*99+99),a.ar(b + SinOsc.ar(freq: 0.03, phase: 0.0, mul: abs(~dppPreset[\planetDrone_4a] * 4), add: 0.0)).round(a.ar(0.05 + ~dppPreset[\planetDrone_1a]).round(1/3)) * 99 + 175 + (~dppPreset[\planetDrone_2a] * 99), 1 , a.ar(b/6.011 + (~dppPreset[\planetDrone_3a] * 7))%1)/9,
-			0.1 + ~dppPreset[\planetDrone_effect_1], 0.1 + ~dppPreset[\planetDrone_effect_2]),
-		(0 + (~dppPreset[\planetDrone_effect_3] *500)) + SinOsc.ar(freq: 0.03, phase: 0.0, mul: (~dppPreset[\planetDrone_4a]*8), add: 0.0) / (2..9));
+		Splay.ar(sig, 1),
+		~dppPreset[\freqShift1]  + SinOsc.ar(
+			freq: ~dppPreset[\freqShiftLfo],
+			phase: 0.0,
+			mul: ~dppPreset[\freqShift2],
+			add: 0.0
+		) / ~dppPreset[\freqDivArray]
+	); // freqshift
+
+	sig =	FreeVerb.ar(
+		Mix.ar(sig),
+		0.1 + ~dppPreset[\verbMix],  // mix
+		0.1 + ~dppPreset[\verbRoom] // room
+	); // freeverb
+
+
 	sig = Splay.ar(sig, 1);
 	sig = sig * ~dppPreset[\amp] * 0.25;
- });
+});
 )
 
 Ndef(\dpp).play(0);
 
-Ndef(\dpp).clear(0);
+Ndef(\dpp).clear(1);

@@ -1,5 +1,7 @@
 // 0602 gros chantier. niveaux? filtrer gendy?
 
+// garder mais adoucir 1102
+
 // réécrit. à voir ce qu'on peut en faire
 
 Ndef(\jffMod1).fadeTime_(10);
@@ -52,9 +54,9 @@ Ndef(\jff).fadeTime_(6);
 
 (
 ~jffPreset = ('freqShiftDiv': [ 12.279811579661, 20.082879650414, 17.759214353707, 13.214534060279, 4.352185374814, 4.4811572824518, 12.767662052244, 2.3220366461122 ], 'revTimeFreq': 4.4191006064415, 'roomSize': 4.8549469709396, 'gendyMinFreq': 54.242159605026,
-  'modFreq': 0.81653506845713, 'klankFreqArray': [ 105.7068680368, 269.00516424963, 277.6734986618, 117.52005704529, 111.44927501412 ], 'gendyMaxFreqMod': 1.1988924117088, 'amp': 0.1, 'dustFreq1': 46630.616593367,
-  'gendyMaxFreq': 1317.7432374597, 'modMul': 0.26876306843758, 'klankRingArray': [ 0.13049947402177, 0.21749980891942, 0.11647686021289, 0.24318869845574, 0.22773363712793 ], 'dustFreq2': 684.97200548589, 'roomSizeFreq': 2.5315667510033,
-  'gendyMaxFreqModMul': 1300.4104803801, 'freqShift': 6.9002995729446, 'revTime': 2.6227597594261, 'gendyMaxFreqModAdd': 680.617649436 );
+	'modFreq': 0.81653506845713, 'klankFreqArray': [ 105.7068680368, 269.00516424963, 277.6734986618, 117.52005704529, 111.44927501412 ], 'gendyMaxFreqMod': 1.1988924117088, 'amp': 0.1, 'dustFreq1': 46630.616593367,
+	'gendyMaxFreq': 1317.7432374597, 'modMul': 0.26876306843758, 'klankRingArray': [ 0.13049947402177, 0.21749980891942, 0.11647686021289, 0.24318869845574, 0.22773363712793 ], 'dustFreq2': 684.97200548589, 'roomSizeFreq': 2.5315667510033,
+	'gendyMaxFreqModMul': 1300.4104803801, 'freqShift': 6.9002995729446, 'revTime': 2.6227597594261, 'gendyMaxFreqModAdd': 680.617649436 );
 )
 
 (
@@ -105,8 +107,13 @@ Ndef(\jff,{
 			phase: 0.0,
 			mul: ~jffPreset[\gendyMaxFreqModMul] , // 360, // 3,
 			add: ~jffPreset[\gendyMaxFreqModMul] + ~jffPreset[\gendyMaxFreqModAdd] // 130 // 0.0
-		) * Ndef.kr(\jffMod1),
-		)
+		)) * Ndef.kr(\jffMod1),
+		ampscale: 0.5,
+		durscale: 0.5,
+		initCPs: 12,
+		knum: Ndef.kr(\jffMod1),
+		mul: 1.0,
+		add: 0.0
 	);
 	sig = Klank.ar(
 		`[
@@ -128,12 +135,12 @@ Ndef(\jff,{
 	);
 	sig= LPF.ar(sig, 7000);
 
-	sig = FreqShift.ar(
+	/*sig = FreqShift.ar(
 		sig,
 		~jffPreset[\freqShift] + LFPulse.kr(Ndef.kr(\jffMod1), 0.0, 0.5, 170, 170),
 		0.0,
 		0.1// 170
-	) / (~jffPreset[\freqShiftDiv] + mod);
+	) / (~jffPreset[\freqShiftDiv] + mod);*/
 
 	sig = GVerb.ar(
 		Mix.ar(sig * 0.5),
@@ -152,7 +159,7 @@ Ndef(\jff,{
 
 	sig= HPF.ar(sig, 200);
 
-	sig = sig * ~jffPreset[\amp] * 0.01251;
+	sig = sig * ~jffPreset[\amp] * 0.001251;
 
 	sig = Limiter.ar(sig, 0.25);
 

@@ -82,7 +82,7 @@ Ndef(\jz,{
 		taillevel:  0.65,
 		maxroomsize: 401
 	);
-
+/*
 	sig = FreqShift.ar(
 		sig,
 		10 + ~jzPreset[\fshiftFreq] * Ndef.kr(\jzMod1, 1)) / (~jzPreset[\divFreqs]
@@ -91,7 +91,7 @@ Ndef(\jz,{
 			phase: 0.0,  //  (abs(Ndef.kr(\jzMod1)) % 1).scope, // 0.0,
 			mul: ~jzPreset[\fshiftGain]
 		)
-	);
+	);*/
 
 	sig = FreeVerb.ar(
 		sig,

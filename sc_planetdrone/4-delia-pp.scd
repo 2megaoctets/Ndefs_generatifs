@@ -1,3 +1,4 @@
+// validé, rajoute des mods
 // 1002 graphe, args, range
 
 Ndef(\dpp).fadeTime_(10);
@@ -31,7 +32,7 @@ Ndef(\dpp,{
 	var sig ;
 	sig = Formlet.ar(
 		LFTri.ar(~dppPreset[\freqArray] * 99 + 99), // in
-		LFTri.ar(~dppPreset[\freqArray]
+		(LFTri.ar(~dppPreset[\freqArray]
 			+ SinOsc.ar(
 			freq: ~dppPreset[\filterFreq3] ,
 			phase: 0.0,
@@ -44,7 +45,7 @@ Ndef(\dpp,{
 			9,
 			20 ) // 175 )
 		)
-		+ (~dppPreset[\filterFreq2]), // freq
+		+ (~dppPreset[\filterFreq2])).max(20).min(16000), // freq
 		1 , // attacktime
 		LFTri.ar(~dppPreset[\freqArray] / 6.011 + ~dppPreset[\decayTime] ) % 1 // decaytime
 	) / ~dppPreset[\filterDiv];
@@ -57,7 +58,7 @@ Ndef(\dpp,{
 			freq: ~dppPreset[\freqShiftLfo],
 			phase: 0.0,
 			mul: ~dppPreset[\freqShift2],
-			add: 0.0
+			add: ~dppPreset[\freqShift2] / 2 // 0.0
 		) / ~dppPreset[\freqDivArray]
 	); // freqshift
 
@@ -75,4 +76,4 @@ Ndef(\dpp,{
 
 Ndef(\dpp).play(0);
 
-Ndef(\dpp).clear(1);
+Ndef(\dpp).clear(10);

@@ -1,3 +1,4 @@
+// 1102 modèle randseed
 // fabien l'a fait
 // 0202 ajout HPF en amont de gverb, args nommés, ajout envs dans les args, moins d'opérations, edit gverb, ajout mod (?)
 
@@ -49,7 +50,7 @@ Ndef(\sd).fadeTime_(7);
 )
 
 (
-~sdPreset = (random2: rrand(0.25, 0.8), random4: rrand(1.0, 251), random1: rrand(0.0001, 0.00021), random3: rrand(1.01, 1.9), dryLevel: rrand(-3.96, 0.0), earlyRef: rrand(-3, 0.925), tailLevel: rrand(0.90125, 2.15), hz: rrand(65.41, 300), envs: rrand(30,99), hpfLfo: rrand(0.01, 3), hpfFreq: rrand(150, 1500), randSeed: 10000000.rand, amp: 0.3);
+~sdPreset = (random2: rrand(0.25, 0.8), random4: rrand(1.0, 251), random1: rrand(0.0001, 0.00021), random3: rrand(1.01, 1.9), dryLevel: rrand(-3.96, 0.0), earlyRef: rrand(-3, 0.925), tailLevel: rrand(0.90125, 2.15), hz: rrand(65.41, 300), envs: rrand(30,99), hpfLfo: rrand(0.01, 3), hpfFreq: rrand(150, 1500), randSeed: 10000000.rand, amp: 0.1);
 )
 
 
@@ -57,8 +58,8 @@ Ndef(\sd).fadeTime_(7);
 Ndef(\sd, {
 
 	var sig;
-	~sdPreset[\randSeed] ?? ({ ~sdPreset[\randSeed] = 10000000; });
-	thisThread.randSeed = ~sdPreset[\randSeed].debug("randSeed");
+	~sdPreset[\randSeed] ?? ({ ~sdPreset[\randSeed] = 10000000.rand.debug("randSeed"); });
+	thisThread.randSeed = ~sdPreset[\randSeed];
 
 	sig = EnvGen.ar(
 		Env(

@@ -7,7 +7,7 @@ Ndef(\st).fadeTime_(7);
 )
 
 (
-~stPreset = (planetDrone_1a: rrand(0.1,1.7), planetDrone_2a: rrand(0.1,0.8), planetDrone_3a: rrand(0,0.82), planetDrone_4a: rrand(0.1,1),  planetDrone_effect_1: rrand(0.01,1), planetDrone_effect_2: rrand(0.01,0.99), planetDrone_effect_3: rrand(0.01,0.99), ascii1: , ascii2: , ascii3: , amp: 0.1);
+~stPreset = (planetDrone_1a: rrand(0.1,1.7), planetDrone_2a: rrand(0.1,0.8), planetDrone_3a: rrand(0,0.82), planetDrone_4a: rrand(0.1,1),  planetDrone_effect_1: rrand(0.01,1), planetDrone_effect_2: rrand(0.01,0.99), planetDrone_effect_3: rrand(0.01,0.99), ascii1: rrand(1,999999), ascii2: rrand(0,999), ascii3: rrand(1,200000), amp: 0.1);
 )
 
 (
@@ -16,9 +16,9 @@ Ndef(\st,{
 
 	// a=Saw;
 	sig = BBandPass.ar(
-		Saw.ar( ~stPreset[\ascii1].ascii),
-		Saw.ar((2 + (~stPreset[\planetDrone_4a] * 45)) / ~stPreset[\ascii2]Char.ascii) * 1000 + (800 + (~stPreset[\planetDrone_1a] * 475)),
-		Saw.ar((~stPreset[\planetDrone_3a] * 30)/~stPreset[\ascii3].ascii)+(0.0162+abs(~stPreset[\planetDrone_2a] * 0.75))
+		Saw.ar( ~stPreset[\ascii1].asString.ascii),
+		Saw.ar((2 + (~stPreset[\planetDrone_4a] * 45)) / ~stPreset[\ascii2].asString.ascii) * 1000 + (800 + (~stPreset[\planetDrone_1a] * 475)),
+		Saw.ar((~stPreset[\planetDrone_3a] * 30)/~stPreset[\ascii3].asString.ascii)+(0.0162+abs(~stPreset[\planetDrone_2a] * 0.75))
 			);
 
 	sig = Splay.ar(sig * 0.15, 1 /*/1.75*/);

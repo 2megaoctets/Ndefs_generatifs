@@ -21,7 +21,7 @@ Ndef(\dooMod1, {
 		carfreq: Phasor.kr(0.0, ~dooMod1Preset[\freqslope], ~dooMod1Preset[\freqstart], ~dooMod1Preset[\freqend], ~dooMod1Preset[\freqend]),
 		modfreq: Phasor.kr(0.0, ~dooMod1Preset[\modfreqslope], ~dooMod1Preset[\modfreqstart], ~dooMod1Preset[\modfreqend], ~dooMod1Preset[\modfreqend]),
 		pmindex: Phasor.kr(0.0, ~dooMod1Preset[\pmindexslope], ~dooMod1Preset[\pmindexstart], ~dooMod1Preset[\pmindexend], ~dooMod1Preset[\pmindexend]),
-		modphase: Phasor.kr(0.0, ~dooMod1Preset[\modphaseslope], ~dooMod1Preset[\modphasestart], ~dooMod1Preset[\modphaseend], ~dooMod1Preset[\modphaseend),
+		modphase: Phasor.kr(0.0, ~dooMod1Preset[\modphaseslope], ~dooMod1Preset[\modphasestart], ~dooMod1Preset[\modphaseend], ~dooMod1Preset[\modphaseend])
 	)
 });
 )
@@ -106,8 +106,8 @@ Ndef(\doo, {
 		pos: SinOsc.ar(
 			freq: LFPulse.kr(0.0125 + ~dooPreset[\panpos]),
 			phase: 0.0,
-			mul: 0.5 + LFPulse.kr(~dooPreset[\panmul]) ,
-			add: 0.0
+			mul:  LFPulse.kr(~dooPreset[\panmul]) ,
+			add: LFPulse.kr(~dooPreset[\panmul]) / 2
 		)
 	);
 	sig= HPF.ar(sig, 180);

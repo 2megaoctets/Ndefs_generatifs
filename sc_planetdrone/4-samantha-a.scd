@@ -68,10 +68,10 @@ Ndef(\sa,{
 		),
 		0.5
 	);
-	sig = FreqShift.ar(
+/*	sig = FreqShift.ar(
 		sig,
 		abs(~saPreset[\planetDrone_effect_3] * 8) / ~saPreset[\freqShiftDivArray] // (4..16)
-	);
+	);*/
 	sig = FreeVerb.ar(
 
 		sig,

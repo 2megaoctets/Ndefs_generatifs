@@ -48,7 +48,7 @@ Ndef(\dll, {
 	chain = FFT(LocalBuf(256), noise);
 	chain = PV_BinShift(chain, SinOsc.kr(tardRate * 0.986, 0.7).range(0.96, 1.052), SinOsc.kr(tardRate * 1.003, 0.61).range(-3, 2.1));
 	chain = PV_BinScramble(chain, 0.05, 0.1, 1.0 );
-	noise = IFFT(chain);
+	noise = IFFT(chain, 1, 256);
 	noise = noise.fold(-0.5, 0.5);
 	combs = Mix.ar(
 		[

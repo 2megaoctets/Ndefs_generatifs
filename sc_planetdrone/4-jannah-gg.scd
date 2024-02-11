@@ -1,3 +1,4 @@
+// on le garde 1102
 // 0602 correc graphe, valeurs (défactorisation), args: noms et rajouts
 // 0602 SinOscFB > moduler feedbacks et phases
 // 0602 GVerb > modulateurs kr
@@ -29,7 +30,7 @@ Ndef(\jggMod1).fadeTime_(10);
 )
 
 (
-~jggMod1Preset = (freqSlope: rrand(1.0,20), freqStart: rrand(1.0,440), freqEnd: rrand(1.0,440), feedbackSlope: rrand(1.0,30), feedbackStart: rrand(0.0,4pi), feedbackEnd: rrand(0.0,4pi), mulSlope: rrand(1.0,30), mulStart: rrand(0.75,3), mulEnd: rrand(0.75,3), addSlope: rrand(1.0,30), addStart: rrand(0.76,3), addEnd: rrand(0.76,3));
+~jggMod1Preset = (freqSlope: rrand(10,2000), freqStart: rrand(1.0,440), freqEnd: rrand(1.0,440), feedbackSlope: rrand(1.0,30), feedbackStart: rrand(0.0,4pi), feedbackEnd: rrand(0.0,4pi), mulSlope: rrand(1.0,30), mulStart: rrand(0.75,3), mulEnd: rrand(0.75,3), addSlope: rrand(1.0,30), addStart: rrand(0.76,3), addEnd: rrand(0.76,3));
 )
 
 (
@@ -76,7 +77,7 @@ Post << ~jggPreset = (sine2Freq2: rrand(0.01, 750), sine2Freq1: Array.geom(rrand
 Ndef(\jgg, {
 
 	var
-	sig, srcA;
+	sig, srcA, srcB;
 
 
 	srcA = Splay.ar(
@@ -84,7 +85,7 @@ Ndef(\jgg, {
 			SinOscFB.ar(
 				~jggPreset[\sine1Div1] , // (10..15),
 				Phasor.kr(0.0, 10.0, 0.0, 8.0, 8.0) //LFPulse.kr(Ndef.kr(\jggMod1))   // 2
-			) < 1 * 450 + 90
+			) < ~jggPreset[\sine1Div2] /*1*/ * 450 + 90
 			+ SinOsc.ar (
 				freq: ~jggPreset[\sine1Freq] % ~jggPreset[\sine1FreqMod] , // 0.0173 + ~jggPreset[\sine1Freq],
 				phase: 0.0,
@@ -101,27 +102,32 @@ Ndef(\jgg, {
 			)
 			+ ~jggPreset[\sine2Freq2] + 600 ,
 			SinOscFB.ar(
-				SinOscFB.ar(1, 1) > 0.1 + 1,
+				SinOscFB.ar(1, 1) > ~jggPreset[\sine2Fb2] , // 0.1 + 1,
 				abs(VarSaw.kr(~jggPreset[\sine2Fb2]))
-			) % 1,
+			) /*% 1*/,
 			SinOscFB.ar(
-				0.1 - 1,
+				(0.1 - 1) * Ndef.kr(\jggMod1, 1),
 				LFPulse.kr(~jggPreset[\sine2Fb2])
-			).min(0.01)
+			).min(~jggPreset[\sine2Fb2]) // (0.01)
 		)
 	) / ~jggPreset[\srcADiv]; // 2;
 
-	srcA = FreqShift.ar(
+	srcB = FreqShift.ar(
 		srcA,
 		0.1 + ~jggPreset[\freqShift1]) / (~jggPreset[\freqDiv] +   SinOsc.ar(
 		freq: 0.00025 + (~jggPreset[\freqShift2]),
 		phase: 0.0,
 		mul: ~jggPreset[\freqShift2Mul],
-		add: 0.0
-	)
+		add: ~jggPreset[\freqShift2Mul] / 2 // 0.0
+	));
+
+	sig = SelectX.ar(
+		LFTri.kr(0.15).abs.poll, // which // arg sur lfo freq?
+		[srcA * 0.2, srcB]
 	);
+
 	sig = GVerb.ar(
-		Mix.ar(srcA * 0.5),
+		Mix.ar(sig * 0.5),
 		roomsize: LFPulse.kr(
 			~jggPreset[\roomLfoFreq],
 			0.0,

@@ -13,51 +13,32 @@ Ndef(\jhh).fadeTime_(7);
 )
 
 (
-~jhhPreset =
+~jhhPreset = ( 'm3Ratio': 3, 'm2Ratio': 2, 'ampM': 0.84, 'freqShift2': 0.25, 'f1Freq': 0.1, 'freqShiftLfo': 2.1681439399719, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 14.507520401478, 'freqShift1': 469.23752343655, 'f3Freq': 2.2, 'freq1': 138.74888308048, 'nFreq': 40, 'pan': 0, 'freq2': 189.9374063611, 'freq3': 105.71104279757, 'freqDivArray': [ 2, 3, 4, 5, 6, 7, 8 ], 'f2Freq': 1.1 );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 4, 'm2Ratio': 1, 'ampM': 0.88682844638824, 'freqShift2': 3.5274397134781,
-  'f1Freq': 0.45523629784584, 'freqShiftLfo': 1.3497036933899, 'amp': 0.1, 'm1Ratio': 3, 'mulBase': 33.554689979553,
-  'freqShift1': 237.40975403786, 'f3Freq': 0.82163798809052, 'freq1': 45.778853833675, 'nFreq': 50, 'pan': 0,
-  'freq2': 4.5695507526398, 'freq3': 112.29855012894, 'freqDivArray': [ 7, 7, 3, 6, 5, 5, 4, 6 ], 'f2Freq': 0.44539256095886 )
-
+~jhhPreset = ( 'm3Ratio': 4, 'm2Ratio': 1, 'ampM': 0.88682844638824, 'freqShift2': 3.5274397134781,'f1Freq': 0.45523629784584, 'freqShiftLfo': 1.3497036933899, 'amp': 0.1, 'm1Ratio': 3, 'mulBase': 33.554689979553,'freqShift1': 237.40975403786, 'f3Freq': 0.82163798809052, 'freq1': 45.778853833675, 'nFreq': 50, 'pan': 0,'freq2': 4.5695507526398, 'freq3': 112.29855012894, 'freqDivArray': [ 7, 7, 3, 6, 5, 5, 4, 6 ], 'f2Freq': 0.44539256095886 );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 2, 'm2Ratio': 3, 'ampM': 0.66806688308716, 'freqShift2': 17.341608405113,
-  'f1Freq': 0.10953975200653, 'freqShiftLfo': 0.13606057167053, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 8.332985162735,
-  'freqShift1': 153.46301519871, 'f3Freq': 0.7083624601364, 'freq1': 47.722559869289, 'nFreq': 48, 'pan': 0,
-  'freq2': 98.316177785397, 'freq3': 7.6408414244652, 'freqDivArray': [ 5, 4, 7, 9, 5, 4, 4 ], 'f2Freq': 0.17092581987381 )
+~jhhPreset = ( 'm3Ratio': 2, 'm2Ratio': 3, 'ampM': 0.66806688308716, 'freqShift2': 17.341608405113, 'f1Freq': 0.10953975200653, 'freqShiftLfo': 0.13606057167053, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 8.332985162735,'freqShift1': 153.46301519871, 'f3Freq': 0.7083624601364, 'freq1': 47.722559869289, 'nFreq': 48, 'pan': 0, 'freq2': 98.316177785397, 'freq3': 7.6408414244652, 'freqDivArray': [ 5, 4, 7, 9, 5, 4, 4 ], 'f2Freq': 0.17092581987381 );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.42721357345581, 'freqShift2': 8.0218099355698,
-  'f1Freq': 0.8168498301506, 'freqShiftLfo': 0.81952493190765, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 78.589802575111,
-  'freqShift1': 240.38337147236, 'f3Freq': 0.3849713802338, 'freq1': 27.55929005146, 'nFreq': 44, 'pan': 0,
-  'freq2': 8.4778874516487, 'freq3': 35.793907761574, 'freqDivArray': [ 4, 6, 4, 8, 7, 9 ], 'f2Freq': 0.90983035564423 )
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.42721357345581, 'freqShift2': 8.0218099355698, 'f1Freq': 0.8168498301506, 'freqShiftLfo': 0.81952493190765, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 78.589802575111, 'freqShift1': 240.38337147236, 'f3Freq': 0.3849713802338, 'freq1': 27.55929005146, 'nFreq': 44, 'pan': 0, 'freq2': 8.4778874516487, 'freq3': 35.793907761574, 'freqDivArray': [ 4, 6, 4, 8, 7, 9 ], 'f2Freq': 0.90983035564423 )
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 2, 'ampM': 0.40484269857407, 'freqShift2': 3.3521645069122,
-  'f1Freq': 0.14236243605614, 'freqShiftLfo': 3.4245929956436, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 66.335150074959,
-  'freqShift1': 473.16766667366, 'f3Freq': 1.7057373523712, 'freq1': 74.937063753605, 'nFreq': 34, 'pan': 0,
-  'freq2': 59.230100035667, 'freq3': 160.9641174078, 'freqDivArray': [ 7, 4, 6, 6, 5, 7 ], 'f2Freq': 0.64836958646774 )
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 2, 'ampM': 0.40484269857407, 'freqShift2': 3.3521645069122, 'f1Freq': 0.14236243605614, 'freqShiftLfo': 3.4245929956436, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 66.335150074959, 'freqShift1': 473.16766667366, 'f3Freq': 1.7057373523712, 'freq1': 74.937063753605, 'nFreq': 34, 'pan': 0, 'freq2': 59.230100035667, 'freq3': 160.9641174078, 'freqDivArray': [ 7, 4, 6, 6, 5, 7 ], 'f2Freq': 0.64836958646774 );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971,
-  'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892,
-  'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0,
-  'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886 )
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971, 'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892, 'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0, 'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886 )
 )
 
 
 (
-~jhhPreset = ( 'm3Ratio': 3, 'm2Ratio': 2, 'ampM': 0.84, 'freqShift2': 0.25,
-  'f1Freq': 0.1, 'freqShiftLfo': 2.2963443756104, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 46.234755086899,
-  'freqShift1': 305.01697397232, 'f3Freq': 2.2, 'freq1': 85.209166777134, 'nFreq': 40, 'pan': 0,
-  'freq2': 223.59039322138, 'freq3': 107.77597073317, 'freqDivArray': [ 2, 3, 4, 5, 6, 7, 8 ], 'f2Freq': 1.1 )
+~jhhPreset = ( 'm3Ratio': 3, 'm2Ratio': 2, 'ampM': 0.84, 'freqShift2': 0.25, 'f1Freq': 0.1, 'freqShiftLfo': 2.2963443756104, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 46.234755086899, 'freqShift1': 305.01697397232, 'f3Freq': 2.2, 'freq1': 85.209166777134, 'nFreq': 40, 'pan': 0, 'freq2': 223.59039322138, 'freq3': 107.77597073317, 'freqDivArray': [ 2, 3, 4, 5, 6, 7, 8 ], 'f2Freq': 1.1 )
 )
 
 

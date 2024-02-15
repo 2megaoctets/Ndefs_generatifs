@@ -1,23 +1,64 @@
+// 1402 refactor
+
+Ndef(\scc).fadeTime_(7);
+
 (
-~sccPreset = (planetDrone_1a: 0.13, planetDrone_2a: 0.145, planetDrone_3a: 0.2, planetDrone_4a: 0.1,  planetDrone_effect_1: 0.3, planetDrone_effect_2: 0.25, planetDrone_effect_3: 0.0625, amp: 0.1);
+~sccPreset = (baseFreq: rrand(0.1,130), lfoFreq: rrand(0.1,70), lpfFreq: rrand(0.1,111), lpfLfo: rrand(0.1,25),  verb1Mix: rrand(0.3,0.99),  verb1Room: rrand(0.01,0.985), verb2Dry: rrand(0.1,3), amp: 0.1);
+)
+
+(
+~sccPreset = (baseFreq: 0.13, lfoFreq: 0.145, lpfFreq: 0.2, lpfLfo: 0.1,  verb1Mix: 0.3, verb1Room: 0.25, verb2Dry: 0.625, amp: 0.1);
 )
 
 (
 Ndef(\scc, {
-	var pd_1a = (~sccPreset[\planetDrone_1a] * 130), pd_2a = (~sccPreset[\planetDrone_2a] * 70), pd_3a = (~sccPreset[\planetDrone_3a] * 111), pd_4a = (~sccPreset[\planetDrone_4a] * 25),
-	pd_eff3 = ~sccPreset[\planetDrone_effect_3] * 3, sig;
+	var sig;
+
+	sig = {
+		|int|
+		LFNoise2.kr(int*[0.001,0.01]) * RLPF.ar(
+			Saw.ar(
+				(SinOsc.ar(
+					freq: 0.00012,
+					phase: Pulse.kr(SinOsc.kr(~sccPreset[\lfoFreq])), // 0.0,
+					mul: ~sccPreset[\lfoFreq],
+					add: ~sccPreset[\lfoFreq] / 2
+				) + ~sccPreset[\baseFreq] + 25) + (int * 7.4).round(6.73), // saw freq
+				0.1 // saw mul
+			), // rlpf in
+			(LFNoise2.kr(int*[0.001,0.01]) * 2e3).max(100 + abs(~sccPreset[\lpfFreq] + SinOsc.ar(
+				freq: 0.000721,
+				phase: 0.13,
+				mul: ~sccPreset[\lpfLfo],
+				add: ~sccPreset[\lpfLfo] / 2
+			))), // rlpf freq
+			(int+1)*0.001 // rlpf rq
+		) // rlpf
+	};
+
+	sig = Mix.fill(
+		50,
+		sig
+	);
+
+	sig = FreeVerb.ar(
+		sig,
+		0.01 + ~sccPreset[\verb1Mix] ,
+		0.015 + abs(~sccPreset[\verb1Room]),
+		0.7
+	);
 	sig = GVerb.ar(
-		FreeVerb.ar(
-			Mix.fill(50,{|i| var a=LFNoise2.kr(i*[0.001,0.01]); a*RLPF.ar(Saw.ar((
-				SinOsc.ar(freq: 0.00012, phase: 0.0, mul: pd_2a, add: 0.0)+
-
-				pd_1a+25)+(i*7.4).round(6.73),0.035),(a*2e3).max(100+abs(pd_3a+
-
-				SinOsc.ar(freq: 0.000721, phase: 0.13, mul: pd_4a, add: 0.0))),(i+1)*0.001)}),
-
-			0.01+abs(~sccPreset[\planetDrone_effect_1]),0.015 + abs(~sccPreset[\planetDrone_effect_2]),0.7),
-
-		roomsize: 272, revtime: 3, damping: 0.65, inputbw: 0.35, spread: 14, drylevel: -7 - pd_eff3, earlyreflevel: -1.47, taillevel: 0.56, maxroomsize: 301, mul: 0.85, add: 0);
+		sig,
+		roomsize: 272,
+		revtime: 3,
+		damping: 0.65,
+		inputbw: 0.35,
+		spread: 14,
+		drylevel: -7 + ~sccPreset[\verb2Dry],
+		earlyreflevel: -1.47,
+		taillevel: 0.56,
+		maxroomsize: 301
+	);
 
 	sig = sig.sum * ~sccPreset[\amp] * 0.15;
 

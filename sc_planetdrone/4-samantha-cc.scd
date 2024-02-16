@@ -3,12 +3,13 @@
 Ndef(\scc).fadeTime_(7);
 
 (
-~sccPreset = (baseFreq: rrand(0.1,130), lfoFreq: rrand(0.1,70), lpfFreq: rrand(0.1,111), lpfLfo: rrand(0.1,25),  verb1Mix: rrand(0.3,0.99),  verb1Room: rrand(0.01,0.985), verb2Dry: rrand(0.1,3), amp: 0.1);
+~sccPreset = (baseFreq: 160, lfoFreq: 7.4, lpfFreq: 14, lpfLfo: 2.5,  verb1Mix: 0.3, verb1Room: 0.25, verb2Dry: 1.625, amp: 0.1);
 )
 
 (
-~sccPreset = (baseFreq: 0.13, lfoFreq: 0.145, lpfFreq: 0.2, lpfLfo: 0.1,  verb1Mix: 0.3, verb1Room: 0.25, verb2Dry: 0.625, amp: 0.1);
+~sccPreset = (baseFreq: rrand(0.1,130), lfoFreq: rrand(0.1,70), lpfFreq: rrand(0.1,111), lpfLfo: rrand(0.1,25),  verb1Mix: rrand(0.3,0.99),  verb1Room: rrand(0.01,0.985), verb2Dry: rrand(0.1,3), amp: 0.1);
 )
+
 
 (
 Ndef(\scc, {
@@ -20,7 +21,7 @@ Ndef(\scc, {
 			Saw.ar(
 				(SinOsc.ar(
 					freq: 0.00012,
-					phase: Pulse.kr(SinOsc.kr(~sccPreset[\lfoFreq])), // 0.0,
+					phase: Pulse.kr(SinOsc.kr(~sccPreset[\lfoFreq]), 0.5, ~sccPreset[\lfoFreq], ~sccPreset[\lfoFreq] / 2), // 0.0,
 					mul: ~sccPreset[\lfoFreq],
 					add: ~sccPreset[\lfoFreq] / 2
 				) + ~sccPreset[\baseFreq] + 25) + (int * 7.4).round(6.73), // saw freq
@@ -49,9 +50,9 @@ Ndef(\scc, {
 	);
 	sig = GVerb.ar(
 		sig,
-		roomsize: 272,
+		roomsize: 10, // 272,
 		revtime: 3,
-		damping: 0.65,
+		damping: 0.85, //  0.65,
 		inputbw: 0.35,
 		spread: 14,
 		drylevel: -7 + ~sccPreset[\verb2Dry],

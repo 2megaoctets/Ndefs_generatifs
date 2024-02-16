@@ -1,4 +1,26 @@
-// 1002 refonte, pas ouf
+// 1602 wip ajout d'un mod, refonte graphe
+// 1002 refonte, pas ouf pour l'instant
+
+Ndef(\jhMod1).fadeTime_(7);
+
+(
+~jhMod1Preset = (freqLfoSlope: rrand(100, 44100), freqLfoStart: rrand(0.05,20), freqLfoEnd: rrand(0.5,20), freqLfoMul: rrand(2.0,33), iphaseLfoSlope: rrand(100, 48000), iphaseLfoStart: rrand(0.0,2), iphaseLfoEnd: rrand(0.0,2), mulLfoFreq: rrand(1.0,20), mulLfoSlope: rrand(100,48000), mulLfoStart: rrand(1.0,2), mulLfoEnd: rrand(1.0,2));
+)
+
+
+(
+Ndef(\jhMod1, {
+	LeakDC.kr(
+		LFCub.kr(
+			Phasor.kr(0.0, ~jhMod1Preset[\freqLfoSlope], ~jhMod1Preset[\freqLfoStart], ~jhMod1Preset[\freqLfoEnd], ~jhMod1Preset[\freqLfoEnd]) , // freq
+			Phasor.kr(0.0, ~jhMod1Preset[\iphaseLfoSlope], ~jhMod1Preset[\iphaseLfoStart], ~jhMod1Preset[\iphaseLfoEnd], ~jhMod1Preset[\iphaseLfoEnd]), // iphase
+			LFPulse.kr(~jhMod1Preset[\mulLfoFreq], 0.0, 0.5, Phasor.kr(0.0, ~jhMod1Preset[\mulLfoSlope], ~jhMod1Preset[\mulLfoStart], ~jhMod1Preset[\mulLfoEnd], ~jhMod1Preset[\mulLfoEnd])), // mul
+			Phasor.kr(0.0, ~jhMod1Preset[\mulLfoStart], ~jhMod1Preset[\mulLfoEnd], ~jhMod1Preset[\mulLfoEnd] )// add
+		)
+	)
+});
+)
+
 
 Ndef(\jh).fadeTime_(10);
 
@@ -19,15 +41,15 @@ Ndef(\jh,{
 			~jhPreset[\freq1_1]
 			+
 			(SinOsc.ar(~jhPreset[\modFreq] )
-			* (~jhPreset[\freqFactor1] * 1.5)
+				* (~jhPreset[\freqFactor1] * 1.5)
 			) ,
 			~jhPreset[\freq1_2]
 			-
 			(SinOsc.ar(~jhPreset[\modFreq] )
-			* (~jhPreset[\freqFactor1] + 1)
+				* (~jhPreset[\freqFactor1] + 1)
 			)
 		], // freq
-		LFNoise2.kr(~jhPreset[\fbLfo1], 0.5, 0.5) //+ 1/2 // feedback
+		LFNoise2.kr(~jhPreset[\fbLfo1], 0.5, 1) //+ 1/2 // feedback
 	);
 
 	sig2 = SinOscFB.ar(
@@ -35,15 +57,15 @@ Ndef(\jh,{
 			~jhPreset[\freq2_1]
 			+
 			(SinOsc.ar(~jhPreset[\modFreq])
-			* (~jhPreset[\freqFactor2] + 1)
+				* (~jhPreset[\freqFactor2] + 1)
 			) ,
 			~jhPreset[\freq2_2]
 			-
 			(SinOsc.ar(~jhPreset[\modFreq])
-			* ~jhPreset[\freqFactor2]
+				* ~jhPreset[\freqFactor2]
 			)
 		], // freq
-		LFNoise2.kr(~jhPreset[\fbLfo2], 0.5, 0.5) // + 1/2 // feedback
+		LFNoise2.kr(~jhPreset[\fbLfo2], 0.5, 1) // + 1/2 // feedback
 	);
 
 	sig = FreeVerb2.ar(

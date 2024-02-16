@@ -1,5 +1,47 @@
 // 1002 encours
 
+Ndef(\jhhMod1).fadeTime_(8);
+
+(
+~jhhMod1Preset = (freqLfoRate: rrand(0.05,11), freqLfoOffset: rrand(0.5, 210), fbLfoRate: rrand(0.05, 10), fbLfoIphaseRate: rrand(100, 44100), fbLfoIphaseStart: rrand(1,4), fbLfoIphaseEnd: rrand(1,4), fbLfoWidthRate: rrand(100, 44100), fbLfoWidthStart: rrand(0.25, 0.85), fbLfoWidthEnd: rrand(0.25, 0.85), fbMul: rrand(1.0, 14));
+)
+
+(Ndef(\jhhMod1, {
+	SinOscFB.kr(
+		LFNoise1.kr(~jhhMod1Preset[\freqLfoRate], ~jhhMod1Preset[\freqLfoOffset], ~jhhMod1Preset[\freqLfoOffset] / 2), // freq
+		LFPulse.kr(
+			~jhhMod1Preset[\fbLfoRate], // freq LFPulse
+			Phasor.kr(0.0, ~jhhMod1Preset[\fbLfoIphaseRate], ~jhhMod1Preset[\fbLfoIphaseStart], ~jhhMod1Preset[\fbLfoIphaseEnd], ~jhhMod1Preset[\fbLfoIphaseEnd]), // iphase LFPulse
+			Phasor.kr(0.0, ~jhhMod1Preset[\fbLfoWidthRate], ~jhhMod1Preset[\fbLfoWidthStart], ~jhhMod1Preset[\fbLfoWidthEnd], ~jhhMod1Preset[\fbLfoWidthEnd]), // width fb LFPulse
+			~jhhMod1Preset[\fbMul], // mul fb LFPulse
+			~jhhMod1Preset[\fbMul] / 2// add fb LFPulse
+		).linlin(0, ~jhhMod1Preset[\fbMul], 0, 4pi) // , // feedback
+		// , // mul
+		// , // add
+	) // SinOscFB
+});
+)
+
+
+Ndef(\jhhMod2).fadeTime_(7);
+
+(
+~jhhMod2Preset = (freqLfoRate: rrand(0.05, 20), freqLfoMul: rrand(1.0,120), iphaseLfoRate: rrand(0.05, 20), iphaseLfoMul: rrand(1.0, 3), );
+)
+
+(
+Ndef(\jhhMod2, {
+	LeakDC.kr(
+		LFPar.kr(
+			LFClipNoise.kr(~jhhMod2Preset[\freqLfoRate], ~jhhMod2Preset[\freqLfoMul], ~jhhMod2Preset[\freqLfoMul] / 2), // freq
+			LFNoise1.kr(~jhhMod2Preset[\iphaseLfoRate], ~jhhMod2Preset[\iphaseLfoMul] * pi, ~jhhMod2Preset[\iphaseLfoMul] * pi / 2).abs, // iphase
+		)
+	)
+});
+)
+
+// Ndef(\jhhMod2).clear(1);
+
 Ndef(\jhh).fadeTime_(7);
 
 
@@ -88,6 +130,7 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m2Ratio],
 			~jhhPreset[\freq2] + ~jhhPreset[\nFreq] + 1.4 * ~jhhPreset[\m2Ratio]
 		],
+		Ndef.kr(\jhhMod1).abs, // ajout 1602
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m2Ratio] * index) * ~jhhPreset[\ampM];
 
 	car2 = SinOsc.ar(~jhhPreset[\f2Freq] + mod2);
@@ -97,17 +140,18 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio],
 			~jhhPreset[\freq3] + ~jhhPreset[\nFreq] + 0.35 * ~jhhPreset[\m3Ratio]
 		],
+		Ndef.kr(\jhhMod2).abs, // ajout 1602
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio] * index) * ~jhhPreset[\ampM];
 
 	car3 = SinOsc.ar(~jhhPreset[\f3Freq] + mod3) * 0.4;
 
 	sig = car1 + car2 + car3;
 
-/*	sig2 = SmoothDecimator.ar(
-		sig,
-		44100  / LFPulse.kr(0.2, 0.0, 0.5, ~jhhPreset[\freqShift1], 0.01 + ~jhhPreset[\freqShift1] / 2), // rate
-		0.5, // smoothing
-		0.25 // mul
+	/*	sig2 = SmoothDecimator.ar(
+	sig,
+	44100  / LFPulse.kr(0.2, 0.0, 0.5, ~jhhPreset[\freqShift1], 0.01 + ~jhhPreset[\freqShift1] / 2), // rate
+	0.5, // smoothing
+	0.25 // mul
 	);*/
 
 	sig2 = LPF.ar(
@@ -115,7 +159,7 @@ Ndef(\jhh, {
 		Limiter.ar(
 			LFTri.ar(
 				~jhhPreset[\selectLfoEnd] * 2,
-				0.0,
+				Ndef.kr(\jhhMod2).abs , // 0.0,
 				~jhhPreset[\freqShift1] * 8,
 				~jhhPreset[\freqShift1] * 4
 			),
@@ -124,9 +168,9 @@ Ndef(\jhh, {
 		0.5 // mul
 	);
 
-/*	sig = LinSelectX.ar(
-		LFPulse.kr(~jhhPreset[\selectLfoStart]),
-		[sig, sig2]
+	/*	sig = LinSelectX.ar(
+	LFPulse.kr(~jhhPreset[\selectLfoStart]),
+	[sig, sig2]
 	).scope;*/
 
 	sig2 = FreqShift.ar( // og
@@ -136,7 +180,7 @@ Ndef(\jhh, {
 	) / (
 		~jhhPreset[\freqDivArray] + SinOsc.ar(
 			freq: ~jhhPreset[\freqShiftLfo],
-			phase: LFPulse.kr(0.25),
+			phase: Ndef.kr(\jhhMod1).abs , // LFPulse.kr(0.25),
 			mul: ~jhhPreset[\freqShift2],
 			add: ~jhhPreset[\freqShift2] / 2
 		)
@@ -147,7 +191,7 @@ Ndef(\jhh, {
 		Limiter.ar(
 			LFTri.ar(
 				~jhhPreset[\selectLfoEnd] * 0.625,
-				LFPulse.kr(0.25),
+				Ndef.kr(\jhhMod2).abs, // LFPulse.kr(0.25),
 				~jhhPreset[\freqShift1],
 				~jhhPreset[\freqShift1] / 2
 			),
@@ -159,7 +203,7 @@ Ndef(\jhh, {
 	sig= LinSelectX.ar(
 		LFTri.kr(
 			Phasor.kr(0.0, ~jhhPreset[\selectLfoRate], ~jhhPreset[\selectLfoStart], ~jhhPreset[\selectLfoEnd], ~jhhPreset[\selectLfoEnd]), // 0.5,
-			LFPulse.kr(0.0625), // 0.0,
+			LFPulse.kr(Ndef.kr(\jhhMod1) + 1, 1), // 0.0,
 			0.5,
 			0.5
 		),
@@ -170,12 +214,12 @@ Ndef(\jhh, {
 		Mix.ar(sig) * 0.15,
 		roomsize: 270,
 		revtime: 3,
-		damping: 0.47,
+		damping: 0.87, // 0.47,
 		inputbw: 0.7,
-		spread: 40,
+		spread: 15, // 40,
 		drylevel: 30,
 		earlyreflevel: -6,
-		taillevel: -11,
+		taillevel: 0.5, // -11,
 		mul: 0.75
 	);
 

@@ -15,21 +15,46 @@ Ndef(\sk,{
 	sig = Pan2.ar(
 		FreeVerb.ar(
 			SinOsc.ar(
-				Demand.kr(Impulse.kr(Rand(10,100)
-				+ pd_1a
-				+ SinOsc.ar(freq: 0.0032, phase: 0.0, mul: (pd_3a*4), add: 0.0)),0,Dseq([Rand(100,333),Rand(100,333)
-				+ pd_2a
-				+ SinOsc.ar(freq: 0.0019, phase: 0.0, mul: (pd_4a*6), add: 0.0)
-			],inf)  ),
+				Demand.kr(
+					Impulse.kr(
+						Rand(10,100)
+						+ pd_1a
+						+ SinOsc.ar(
+							freq: 0.0032,
+							phase: 0.0,
+							mul: (pd_3a*4),
+							add: 0.0)
+					),
+					0,
+					Dseq(
+						[Rand(100,333),Rand(100,333)
+							+ pd_2a
+							+ SinOsc.ar(
+								freq: 0.0019,
+								phase: 0.0,
+								mul: (pd_4a*6),
+								add: 0.0
+							)
+						],
+						inf)
+				),
+				0,
+				0.08
+			),
 
-		0,0.08),
-
-			0.25 + ~skPreset[\planetDrone_effect_1],1,1), pos:SinOsc.ar(freq: 0.0125 + abs(~skPreset[\planetDrone_effect_3] * 4), phase: 0.0, mul: (~skPreset[\planetDrone_effect_2] * 0.75), add: 0.0));
+			0.25 + ~skPreset[\planetDrone_effect_1],1,1),
+		pos:SinOsc.ar(
+			freq: 0.0125 + abs(~skPreset[\planetDrone_effect_3] * 4),
+			phase: 0.0,
+			mul: (~skPreset[\planetDrone_effect_2] * 0.75),
+			add: 0.0
+		)
+	);
 
 	sig = sig * ~skPreset[\amp] ;
 	// sig = Limiter.ar(sig, 0.5);
 
-   });
+});
 )
 
 

@@ -3,7 +3,7 @@
 Ndef(\jhhMod1).fadeTime_(8);
 
 (
-~jhhMod1Preset = (freqLfoRate: rrand(0.05,11), freqLfoOffset: rrand(0.5, 210), fbLfoRate: rrand(0.05, 10), fbLfoIphaseRate: rrand(100, 44100), fbLfoIphaseStart: rrand(1,4), fbLfoIphaseEnd: rrand(1,4), fbLfoWidthRate: rrand(100, 44100), fbLfoWidthStart: rrand(0.25, 0.85), fbLfoWidthEnd: rrand(0.25, 0.85), fbMul: rrand(1.0, 14));
+~jhhMod1Preset = (freqLfoRate: rrand(0.05,1.1), freqLfoOffset: rrand(0.5, 210), fbLfoRate: rrand(0.05, 1.0), fbLfoIphaseRate: rrand(1000000, 44100), fbLfoIphaseStart: rrand(1,4), fbLfoIphaseEnd: rrand(1,4), fbLfoWidthRate: rrand(1000000, 44100), fbLfoWidthStart: rrand(0.25, 0.85), fbLfoWidthEnd: rrand(0.25, 0.85), fbMul: rrand(1.0, 14));
 )
 
 (Ndef(\jhhMod1, {
@@ -26,7 +26,7 @@ Ndef(\jhhMod1).fadeTime_(8);
 Ndef(\jhhMod2).fadeTime_(7);
 
 (
-~jhhMod2Preset = (freqLfoRate: rrand(0.05, 20), freqLfoMul: rrand(1.0,120), iphaseLfoRate: rrand(0.05, 20), iphaseLfoMul: rrand(1.0, 3), );
+~jhhMod2Preset = (freqLfoRate: rrand(0.05, 2), freqLfoMul: rrand(1.0,120), iphaseLfoRate: rrand(0.05, 2), iphaseLfoMul: rrand(1.0, 3), );
 )
 
 (
@@ -34,7 +34,7 @@ Ndef(\jhhMod2, {
 	LeakDC.kr(
 		LFPar.kr(
 			LFClipNoise.kr(~jhhMod2Preset[\freqLfoRate], ~jhhMod2Preset[\freqLfoMul], ~jhhMod2Preset[\freqLfoMul] / 2), // freq
-			LFNoise1.kr(~jhhMod2Preset[\iphaseLfoRate], ~jhhMod2Preset[\iphaseLfoMul] * pi, ~jhhMod2Preset[\iphaseLfoMul] * pi / 2).abs, // iphase
+			LFNoise1.kr(~jhhMod2Preset[\iphaseLfoRate], ~jhhMod2Preset[\iphaseLfoMul] * pi * 2, ~jhhMod2Preset[\iphaseLfoMul] * pi).abs, // iphase
 		)
 	)
 });
@@ -82,33 +82,33 @@ Ndef(\jhh).fadeTime_(7);
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 2, 'm2Ratio': 3, 'ampM': 0.66806688308716, 'freqShift2': 17.341608405113, 'f1Freq': 0.10953975200653, 'freqShiftLfo': 0.13606057167053, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 8.332985162735,'freqShift1': 153.46301519871, 'f3Freq': 0.7083624601364, 'freq1': 47.722559869289, 'nFreq': 48, 'pan': 0, 'freq2': 98.316177785397, 'freq3': 7.6408414244652, 'freqDivArray': [ 5, 4, 7, 9, 5, 4, 4 ], 'f2Freq': 0.17092581987381, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65) );
+~jhhPreset = ( 'm3Ratio': 2, 'm2Ratio': 3, 'ampM': 0.66806688308716, 'freqShift2': 17.341608405113, 'f1Freq': 0.10953975200653, 'freqShiftLfo': 0.13606057167053, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 8.332985162735,'freqShift1': 153.46301519871, 'f3Freq': 0.7083624601364, 'freq1': 47.722559869289, 'nFreq': 48, 'pan': 0, 'freq2': 98.316177785397, 'freq3': 7.6408414244652, 'freqDivArray': [ 5, 4, 7, 9, 5, 4, 4 ], 'f2Freq': 0.17092581987381, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000000,4410000), selectLfoEnd: rrand(0.05,2.65) );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.42721357345581, 'freqShift2': 8.0218099355698, 'f1Freq': 0.8168498301506, 'freqShiftLfo': 0.81952493190765, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 78.589802575111, 'freqShift1': 240.38337147236, 'f3Freq': 0.3849713802338, 'freq1': 27.55929005146, 'nFreq': 44, 'pan': 0, 'freq2': 8.4778874516487, 'freq3': 35.793907761574, 'freqDivArray': [ 4, 6, 4, 8, 7, 9 ], 'f2Freq': 0.90983035564423, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65) )
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.42721357345581, 'freqShift2': 8.0218099355698, 'f1Freq': 0.8168498301506, 'freqShiftLfo': 0.81952493190765, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 78.589802575111, 'freqShift1': 240.38337147236, 'f3Freq': 0.3849713802338, 'freq1': 27.55929005146, 'nFreq': 44, 'pan': 0, 'freq2': 8.4778874516487, 'freq3': 35.793907761574, 'freqDivArray': [ 4, 6, 4, 8, 7, 9 ], 'f2Freq': 0.90983035564423, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(1000000,44100000), selectLfoEnd: rrand(0.05,2.65) )
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 2, 'ampM': 0.40484269857407, 'freqShift2': 3.3521645069122, 'f1Freq': 0.14236243605614, 'freqShiftLfo': 3.4245929956436, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 66.335150074959, 'freqShift1': 473.16766667366, 'f3Freq': 1.7057373523712, 'freq1': 74.937063753605, 'nFreq': 34, 'pan': 0, 'freq2': 59.230100035667, 'freq3': 160.9641174078, 'freqDivArray': [ 7, 4, 6, 6, 5, 7 ], 'f2Freq': 0.64836958646774, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65) );
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 2, 'ampM': 0.40484269857407, 'freqShift2': 3.3521645069122, 'f1Freq': 0.14236243605614, 'freqShiftLfo': 3.4245929956436, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 66.335150074959, 'freqShift1': 473.16766667366, 'f3Freq': 1.7057373523712, 'freq1': 74.937063753605, 'nFreq': 34, 'pan': 0, 'freq2': 59.230100035667, 'freq3': 160.9641174078, 'freqDivArray': [ 7, 4, 6, 6, 5, 7 ], 'f2Freq': 0.64836958646774, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000,4410000), selectLfoEnd: rrand(0.05,2.65) );
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971, 'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892, 'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0, 'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65) )
-)
-
-
-(
-~jhhPreset = ( 'm3Ratio': 3, 'm2Ratio': 2, 'ampM': 0.84, 'freqShift2': 0.25, 'f1Freq': 0.1, 'freqShiftLfo': 2.2963443756104, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 46.234755086899, 'freqShift1': 305.01697397232, 'f3Freq': 2.2, 'freq1': 85.209166777134, 'nFreq': 40, 'pan': 0, 'freq2': 223.59039322138, 'freq3': 107.77597073317, 'freqDivArray': [ 2, 3, 4, 5, 6, 7, 8 ], 'f2Freq': 1.1,  selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65))
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971, 'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892, 'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0, 'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000000,4410000000), selectLfoEnd: rrand(0.05,2.65) )
 )
 
 
 (
-~jhhPreset = (   freq1: rrand(0.1, 256), freq2: rrand(0.1, 256), freq3: rrand(0.1, 256), mulBase: rrand(0.1, 95), freqShift1: rrand(1.0, 500), freqShift2: 0.25, freqShiftLfo: rrand(0.1, 2.5), f1Freq: 0.1, f2Freq: 1.1, f3Freq: 2.2, nFreq: 40, m1Ratio: 1, m2Ratio: 2, m3Ratio: 3, amp: 0.1, ampM: 0.84 , pan: 0, freqDivArray: (2..8), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65));
+~jhhPreset = ( 'm3Ratio': 3, 'm2Ratio': 2, 'ampM': 0.84, 'freqShift2': 0.25, 'f1Freq': 0.1, 'freqShiftLfo': 2.2963443756104, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 46.234755086899, 'freqShift1': 305.01697397232, 'f3Freq': 2.2, 'freq1': 85.209166777134, 'nFreq': 40, 'pan': 0, 'freq2': 223.59039322138, 'freq3': 107.77597073317, 'freqDivArray': [ 2, 3, 4, 5, 6, 7, 8 ], 'f2Freq': 1.1,  selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000000,4410000000), selectLfoEnd: rrand(0.05,2.65))
+)
+
+
+(
+~jhhPreset = (   freq1: rrand(0.1, 256), freq2: rrand(0.1, 256), freq3: rrand(0.1, 256), mulBase: rrand(0.1, 95), freqShift1: rrand(1.0, 500), freqShift2: 0.25, freqShiftLfo: rrand(0.1, 2.5), f1Freq: 0.1, f2Freq: 1.1, f3Freq: 2.2, nFreq: 40, m1Ratio: 1, m2Ratio: 2, m3Ratio: 3, amp: 0.1, ampM: 0.84 , pan: 0, freqDivArray: (2..8), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100000,44100000), selectLfoEnd: rrand(0.05,2.65));
 )
 
 (
-Post << ~jhhPreset = ( 'm3Ratio': rrand(1,4), 'm2Ratio': rrand(1,4), 'ampM': rrand(0.4,0.9), 'freqShift2': rrand(1.0,20), 'f1Freq': rrand(0.1,0.99), 'freqShiftLfo': rrand(0.1,3.5), 'amp': 0.1, 'm1Ratio': rrand(1,3), 'mulBase': rrand(0.1,95), 'freqShift1': rrand(1.0,500), 'f3Freq': rrand(0.5,3.5), 'freq1': rrand(0.5,256), 'nFreq': rrand(25,50), 'pan': 0, 'freq2': rrand(0.5,256), 'freq3': rrand(0.5,256), 'freqDivArray': Array.rand(rrand(5,8), rrand(2,4), rrand(5,9)), 'f2Freq': rrand(0.1,1), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(100,44100), selectLfoEnd: rrand(0.05,2.65) );
+Post << ~jhhPreset = ( 'm3Ratio': rrand(1,4), 'm2Ratio': rrand(1,4), 'ampM': rrand(0.4,0.9), 'freqShift2': rrand(1.0,20), 'f1Freq': rrand(0.1,0.99), 'freqShiftLfo': rrand(0.1,3.5), 'amp': 0.1, 'm1Ratio': rrand(1,3), 'mulBase': rrand(0.1,95), 'freqShift1': rrand(1.0,500), 'f3Freq': rrand(0.5,3.5), 'freq1': rrand(0.5,256), 'nFreq': rrand(25,50), 'pan': 0, 'freq2': rrand(0.5,256), 'freq3': rrand(0.5,256), 'freqDivArray': Array.rand(rrand(5,8), rrand(2,4), rrand(5,9)), 'f2Freq': rrand(0.1,1), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(1000000,44100000), selectLfoEnd: rrand(0.05,2.65) );
 )
 
 (
@@ -121,6 +121,7 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m1Ratio],
 			~jhhPreset[\freq1] + ~jhhPreset[\nFreq]+ 0.7 * ~jhhPreset[\m1Ratio]
 		],
+		Ndef.kr(\jhMod1) * Ndef.kr(\jhMod2),
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m1Ratio] * index) * ~jhhPreset[\ampM];
 
 	car1 = SinOsc.ar(~jhhPreset[\f1Freq] + mod1);
@@ -138,18 +139,18 @@ Ndef(\jhh, {
 	mod3 = SinOsc.ar(
 		[
 			~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio],
-			~jhhPreset[\freq3] + ~jhhPreset[\nFreq] + 0.35 * ~jhhPreset[\m3Ratio]
+			~jhhPreset[\freq3] + ~jhhPreset[\nFreq] + 2.35 * ~jhhPreset[\m3Ratio]
 		],
 		Ndef.kr(\jhhMod2).abs, // ajout 1602
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio] * index) * ~jhhPreset[\ampM];
 
-	car3 = SinOsc.ar(~jhhPreset[\f3Freq] + mod3) * 0.4;
+	car3 = SinOsc.ar(~jhhPreset[\f3Freq] + mod3) ;
 
 	sig = car1 + car2 + car3;
 
-	/*	sig2 = SmoothDecimator.ar(
+/*		sig2 = SmoothDecimator.ar(
 	sig,
-	44100  / LFPulse.kr(0.2, 0.0, 0.5, ~jhhPreset[\freqShift1], 0.01 + ~jhhPreset[\freqShift1] / 2), // rate
+	48100  / LFPulse.kr(0.2, 0.0, 0.5, ~jhhPreset[\freqShift1] * 2, 0.01 + ~jhhPreset[\freqShift1] * 4), // rate
 	0.5, // smoothing
 	0.25 // mul
 	);*/
@@ -158,10 +159,10 @@ Ndef(\jhh, {
 		Mix.ar(sig), // in
 		Limiter.ar(
 			LFTri.ar(
-				~jhhPreset[\selectLfoEnd] * 2,
+				~jhhPreset[\selectLfoEnd] * 0.2,
 				Ndef.kr(\jhhMod2).abs , // 0.0,
-				~jhhPreset[\freqShift1] * 8,
-				~jhhPreset[\freqShift1] * 4
+				~jhhPreset[\freqShift1] * 80,
+				~jhhPreset[\freqShift1] * 40
 			),
 			0.5
 		), // freq
@@ -181,8 +182,8 @@ Ndef(\jhh, {
 		~jhhPreset[\freqDivArray] + SinOsc.ar(
 			freq: ~jhhPreset[\freqShiftLfo],
 			phase: Ndef.kr(\jhhMod1).abs , // LFPulse.kr(0.25),
-			mul: ~jhhPreset[\freqShift2],
-			add: ~jhhPreset[\freqShift2] / 2
+			mul: ~jhhPreset[\freqShift2] * 2,
+			add: ~jhhPreset[\freqShift2]
 		)
 	);
 
@@ -192,8 +193,8 @@ Ndef(\jhh, {
 			LFTri.ar(
 				~jhhPreset[\selectLfoEnd] * 0.625,
 				Ndef.kr(\jhhMod2).abs, // LFPulse.kr(0.25),
-				~jhhPreset[\freqShift1],
-				~jhhPreset[\freqShift1] / 2
+				~jhhPreset[\freqShift1] * 8,
+				~jhhPreset[\freqShift1] * 4
 			),
 			0.5
 		), // freq

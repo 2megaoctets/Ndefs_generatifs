@@ -114,7 +114,7 @@ Ndef(\su, {
 		[0, del3]
 	);
 	loc3Fb = loc3.reverse * (0.99 + (~suPreset[\planetDrone_effect_3] * 0.75));
-	// LocalOut.ar(LPF.ar(locFb ++ loc2Fb ++ loc3Fb, 800) * 0.092);
+	LocalOut.ar(LPF.ar(locFb ++ loc2Fb ++ loc3Fb, 800) * 0.092);
 	sig = (loc * 0.15) + (Compander.ar(loc2, loc2, 0.1, 1, 0.05) * 0.15);
 	sig = Mix.ar(Mix.ar(sig));
 	sig = sig * ~suPreset[\amp] ;

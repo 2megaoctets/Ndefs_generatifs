@@ -3,7 +3,7 @@
 Ndef(\jhhMod1).fadeTime_(8);
 
 (
-~jhhMod1Preset = (freqLfoRate: rrand(0.05,1.1), freqLfoOffset: rrand(0.5, 210), fbLfoRate: rrand(0.05, 1.0), fbLfoIphaseRate: rrand(1000000, 44100), fbLfoIphaseStart: rrand(1,4), fbLfoIphaseEnd: rrand(1,4), fbLfoWidthRate: rrand(1000000, 44100), fbLfoWidthStart: rrand(0.25, 0.85), fbLfoWidthEnd: rrand(0.25, 0.85), fbMul: rrand(1.0, 14));
+~jhhMod1Preset = (freqLfoRate: rrand(0.05,1.1), freqLfoOffset: rrand(0.5, 210), fbLfoRate: rrand(0.05, 1.0), fbLfoIphaseRate: rrand(10000, 44100000), fbLfoIphaseStart: rrand(1,4), fbLfoIphaseEnd: rrand(1,4), fbLfoWidthRate: rrand(10000, 44100000), fbLfoWidthStart: rrand(0.25, 0.85), fbLfoWidthEnd: rrand(0.25, 0.85), fbMul: rrand(1.0, 14), mulLfoRate: rrand(44100, 1000000), mulLfoStart: rrand(0.85, 3.5), mulLfoEnd: rrand(0.85, 3.5), addLfoRate: rrand(44100, 1000000), addLfoStart: rrand(0.5, 35), addLfoEnd: rrand(0.5, 35));
 )
 
 (Ndef(\jhhMod1, {
@@ -15,9 +15,9 @@ Ndef(\jhhMod1).fadeTime_(8);
 			Phasor.kr(0.0, ~jhhMod1Preset[\fbLfoWidthRate], ~jhhMod1Preset[\fbLfoWidthStart], ~jhhMod1Preset[\fbLfoWidthEnd], ~jhhMod1Preset[\fbLfoWidthEnd]), // width fb LFPulse
 			~jhhMod1Preset[\fbMul], // mul fb LFPulse
 			~jhhMod1Preset[\fbMul] / 2// add fb LFPulse
-		).linlin(0, ~jhhMod1Preset[\fbMul], 0, 4pi) // , // feedback
-		// , // mul
-		// , // add
+		).linlin(0, ~jhhMod1Preset[\fbMul], 0, 4pi)  , // feedback
+		Phasor.kr(0.0, ~jhhMod1Preset[\mulLfoRate], ~jhhMod1Preset[\mulLfoStart], ~jhhMod1Preset[\mulLfoEnd], ~jhhMod1Preset[\mulLfoEnd]), // mul
+		Phasor.kr(0.0, ~jhhMod1Preset[\addLfoRate], ~jhhMod1Preset[\addLfoStart], ~jhhMod1Preset[\addLfoEnd]) // add
 	) // SinOscFB
 });
 )
@@ -26,7 +26,7 @@ Ndef(\jhhMod1).fadeTime_(8);
 Ndef(\jhhMod2).fadeTime_(7);
 
 (
-~jhhMod2Preset = (freqLfoRate: rrand(0.05, 2), freqLfoMul: rrand(1.0,120), iphaseLfoRate: rrand(0.05, 2), iphaseLfoMul: rrand(1.0, 3), );
+~jhhMod2Preset = (freqLfoRate: rrand(0.05, 2), freqLfoMul: rrand(1.0,120), iphaseLfoRate: rrand(0.05, 2), iphaseLfoMul: rrand(1.0, 3), mulLfoRate: rrand(44100, 1000000), mulLfoStart: rrand(0.85, 35), mulLfoEnd: rrand(0.85, 35), addLfoRate: rrand(44100, 1000000), addLfoStart: rrand(0.5, 35), addLfoEnd: rrand(0.5, 35) );
 )
 
 (
@@ -35,6 +35,7 @@ Ndef(\jhhMod2, {
 		LFPar.kr(
 			LFClipNoise.kr(~jhhMod2Preset[\freqLfoRate], ~jhhMod2Preset[\freqLfoMul], ~jhhMod2Preset[\freqLfoMul] / 2), // freq
 			LFNoise1.kr(~jhhMod2Preset[\iphaseLfoRate], ~jhhMod2Preset[\iphaseLfoMul] * pi * 2, ~jhhMod2Preset[\iphaseLfoMul] * pi).abs, // iphase
+			Phasor.kr(0.0, ~jhhMod2Preset[\mulLfoRate], ~jhhMod2Preset[\mulLfoStart], ~jhhMod2Preset[\mulLfoEnd], ~jhhMod2Preset[\mulLfoEnd])
 		)
 	)
 });
@@ -62,7 +63,7 @@ Ndef(\jhh).fadeTime_(7);
 )
 
 (
-~jhhPreset =
+~jhhPreset = ( 'm2Ratio': 2, 'selectLfoRate': 42612319, 'freq2': 226.32156789303, 'freqShift1': 110.81981003284, 'nFreq': 45, 'pan': 0, 'f2Freq': 0.54331550598145, 'amp': 0.1, 'freqShiftLfo': 1.5101669549942, 'm3Ratio': 5, 'ampM': 0.45880504846573, 'freqDivArray': [ 3, 3, 3, 4, 5, 4, 4, 3 ], 'freqShift2': 5.5998728275299, 'selectLfoStart': 0.21984091997147, 'selectLfoEnd': 1.1114768981934, 'freq3': 102.13633865118, 'f1Freq': 0.12988509058952, 'm1Ratio': 5, 'mulBase': 12.026553988457,  'f3Freq': 1.0936980247498, 'freq1': 11.545888662338 );
 )
 
 (
@@ -94,7 +95,7 @@ Ndef(\jhh).fadeTime_(7);
 )
 
 (
-~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971, 'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892, 'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0, 'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000000,4410000000), selectLfoEnd: rrand(0.05,2.65) )
+~jhhPreset = ( 'm3Ratio': 1, 'm2Ratio': 4, 'ampM': 0.68100442886353, 'freqShift2': 6.5549749135971, 'f1Freq': 0.11506874680519, 'freqShiftLfo': 2.8514682292938, 'amp': 0.1, 'm1Ratio': 1, 'mulBase': 24.241373550892, 'freqShift1': 479.60732197762, 'f3Freq': 0.77444005012512, 'freq1': 114.37980437279, 'nFreq': 44, 'pan': 0, 'freq2': 30.824445724487, 'freq3': 112.08994346857, 'freqDivArray': [ 6, 4, 4, 4, 4, 5, 4, 7 ], 'f2Freq': 0.9617817401886, selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(10000,4410000), selectLfoEnd: rrand(0.05,2.65) )
 )
 
 
@@ -108,7 +109,7 @@ Ndef(\jhh).fadeTime_(7);
 )
 
 (
-Post << ~jhhPreset = ( 'm3Ratio': rrand(1,4), 'm2Ratio': rrand(1,4), 'ampM': rrand(0.4,0.9), 'freqShift2': rrand(1.0,20), 'f1Freq': rrand(0.1,0.99), 'freqShiftLfo': rrand(0.1,3.5), 'amp': 0.1, 'm1Ratio': rrand(1,3), 'mulBase': rrand(0.1,95), 'freqShift1': rrand(1.0,500), 'f3Freq': rrand(0.5,3.5), 'freq1': rrand(0.5,256), 'nFreq': rrand(25,50), 'pan': 0, 'freq2': rrand(0.5,256), 'freq3': rrand(0.5,256), 'freqDivArray': Array.rand(rrand(5,8), rrand(2,4), rrand(5,9)), 'f2Freq': rrand(0.1,1), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(1000000,44100000), selectLfoEnd: rrand(0.05,2.65) );
+Post << ~jhhPreset = ( 'm3Ratio': rrand(1,5), 'm2Ratio': rrand(1,6), 'ampM': rrand(0.4,0.9), 'freqShift2': rrand(1.0,20), 'f1Freq': rrand(0.1,0.99), 'freqShiftLfo': rrand(0.051,1.5), 'amp': 0.1, 'm1Ratio': rrand(1,5), 'mulBase': rrand(0.1,95), 'freqShift1': rrand(1.0,500), 'f3Freq': rrand(0.5,3.5), 'freq1': rrand(0.5,256), 'nFreq': rrand(25,50), 'pan': 0, 'freq2': rrand(0.5,256), 'freq3': rrand(0.5,256), 'freqDivArray': Array.rand(rrand(5,8), rrand(2,4), rrand(5,9)), 'f2Freq': rrand(0.1,1), selectLfoStart: rrand(0.05,2.5), selectLfoRate: rrand(1000,4410000), selectLfoEnd: rrand(0.05,2.65) );
 )
 
 (
@@ -121,7 +122,7 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m1Ratio],
 			~jhhPreset[\freq1] + ~jhhPreset[\nFreq]+ 0.7 * ~jhhPreset[\m1Ratio]
 		],
-		Ndef.kr(\jhMod1) * Ndef.kr(\jhMod2),
+		SinOsc.ar(Ndef.kr(\jhMod1) - Ndef.kr(\jhMod2)).mod(pi),
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m1Ratio] * index) * ~jhhPreset[\ampM];
 
 	car1 = SinOsc.ar(~jhhPreset[\f1Freq] + mod1);
@@ -131,7 +132,7 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m2Ratio],
 			~jhhPreset[\freq2] + ~jhhPreset[\nFreq] + 1.4 * ~jhhPreset[\m2Ratio]
 		],
-		Ndef.kr(\jhhMod1).abs, // ajout 1602
+		Ndef.kr(\jhhMod1).mod(2pi), // ajout 1602
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m2Ratio] * index) * ~jhhPreset[\ampM];
 
 	car2 = SinOsc.ar(~jhhPreset[\f2Freq] + mod2);
@@ -141,7 +142,7 @@ Ndef(\jhh, {
 			~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio],
 			~jhhPreset[\freq3] + ~jhhPreset[\nFreq] + 2.35 * ~jhhPreset[\m3Ratio]
 		],
-		Ndef.kr(\jhhMod2).abs, // ajout 1602
+		Ndef.kr(\jhhMod2).mod(4pi), // ajout 1602
 		mul: ~jhhPreset[\mulBase] + ~jhhPreset[\nFreq] * ~jhhPreset[\m3Ratio] * index) * ~jhhPreset[\ampM];
 
 	car3 = SinOsc.ar(~jhhPreset[\f3Freq] + mod3) ;
@@ -181,7 +182,7 @@ Ndef(\jhh, {
 	) / (
 		~jhhPreset[\freqDivArray] + SinOsc.ar(
 			freq: ~jhhPreset[\freqShiftLfo],
-			phase: Ndef.kr(\jhhMod1).abs , // LFPulse.kr(0.25),
+			phase: Ndef.kr(\jhhMod1).abs.mod(4pi) , // LFPulse.kr(0.25),
 			mul: ~jhhPreset[\freqShift2] * 2,
 			add: ~jhhPreset[\freqShift2]
 		)
@@ -192,7 +193,7 @@ Ndef(\jhh, {
 		Limiter.ar(
 			LFTri.ar(
 				~jhhPreset[\selectLfoEnd] * 0.625,
-				Ndef.kr(\jhhMod2).abs, // LFPulse.kr(0.25),
+				Ndef.kr(\jhhMod2).abs.mod(4pi), // LFPulse.kr(0.25),
 				~jhhPreset[\freqShift1] * 8,
 				~jhhPreset[\freqShift1] * 4
 			),
@@ -204,7 +205,7 @@ Ndef(\jhh, {
 	sig= LinSelectX.ar(
 		LFTri.kr(
 			Phasor.kr(0.0, ~jhhPreset[\selectLfoRate], ~jhhPreset[\selectLfoStart], ~jhhPreset[\selectLfoEnd], ~jhhPreset[\selectLfoEnd]), // 0.5,
-			LFPulse.kr(Ndef.kr(\jhhMod1) + 1, 1), // 0.0,
+			LFPulse.kr(Ndef.kr(\jhhMod1) + 1, 1).mod(2pi), // 0.0,
 			0.5,
 			0.5
 		),

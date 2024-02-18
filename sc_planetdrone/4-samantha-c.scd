@@ -107,7 +107,7 @@ Ndef(\sc, {
 
 	sig = sig + sig1;
 	sig = LPF.ar(sig , 1999 + ~scPreset[\freqLpf]);
-	sig = sig * ~scPreset[\amp] * 0.25;
+	sig = sig * ~scPreset[\amp] * 0.125;
 	sig = Limiter.ar(sig, 0.5);
 });
 )

@@ -34,7 +34,7 @@ Ndef(\sfMod1).fadeTime_(10);
 )
 
 (
-~sfMod1Preset = (excitation: rrand(0.25, 15), excitationLfoFreq: rrand(0.5, 20), tensionSlope: rrand(0.05,100), tensionStart: rrand(0.025,0.65), tensionEnd: rrand(0.05,0.65), lossSlope: rrand(0.05,100), lossStart: rrand(0.65, 0.999999), lossEnd: rrand(0.65, 0.999999), mulSlope: rrand(0.05, 100), mulStart: rrand(0.75, 1.25), mulEnd: rrand(0.75, 1.5), addSlope: rrand(0.05, 10), addStart: rrand(0.75, 1.25), addEnd: rrand(0.75, 1.25));
+~sfMod1Preset = (excitation: rrand(0.25, 15), excitationLfoFreq: rrand(0.5, 20), tensionSlope: rrand(1000,441000), tensionStart: rrand(0.025,0.65), tensionEnd: rrand(0.05,0.65), lossSlope: rrand(0.05,100), lossStart: rrand(0.65, 0.999999), lossEnd: rrand(0.65, 0.999999), mulSlope: rrand(0.05, 100), mulStart: rrand(0.75, 1.25), mulEnd: rrand(0.75, 1.5), addSlope: rrand(0.05, 10), addStart: rrand(0.75, 1.25), addEnd: rrand(0.75, 1.25));
 )
 
 (

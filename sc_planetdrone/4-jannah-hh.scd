@@ -228,7 +228,7 @@ Ndef(\jhh, {
 
 	// sig = Mix.ar(sig);
 	sig = HPF.ar(sig, 140);
-	sig = sig * ~jhhPreset[\amp] * 0.1;
+	sig = sig * ~jhhPreset[\amp] * 0.051;
 	sig = Limiter.ar(LeakDC.ar(sig), 0.5, 0.3); // .clip2(0.03);
 });
 )

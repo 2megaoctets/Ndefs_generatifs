@@ -1,3 +1,4 @@
+// 1802 ternaire randSeed corrigée et à jour, appliquer aux autres graphes
 // 0202: correc graphe
 
 Ndef(\jpd2Mod).fadeTime_(5);
@@ -82,8 +83,7 @@ Ndef(\jpd2, {
 
 	var sig, snd;
 
-	~jpd2Preset[\randSeed] ?? ({ ~jpd2Preset[\randSeed] = 10000000; });
-	thisThread.randSeed = ~jpd2Preset[\randSeed].debug("randSeed");
+	thisThread.randSeed = ~jpd2Preset[\randSeed] ?? ({ 10000000.rand.debug("randSeed") });
 
 	sig = {snd = LFTri.ar(~jpd2Preset[\bohlen].choose/3);
 		4.do{

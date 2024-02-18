@@ -58,8 +58,7 @@ Ndef(\sd).fadeTime_(7);
 Ndef(\sd, {
 
 	var sig;
-	~sdPreset[\randSeed] ?? ({ ~sdPreset[\randSeed] = 10000000.rand.debug("randSeed"); });
-	thisThread.randSeed = ~sdPreset[\randSeed];
+	thisThread.randSeed = ~sdPreset[\randSeed] ?? ({ 10000000.rand.debug("randSeed") });
 
 	sig = EnvGen.ar(
 		Env(

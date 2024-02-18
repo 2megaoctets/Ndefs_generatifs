@@ -81,8 +81,8 @@ Ndef(\sg, {
 	);
 
 	sig = XFade2.ar(
-		sig,
-		FreeVerb.ar(sig)
+		sig * 0.75,
+		FreeVerb.ar(sig * 0.75)
 	);
 
 	sig = sig * ~sgPreset[\amp] * 0.5;

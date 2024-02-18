@@ -25,11 +25,11 @@ Ndef(\jhMod1, {
 Ndef(\jh).fadeTime_(10);
 
 (
-~jhPreset = ( 'freq2_2': 248.1715965271, 'freqFactor1': 30.970663397312, 'freqFactor2': 43.801362544298, 'freq1_1': 245.29930114746, 'freq1_2': 310.42667961121, 'freq2_1': 160.68777751923, 'modFreq': 0.07014747440815, 'fbLfo1': 0.95554893016815, 'fbLfo2': 0.73493455648422, 'panLfo': 2.4287336349487, 'amp': 0.1, 'freqFactor1_1': 1.5 );
+~jhPreset = ( 'freq2_2': 248.1715965271, 'freqFactor1': 30.970663397312, 'freqFactor2': 43.801362544298, 'freq1_1': 245.29930114746, 'freq1_2': 310.42667961121, 'freq2_1': 160.68777751923, 'modFreq': 0.07014747440815, 'fbLfo1': 0.95554893016815, 'fbLfo2': 0.73493455648422, 'panLfo': 2.4287336349487, 'amp': 0.1, 'freqFactor1_1': 1.5, phaserLfoSkew: 0.1, phaserLfoMod: 0.125, phaserStages: 8 );
 )
 
 (
-~jhPreset = (freq1_1: rrand(60.0, 260), freq1_2: rrand(51.0, 362), freq2_1: rrand(121.0, 242), freq2_2: rrand(160.0,320),  freqFactor1: rrand(0.03, 120), freqFactor1_1: rrand(1.1,2.5), freqFactor2: rrand(0.25, 80), freqAdd2_1: rrand(0.8,2.5), freqFactor2_1: rrand(0.9,2.5), modFreq: rrand(0.045, 0.09), fbLfo1: rrand(0.1,1), fbLfo1Slope: rrand(44100,96000000), fbLfo2: rrand(0.1,1), panLfo: rrand(0.1,2.5), amp: 0.1);
+Post << ~jhPreset = (freq1_1: rrand(60.0, 260), freq1_2: rrand(51.0, 362), freq2_1: rrand(121.0, 242), freq2_2: rrand(160.0,320),  freqFactor1: rrand(0.03, 120), freqFactor1_1: rrand(1.1,2.5), freqFactor2: rrand(0.25, 80), freqAdd2_1: rrand(0.8,2.5), freqFactor2_1: rrand(0.9,2.5), modFreq: rrand(0.045, 0.09), fbLfo1: rrand(0.1,1), fbLfo1Slope: rrand(44100,96000000), fbLfo2: rrand(0.1,1), panLfo: rrand(0.1,2.5), amp: 0.1, phaserLfoSkew: rrand(0.05, 1), phaserLfoMod: rrand(0.05,10), phaserStages: rrand(8,35));
 )
 
 (
@@ -93,8 +93,15 @@ Ndef(\jh,{
 		)
 	);
 
+	sig = AnalogPhaserMod.ar(
+		sig,
+		LFSaw.kr(~jhPreset[\phaserLfoSkew]),  // skew -1 à 1
+		LFPulse.kr(~jhPreset[\phaserLfoMod]), // modulation 0 à 1
+		~jhPreset[\phaserStages] // 8 // stages 0 à 50
+	);
+
 	// Ndef('jh'): wrapped channels from 2 to 1 channels
-	sig= Splay.ar(sig, 1);
+	sig= Splay.ar(sig , 1);
 	// sig = Splay.ar(sig, 2, 1, 0.5);
 
 	sig = sig * ~jhPreset[\amp] * 0.5;

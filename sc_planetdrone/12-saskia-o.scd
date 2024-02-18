@@ -15,7 +15,7 @@ Ndef(\soMod1).fadeTime_(7);
 )
 
 (
-~soMod1Preset = (freqSlope: rrand(0.1,100), freqStart: rrand(0.1,20), freqEnd: rrand(0.1,40), numharmSlope: rrand(1,100), numharmStart: rrand(1,200), numharmEnd: rrand(1,200), mulSlope: rrand(0.1,100), mulStart: rrand(1.0,1.5), mulEnd: rrand(0.75,1.5), addSlope: rrand(0.1,10), addStart: rrand(1.0,10), addEnd: rrand(1.0,10));
+~soMod1Preset = (freqSlope: rrand(10000,441900), freqStart: rrand(0.1,20), freqEnd: rrand(0.1,40), numharmSlope: rrand(10000,441100), numharmStart: rrand(1,200), numharmEnd: rrand(1,200), mulSlope: rrand(10000,441100), mulStart: rrand(1.0,1.5), mulEnd: rrand(0.75,1.5), addSlope: rrand(1000,441110), addStart: rrand(1.0,10), addEnd: rrand(1.0,10));
 )
 
 
@@ -41,11 +41,11 @@ Ndef(\so).fadeTime_(8);
 )
 
 (
-~soPreset = ( 'ringzFreq3': 9.7110120773315, 'freqShift': [4.1584684848785, 5.2349713498896, 6.3114742149006, 7.3879770799117, 8.4644799449227, 9.5409828099337, 10.617485674945, 11.693988539956, 12.770491404967, 13.846994269978, 14.923497134989, 16.0], 'amp': 0.15, 'decTime2': 0.76502343416214, 'decTime4': 1.3099163413048, 'verbMix': 0.69394955635071, 'verbRoom': 0.66354058980942, 'impulseFreq3': 0.41789809465408, 'decTime3': 16.032494068146,  'impulseFreq2': 3.4629608511925, 'lpfFreq': 3420, 'impulseFreq4': 3.4473466396332, 'ringzFreq1': 4.0677775382996, 'ringzFreq4': 3321.7034950733, 'decTime1': 17.402307403088, 'verbMixLfo': 0.75, 'verbRoomLfo': 1.35, 'impulseFreq1': 3.850760653019, 'coinProbArray': [5,3,2,4], 'coinLineDur': 25.65, 'ringzFreq2': 3770.4411435127, 'ringzMul': [2,3,4,8] );
+~soPreset = ( 'ringzFreq3': 9.7110120773315, 'freqShift': [4.1584684848785, 5.2349713498896, 6.3114742149006, 7.3879770799117, 8.4644799449227, 9.5409828099337, 10.617485674945, 11.693988539956, 12.770491404967, 13.846994269978, 14.923497134989, 16.0], 'amp': 0.1, 'decTime2': 0.76502343416214, 'decTime4': 1.3099163413048, 'verbMix': 0.69394955635071, 'verbRoom': 0.66354058980942, 'impulseFreq3': 0.41789809465408, 'decTime3': 16.032494068146,  'impulseFreq2': 3.4629608511925, 'lpfFreq': 3420, 'impulseFreq4': 3.4473466396332, 'ringzFreq1': 4.0677775382996, 'ringzFreq4': 3321.7034950733, 'decTime1': 17.402307403088, 'verbMixLfo': 0.75, 'verbRoomLfo': 1.35, 'impulseFreq1': 3.850760653019, 'coinProbArray': [5,3,2,4], 'coinLineDur': 25.65, 'ringzFreq2': 3770.4411435127, 'ringzMul': [2,3,4,8] );
 )
 
 (
-~soPreset = ( 'ringzFreq3': 6.9114730119705, 'freqShift': [0.8395735502243, 1.5439880132675, 0.54398801326752, 3.3961952447891], 'amp': 0.15, 'decTime2': 15.132611906528, 'decTime4': 13.766912651062, 'verbMix': 0.40537347793579, 'verbRoom': 0.72955687046051, 'impulseFreq3': 2.8628251314163, 'decTime3': 1.9299045562744,  'impulseFreq2': 1.9344278693199, 'lpfFreq': 3202, 'impulseFreq4': 2.7757254004478, 'ringzFreq1': 16.900631523132, 'ringzFreq4': 674.53752396107,  'decTime1': 19.847937679291, 'impulseFreq1': 2.8049270284176, 'verbMixLfo': 0.125, 'verbRoomLfo': 0.0625, 'coinProbArray': [2,3,3,2], 'coinLineDur': 45.9, 'ringzFreq2': 1228.2455871701, 'ringzMul':[8,2,4,2]  );
+~soPreset = ( 'ringzFreq3': 6.9114730119705, 'freqShift': [0.8395735502243, 1.5439880132675, 0.54398801326752, 3.3961952447891], 'amp': 0.1, 'decTime2': 15.132611906528, 'decTime4': 13.766912651062, 'verbMix': 0.40537347793579, 'verbRoom': 0.72955687046051, 'impulseFreq3': 2.8628251314163, 'decTime3': 1.9299045562744,  'impulseFreq2': 1.9344278693199, 'lpfFreq': 3202, 'impulseFreq4': 2.7757254004478, 'ringzFreq1': 16.900631523132, 'ringzFreq4': 674.53752396107,  'decTime1': 19.847937679291, 'impulseFreq1': 2.8049270284176, 'verbMixLfo': 0.125, 'verbRoomLfo': 0.0625, 'coinProbArray': [2,3,3,2], 'coinLineDur': 45.9, 'ringzFreq2': 1228.2455871701, 'ringzMul':[8,2,4,2]  );
 ) // drum and bass
 
 (
@@ -66,7 +66,7 @@ Ndef(\so).fadeTime_(8);
 
 
 (
-~soPreset = (impulseFreq1: rrand(0.01,4), impulseFreq2: rrand(0.1,4), impulseFreq3: rrand(0.1,4), impulseFreq4: rrand(0.1,4), ringzFreq1: Array.linrand(rrand(1,4),rrand(0.2,25), rrand(10.0,25)), ringzFreq2: rrand(0.5,4000), ringzFreq3: rrand(0.1,25), ringzFreq4: rrand(0.2,4000), decTime1: rrand(0.1,25), decTime2: rrand(0.1,25), decTime3: rrand(0.1,25), decTime4: rrand(0.1,25), verbMix: rrand(0.3,0.9), verbMixLfo: rrand(0.075,2.5), verbRoomLfo: rrand(0.05,3.5), verbRoom: rrand(0.25,0.95), freqShift: Array.interpolation(12, rrand(0.4,4.2),16)  /*rrand(0.1,8)*/, lpfFreq: rrand(2000, 8000), coinProbArray: Array.rand(4,2,8), coinLineDur: rrand(10.0,50.0), ringzMul: Array.rand(4,2,8),  amp: 0.1);
+Post << ~soPreset = (impulseFreq1: rrand(4.0,5.2), impulseFreq2: rrand(8.0,9.2), impulseFreq3: rrand(2.0,3), impulseFreq4: rrand(4.0,5), ringzFreq1: Array.linrand(rrand(1,4),rrand(0.2,25), rrand(10.0,25)), ringzFreq2: rrand(0.5,4000), ringzFreq3: rrand(0.1,25), ringzFreq4: rrand(0.2,4000), decTime1: rrand(0.1,25), decTime2: rrand(0.1,25), decTime3: rrand(0.1,25), decTime4: rrand(0.1,25), verbMix: rrand(0.3,0.9), verbMixLfo: rrand(0.075,2.5), verbRoomLfo: rrand(0.05,3.5), verbRoom: rrand(0.25,0.95), freqShift: Array.interpolation(12, rrand(0.4,4.2),16)  /*rrand(0.1,8)*/, lpfFreq: rrand(2000, 8000), coinProbArray: Array.rand(4,2,8), coinLineDur: rrand(10.0,50.0), ringzMul: Array.rand(4,2,8),  amp: 0.1);
 )
 
 (
@@ -78,10 +78,10 @@ Ndef(\so, {
 		T2A.ar(
 			Impulse.kr(
 				[
-					4 + ~soPreset[\impulseFreq1] ,
-					8 + ~soPreset[\impulseFreq2],
-					2 + ~soPreset[\impulseFreq3],
-					4 + ~soPreset[\impulseFreq4]
+					~soPreset[\impulseFreq1] ,
+					~soPreset[\impulseFreq2],
+					~soPreset[\impulseFreq3],
+					~soPreset[\impulseFreq4]
 				]
 			) // impulse
 		) // t2a
@@ -109,11 +109,11 @@ Ndef(\so, {
 		~soPreset[\lpfFreq]
 	);
 
-	sig = FreqShift.ar(
+/*	sig = FreqShift.ar(
 		Mix.ar(sig),
 		// (~soPreset[\freqShift]%(4..16)).debug('freqShift') + Ndef.kr(\soMod1)
 		(1 + ~soPreset[\freqShift]) //   * Ndef.kr(\soMod1, 1).cos ).scope
-	);
+	);*/
 
 	sig = FreeVerb.ar(
 		Mix.ar(sig),
@@ -125,7 +125,7 @@ Ndef(\so, {
 	);
 
 	sig = Splay.ar(sig, 1);
-	sig = sig * ~soPreset[\amp] * 0.1;
+	sig = sig * ~soPreset[\amp] * 0.051;
 
 
 	sig = Limiter.ar(sig, 0.5);

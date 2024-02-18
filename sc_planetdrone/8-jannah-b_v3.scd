@@ -35,7 +35,7 @@ Ndef(\jbMod, {
 	);
 	sig = LeakDC.ar(sig);
 	sig;
-}).scope;
+});
 )
 
 Ndef(\jb).fadeTime_(7);

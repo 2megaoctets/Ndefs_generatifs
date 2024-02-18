@@ -125,7 +125,7 @@ Ndef(\sf, {
 	src = { |int|
 		RLPF.ar(
 			0.6 ** int * 40 * Impulse.ar(
-				~sfPreset[\impulseFreq] + Ndef.ar(\sfMod1).abs,  // 2**int/32 + ~sfPreset[\impulseFreq], // Impulse freq
+				~sfPreset[\impulseFreq] , // + Ndef.ar(\sfMod1).abs,  // 2**int/32 + ~sfPreset[\impulseFreq], // Impulse freq
 				1 / 2 + ~sfPreset[\impulsePhase] // Impulse phase
 			), // input
 			(4 ** LFNoise0.kr(
@@ -164,7 +164,7 @@ Ndef(\sf, {
 	);
 
 
-	2.do {
+/*	2.do {
 		sig = FreeVerb2.ar(
 			sig[0], // in1
 			sig[1], // in2
@@ -172,7 +172,7 @@ Ndef(\sf, {
 			~sfPreset[\verbRoom], // room
 			~sfPreset[\verbDamp] // damp
 		)
-	};
+	};*/
 /*	sig = FreqShift.ar(
 		Mix.ar(sig * 0.0625), // input
 		~sfPreset[\freqShift] / ~sfPreset[\freqShiftDivArray]  // (2..6) // freq

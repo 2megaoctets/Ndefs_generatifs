@@ -9,11 +9,11 @@ Ndef(\sdMod).fadeTime_(7);
 )
 
 (
-~sdModPreset = (freqSlope: 0.025, freqStart: 1.0, freqEnd: 30, iphaseSlope: 0.05, iphaseStart: 0.01, iphaseEnd: 2.0);
+~sdModPreset = (freqSlope: 25, freqStart: 1.0, freqEnd: 30, iphaseSlope: 500, iphaseStart: 0.01, iphaseEnd: 2.0);
 )
 
 (
-~sdModPreset = (freqSlope: rrand(20.25, 5), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(20.01, 0.1), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
+~sdModPreset = (freqSlope: rrand(20.25, 50000), freqStart: rrand(1.0, 800), freqEnd: rrand(1.0, 800.0), iphaseSlope: rrand(20.01, 100000), iphaseStart: rrand(0.0, 1.0), iphaseEnd: rrand(0.0, 2.0));
 )
 
 (
@@ -96,11 +96,11 @@ Ndef(\sd, {
 		earlyreflevel:~sdPreset[\earlyRef],
 		taillevel: ~sdPreset[\tailLevel]
 	);
-	sig = Mix.ar(sig) * ~sdPreset[\amp] ;
+	sig = Mix.ar(sig) * ~sdPreset[\amp] * 0.5;
 	sig = Limiter.ar(sig, 0.5);
 });
 )
 
 Ndef(\sd).play(0);
 
-Ndef(\sd).clear(1);
+Ndef(\sd).clear(7);

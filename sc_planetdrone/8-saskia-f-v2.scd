@@ -156,17 +156,17 @@ Ndef(\sf, {
 		add: 0.0
 	);
 
-	sig = FreqShift.ar(
+/*	sig = FreqShift.ar(
 		Mix.ar(sig ), // input
 		~sfPreset[\freqShift] / ~sfPreset[\freqShiftDivArray]  // (2..6) // freq
-	);
+	);*/
 
-	sig = sig + Ringz.ar(
+/*	sig = sig + Ringz.ar(
 		sig,
 		Line.kr(20 * ~sfPreset[\filterFreq], 80 * ~sfPreset[\filterFreq], 1.5 * ~sfPreset[\verbMixLfoFreq], 0.4) - Ndef.ar(\sfMod2), // ~sfPreset[\filterFreq], //
 		 Ndef.kr(\sfMod1) % 0.012,
 		0.12
-	);
+	);*/
 
 
 /*	2.do {

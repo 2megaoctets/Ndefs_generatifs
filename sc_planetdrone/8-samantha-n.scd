@@ -61,7 +61,7 @@ Ndef(\sn,{
 			0.0258,
 			1.38,
 			0.12,
-			1.0 / (1.0 + abs(SinOsc.kr(~snPreset[\planetDrone_effect_3], 0.0,~snPreset[\planetDrone_effect_3] * 250, ~snPreset[\planetDrone_effect_3] * 125)))
+			1.0 / (1.0 + abs(SinOsc.kr(~snPreset[\planetDrone_effect_3], 0.0,~snPreset[\planetDrone_effect_3] * 250, ~snPreset[\planetDrone_effect_3] * 125))) // add
 		)
 		)
 	);

@@ -3,6 +3,10 @@
 
 Ndef(\dpp).fadeTime_(10);
 
+( 'freqDivArray': [ 8.7825179637642, 5.6256910516348, 7.5006136901464, 7.5258217798461, 8.1533582531631 ], 'filterDiv': [ 8.693758641449, 6.9190159976883, 6.7898436465359 ], 'verbMix': 0.17910302877426, 'filterFreq1': 0.75773429870605,
+  'freqArray': [ 6.0327419206458, 6.8320706833241, 7.1143039379899, 7.4010472108453, 5.7438517030996 ], 'amp': 0.25, 'freqShift1': 283, 'filterFreq3': 0.11974945187569, 'decayTime': 5.2199939489365,
+  'verbRoom': 0.34900010824203, 'filterFreq2': 24.843945264816, 'freqShiftLfo': 0.055149202346802, 'freqShift2': 0.31861877441406 )
+
 (
 ~dppPreset = ( 'freqDivArray': [ 4.4749206224682, 4.7794763345813, 6.1969742817072, 4.656883172788, 7.5378502406348, 3.7080457222534 ], 'filterDiv': [ 8.1898486895714 ], 'verbMix': 0.60674115419388, 'filterFreq1': 0.016161677837372, 'freqArray': [ 4.0608569537844, 6.6641133595435, 2.548936683098, 4.5630779756183 ], 'amp': 0.25, 'freqShift1': 263, 'filterFreq3': 1.7298840975761, 'decayTime': 3.7049140930176, 'verbRoom': 0.47707213163376, 'filterFreq2': 27.742013931274, 'freqShiftLfo': 2.3634232473373, 'freqShift2': 5.6978397369385 );
 )
@@ -34,10 +38,10 @@ Ndef(\dpp,{
 		LFTri.ar(~dppPreset[\freqArray] * 99 + 99), // in
 		(LFTri.ar(~dppPreset[\freqArray]
 			+ SinOsc.ar(
-			freq: ~dppPreset[\filterFreq3] ,
-			phase: 0.0,
-			mul: abs(~dppPreset[\freqShift2] * 4),
-			add: 0.0)
+				freq: ~dppPreset[\filterFreq3] ,
+				phase: 0.0,
+				mul: abs(~dppPreset[\freqShift2] * 4),
+				add: 0.0)
 		)
 		+ (LFTri.ar(
 			0.05 + ~dppPreset[\filterFreq1] ,
@@ -45,14 +49,15 @@ Ndef(\dpp,{
 			9,
 			20 ) // 175 )
 		)
-		+ (~dppPreset[\filterFreq2])).max(20).min(16000), // freq
+		+ (~dppPreset[\filterFreq2])
+		).max(20).min(16000), // freq
 		1 , // attacktime
 		LFTri.ar(~dppPreset[\freqArray] / 6.011 + ~dppPreset[\decayTime] ) % 1 // decaytime
 	) / ~dppPreset[\filterDiv];
 
-	sig = Mix.ar(sig);
+	// sig = Mix.ar(sig);
 
-	sig = FreqShift.ar(
+/*	sig = FreqShift.ar(
 		Splay.ar(sig, 1),
 		~dppPreset[\freqShift1]  + SinOsc.ar(
 			freq: ~dppPreset[\freqShiftLfo],
@@ -60,7 +65,7 @@ Ndef(\dpp,{
 			mul: ~dppPreset[\freqShift2],
 			add: ~dppPreset[\freqShift2] / 2 // 0.0
 		) / ~dppPreset[\freqDivArray]
-	); // freqshift
+	); // freqshift*/
 
 	sig =	FreeVerb.ar(
 		Mix.ar(sig),

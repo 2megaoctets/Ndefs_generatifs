@@ -67,7 +67,7 @@ Ndef(\sfMod2).fadeTime_(10);
 )
 
 (
-~sfMod2Preset = (freqLfoRate: rrand(0.05, 20), freq: rrand(0.1, 10), iphaseSlope: rrand(4550.5,10), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(0.01,10), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(0.05,10), mulStart: rrand(0.65,3.5), mulEnd: rrand(0.65,3.5), addSlope: rrand(0.05,10), addStart: rrand(0.0,3.5), addEnd: rrand(0.0,3.5));
+~sfMod2Preset = (freqLfoRate: rrand(0.05, 20), freq: rrand(0.1, 10), iphaseSlope: rrand(4550.5,10000), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(1000,44100), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(1000,44110), mulStart: rrand(0.65,3.5), mulEnd: rrand(0.65,3.5), addSlope: rrand(1000,44100), addStart: rrand(0.0,3.5), addEnd: rrand(0.0,3.5));
 )
 
 (
@@ -114,7 +114,7 @@ Ndef(\sf).fadeTime_(7);
 
 
 (
-Post << ~sfPreset = (filterFreq: Array.interpolation(rrand(3,6), rrand(10.0,100), rrand(3000.0,5000)) /*rrand(0.1,100)*/, impulseFreq: rrand(0,20.0), impulsePhase: rrand(0,0.81), filterRQ: rrand(0.1,0.1), combDelTime: rrand(0.13,0.56), combDecTime: rrand(0.145,2), LFNFreq: rrand(0.12, 8), verbMixLfoMul: rrand(0.1, 0.8), verbMixLfoFreq: rrand(0.01,1.5), verbMixBase: rrand(0.03,0.64), verbRoom: rrand(0.25, 0.76), verbDamp: rrand(0.0625, 0.76), freqShift: Array.geom(5, rrand(1.5,10), rrand(1.65,3)), freqShiftDivArray: Array.series(5, rrand(0.25,2.5), rrand(0.25,2.1)), amp: 0.1)
+Post << ~sfPreset = (filterFreq: Array.interpolation(rrand(3,6), rrand(10.0,100), rrand(3000.0,5000)) /*rrand(0.1,100)*/, impulseFreq: rrand(0,20.0), impulsePhase: rrand(0,0.81), filterRQ: rrand(0.1,0.1), combDelTime: rrand(0.13,0.56), combDecTime: rrand(0.145,2), LFNFreq: rrand(0.12, 8), verbMixLfoMul: rrand(0.1, 0.8), verbMixLfoFreq: rrand(0.01,1.5), verbMixBase: rrand(0.03,0.64), verbRoom: rrand(0.25, 0.76), verbDamp: rrand(0.0625, 0.76), freqShift: Array.geom(rrand(3,7), rrand(1.5,10), rrand(1.65,3)), freqShiftDivArray: Array.series(5, rrand(0.25,1.25), rrand(0.25,2.1)), amp: 0.1)
 )
 
 
@@ -137,7 +137,7 @@ Ndef(\sf, {
 
 	q = Mix.ar(src * 0.125);
 
-/*	2.do {
+	2.do {
 		q = FreeVerb2.ar(
 			q[0], // in1
 			q[1], // in2
@@ -145,7 +145,7 @@ Ndef(\sf, {
 			~sfPreset[\verbRoom], // room
 			~sfPreset[\verbDamp] // damp
 		)
-	};*/
+	};
 
 	sig = CombC.ar(
 		q,
@@ -154,6 +154,11 @@ Ndef(\sf, {
 		decaytime: ~sfPreset[\combDecTime],
 		mul: 1,
 		add: 0.0
+	);
+
+	sig = FreqShift.ar(
+		Mix.ar(sig ), // input
+		~sfPreset[\freqShift] / ~sfPreset[\freqShiftDivArray]  // (2..6) // freq
 	);
 
 	sig = sig + Ringz.ar(
@@ -173,10 +178,7 @@ Ndef(\sf, {
 			~sfPreset[\verbDamp] // damp
 		)
 	};*/
-/*	sig = FreqShift.ar(
-		Mix.ar(sig * 0.0625), // input
-		~sfPreset[\freqShift] / ~sfPreset[\freqShiftDivArray]  // (2..6) // freq
-	);*/
+
 
 	sig = Splay.ar(sig, 1);
 	sig = sig * ~sfPreset[\amp] * 0.25;

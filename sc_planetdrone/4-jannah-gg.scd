@@ -122,7 +122,7 @@ Ndef(\jgg, {
 	));
 
 	sig = SelectX.ar(
-		LFTri.kr(0.15).abs.poll, // which // arg sur lfo freq?
+		LFTri.kr(0.15).abs, // which // arg sur lfo freq?
 		[srcA * 0.2, srcB]
 	);
 

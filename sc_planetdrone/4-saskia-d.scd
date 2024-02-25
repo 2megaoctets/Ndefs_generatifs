@@ -96,7 +96,7 @@ Ndef(\sd, {
 		earlyreflevel:~sdPreset[\earlyRef],
 		taillevel: ~sdPreset[\tailLevel]
 	);
-	sig = Mix.ar(sig) * ~sdPreset[\amp] * 0.3;
+	sig = Mix.ar(sig) * ~sdPreset[\amp] ;
 	sig = Limiter.ar(sig, 0.5);
 });
 )

@@ -1,6 +1,9 @@
+// 2102 ajout AnalogPhaser, à moduler
 // 1802 args, graphe, presets
 
 Ndef(\su).fadeTime_(7);
+
+
 
 (
 ~suPreset = (verbMul1: 1.88, delayTime: 0.0154, verbMul2: 1.28, dutyMaxLevel: 100.1,  locFbFactor: 0.8, loc2FbFactor: 25.45, loc3FbFactor: 1.625, amp: 0.15, inputRate: 11/8, attackRate: 4, decayRate: 4, factorRate: 1.25, del2: 0.01, del3: 0.25, impulseRate2: 0.25, attackRate2: 4, decayRate2: 4, factorRate2: 200, impulseRate3: 1, attackRate3: 0.0001, decayRate3: 0.05, factorRate3: 60, bpf1LfoRate: 0.25, bpf1MaxFreq: 907, bpf2LfoRate: 1/10, bpf2MaxFreq: 400, bpf3LfoRate: 0.5, bpf3MaxFreq: 800);
@@ -127,6 +130,15 @@ Ndef(\su, {
 		add:loc2
 	);
 
+	loc2 = AnalogPhaser.ar(
+		loc2,
+		SinOsc.kr(0.1, 0.0, 0.5, 0.5),
+		SinOsc.kr(0.2),
+		0.5,
+		SinOsc.kr(0.25).abs,
+		8
+	);
+
 	loc2 = Compander.ar(
 		loc2,
 		loc2,
@@ -180,6 +192,8 @@ Ndef(\su, {
 	sig = (loc * 0.25) + (Compander.ar(loc2, loc2, 0.1, 1, 0.05) * 0.35);
 
 	sig = Mix.ar(Mix.ar(sig));
+
+	sig = HPF.ar(sig, 140);
 
 	sig = sig * ~suPreset[\amp] ;
 

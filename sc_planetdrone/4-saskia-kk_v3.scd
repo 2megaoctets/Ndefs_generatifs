@@ -4,7 +4,7 @@
 Ndef(\skkMod).fadeTime_(7);
 
 (
-~skkModPreset = (carfreqSlope: 20.1, carfreqStart: 1, carfreqEnd: 3, modfreqSlope: 30.2, modfreqStart: 4, modfreqEnd: 1, pmindexSlope: 10.5, pmindexStart: 20, pmindexEnd: 40, modphaseSlope: 20.1, modphaseStart: 0.0, modphaseEnd: 1);
+~skkModPreset = (carfreqSlope: 20001, carfreqStart: 1, carfreqEnd: 3, modfreqSlope: 30872, modfreqStart: 4, modfreqEnd: 1, pmindexSlope: 10.5, pmindexStart: 20, pmindexEnd: 40, modphaseSlope: 209751, modphaseStart: 0.0, modphaseEnd: 1);
 )
 
 (
@@ -23,7 +23,7 @@ Ndef(\skkMod, {
 });
 )
 
-Ndef(\skk).fadeTime_(7);
+Ndef(\skk).fadeTime_(17);
 
 (
 ~skkPreset = ( 'earlyRef': 0.78317119777203, 'hz': 225.03538643003, 'revTime': 0.91426666378975, 'amp': 0.051,  'randSeed': 4506856, 'impulseFreq2': 0.55979113578796, 'impulseFreq4': 0.46136404275894, 'dryLev': 0.7639681905508, 'impulseFreq1': 0.59683083772659, 'impulseFreq3': 0.44538822174072 );
@@ -46,10 +46,19 @@ Ndef(\skk, {
 	var sig;
 	thisThread.randSeed = ~skkPreset[\randSeed] ?? ({  10000000.rand.debug("randSeed") });
 
-	sig = tanh(Impulse.kr(rrand(6.0,12) + (~skkPreset[\impulseFreq1] * rrand(6.0,12))).lag * Crackle.ar(LFSaw.kr(rrand(3.0, 7) + (~skkPreset[\impulseFreq2] * rrand(10.0, 20))).abs.lag * 1.8)
+	sig = tanh(Impulse.kr(
+		freq: rrand(6.0,12) + (~skkPreset[\impulseFreq1] * rrand(6.0,12)),
+		phase: Line.kr(0.2, 0.0, 0.4)
+	).lag * Crackle.ar(LFSaw.kr(rrand(3.0, 7) + (~skkPreset[\impulseFreq2] * rrand(10.0, 20))).abs.lag * 1.8)
 		+
 		GVerb.ar([
-			Impulse.kr(rrand(0.5,3) + (~skkPreset[\impulseFreq3] * rrand(60,90))) + Impulse.kr(rrand(1.0,6) + ~skkPreset[\impulseFreq4] * (~skkPreset[\impulseFreq3] * rrand(1.0,10)), 0.5)
+			Impulse.kr(
+			freq: rrand(0.5,3) + (~skkPreset[\impulseFreq3] * rrand(60,90)),
+			phase: Line.kr(0.2, 0.0, 0.3)
+		) + Impulse.kr(
+		freq: rrand(1.0,6) + ~skkPreset[\impulseFreq4] * (~skkPreset[\impulseFreq3] * rrand(1.0,10)),
+			phase: 0.5
+		)
 	].lag * Blip.ar(5.9 + (~skkPreset[\impulseFreq4] * rrand(30.0, 50)), 7, 0.4)!2, 1, 1) * 5);
 
 	sig = GVerb.ar(
@@ -75,4 +84,4 @@ Ndef(\skk, {
 
 Ndef(\skk).play(0);
 
-Ndef(\skk).clear(1);
+Ndef(\skk).clear(19);

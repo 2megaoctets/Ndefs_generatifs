@@ -23,8 +23,6 @@ Ndef(\sdMod1, {
 	LFCub.kr(
 		Phasor.kr(0.0, ~sdModPreset[\freqSlope], ~sdModPreset[\freqStart], ~sdModPreset[\freqEnd]),
 		Phasor.kr(0.0, ~sdModPreset[\iphaseSlope], ~sdModPreset[\iphaseStart], ~sdModPreset[\iphaseEnd]),
-		3,
-		6
 	)
 });
 )
@@ -66,27 +64,27 @@ Ndef(\sdMod2).clear(1);
 Ndef(\sd).fadeTime_(7);
 
 (
-~sdPreset = (random2: 0.4120153, random4: 37.25, random1: 0.00012, random3: 1.075,  dryLevel: -2.8, earlyRef: -2.2, tailLevel: 2.12265625, envs: 68, hpfLfo: 0.125, hpfFreq: 975, amp: 0.3, phasorSkew: 0.15, phasorMod: 0.75, phasorStages: 18, randSeed: 3953744, randSeed: 4608358, random3Factor: [ 362.72950172424, 158.4414768219 ]);
+~sdPreset = (random2: 0.4120153, random4: 37.25, random1: 0.00012, random3: 1.075,  dryLevel: -2.8, earlyRef: -2.2, tailLevel: 2.12265625, envs: 68, hpfLfo: 0.125, hpfFreq: 975, amp: 0.1, phasorSkew: 0.15, phasorMod: 0.75, phasorStages: 18, randSeed: 3953744, randSeed: 4608358, random3Factor: [ 362.72950172424, 158.4414768219 ]);
 )
 
 (
-~sdPreset = ( 'random4': 166.71161150932, 'random3': 1.8330188798904, 'hz': 234.63791787148, 'dryLevel': -2.25,   'earlyRef': 0.2449935555458, 'amp': 0.3, 'tailLevel': 1.8750575162, 'random2': 0.6004249215126, envs: 43, hpfLfo: 0.0625, hpfFreq: 1027, 'random1': 0.00010452611684799, phasorSkew: 0.85, phasorMod: 0.25, phasorStages: 28, randSeed: 9154162 , random3Factor: [ 482.48176574707, 229.6308106184 ]);
+~sdPreset = ( 'random4': 166.71161150932, 'random3': 1.8330188798904, 'hz': 234.63791787148, 'dryLevel': -2.25,   'earlyRef': 0.2449935555458, 'amp': 0.1, 'tailLevel': 1.8750575162, 'random2': 0.6004249215126, envs: 43, hpfLfo: 0.0625, hpfFreq: 1027, 'random1': 0.00010452611684799, phasorSkew: 0.85, phasorMod: 0.25, phasorStages: 28, randSeed: 9154162 , random3Factor: [ 482.48176574707, 229.6308106184 ]);
 )
 
 (
-~sdPreset = ( 'dryLevel': -2.9293020057678, 'tailLevel': 1.626927190423, 'earlyRef': -1.627618971467, 'hz': 118.84280915976, 'random2': 0.69399229884148, 'random1': 0.00010575314164162, 'random3': 1.0151849246025, 'envs': 79, 'amp': 0.3, hpfFreq: 124, hpfLfo: 0.15, 'random4': 129.59043478966 , phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8, randSeed: 9154162, random3Factor: [ 132.17046260834, 211.27869665623 ]) ;
+~sdPreset = ( 'dryLevel': -2.9293020057678, 'tailLevel': 1.626927190423, 'earlyRef': -1.627618971467, 'hz': 118.84280915976, 'random2': 0.69399229884148, 'random1': 0.00010575314164162, 'random3': 1.0151849246025, 'envs': 79, 'amp': 0.1, hpfFreq: 124, hpfLfo: 0.15, 'random4': 129.59043478966 , phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8, randSeed: 9154162, random3Factor: [ 132.17046260834, 211.27869665623 ]) ;
 )
 
 (
-~sdPreset = ( 'hpfFreq': 420, 'hz': 79.447018175125, 'random2': 0.59548714756966, 'random1': 0.0001445009803772, 'hpfLfo': 2.2932776784897, 'random3': 1.0393334960937, 'earlyRef': -1.488172724843, 'random4': 14.983815908432, 'dryLevel': -3.4241995668411, 'tailLevel': 1.7820497608185, 'amp': 0.3, 'envs': 64 , phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8, random3Factor: [ 863.85068893433, 534.45250689983 ]);
+~sdPreset = ( 'hpfFreq': 420, 'hz': 79.447018175125, 'random2': 0.59548714756966, 'random1': 0.0001445009803772, 'hpfLfo': 2.2932776784897, 'random3': 1.0393334960937, 'earlyRef': -1.488172724843, 'random4': 14.983815908432, 'dryLevel': -3.4241995668411, 'tailLevel': 1.7820497608185, 'amp': 0.1, 'envs': 64 , phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8, random3Factor: [ 863.85068893433, 534.45250689983 ]);
 )
 
 (
-~sdPreset = ( 'hpfFreq': 1353, 'hz': 135.57551516056, 'random2': 0.67252621650696, 'random1': 0.00016268412590027, 'hpfLfo': 2.5256552696228, 'random3': 1.0688130867481, 'earlyRef': -2.5699128478765, 'random4': 238.69688606262, 'dryLevel': -1.8587717914581, 'tailLevel': 1.5515693694353, 'amp': 0.3, 'randSeed': 206854, 'envs': 87, phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8 , random3Factor: [ 608.81767272949, 389.56364750862 ]);
+~sdPreset = ( 'hpfFreq': 1353, 'hz': 135.57551516056, 'random2': 0.67252621650696, 'random1': 0.00016268412590027, 'hpfLfo': 2.5256552696228, 'random3': 1.0688130867481, 'earlyRef': -2.5699128478765, 'random4': 238.69688606262, 'dryLevel': -1.8587717914581, 'tailLevel': 1.5515693694353, 'amp': 0.1, 'randSeed': 206854, 'envs': 87, phasorSkew: 0.5, phasorMod: 0.5, phasorStages: 8 , random3Factor: [ 608.81767272949, 389.56364750862 ]);
 )
 
 (
-~sdPreset = ( 'envs': 87, 'hz': 335.57551516056, 'earlyRef': -2.5699128478765, 'hpfFreq': 1353, 'tailLevel': 1.5515693694353, 'random2': 0.67252621650696, 'amp': 0.3, 'random4': 238.69688606262, 'random1': 0.00016268412590027, 'dryLevel': -1.8587717914581, 'randSeed': 206854, 'hpfLfo': 2.5256552696228,'random3': 1.0688130867481, 'randSeed': 5267280 ,phasorSkew: 0.85, phasorMod: 0.85, phasorStages: 38, random3Factor: [34.695, 157.724]);
+~sdPreset = ( 'envs': 87, 'hz': 335.57551516056, 'earlyRef': -2.5699128478765, 'hpfFreq': 1353, 'tailLevel': 1.5515693694353, 'random2': 0.67252621650696, 'amp': 0.15, 'random4': 238.69688606262, 'random1': 0.00016268412590027, 'dryLevel': -1.8587717914581, 'randSeed': 206854, 'hpfLfo': 2.5256552696228,'random3': 1.0688130867481, 'randSeed': 5267280 ,phasorSkew: 0.85, phasorMod: 0.85, phasorStages: 38, random3Factor: [34.695, 157.724]);
 )
 
 (
@@ -147,11 +145,12 @@ Ndef(\sd, {
 		earlyreflevel:~sdPreset[\earlyRef],
 		taillevel: ~sdPreset[\tailLevel]
 	);
-	sig = Mix.ar(sig) * ~sdPreset[\amp] * 0.5;
+	sig = HPF.ar(sig, 150);
+	sig = Mix.ar(sig) * ~sdPreset[\amp] * 0.35;
 	sig = Limiter.ar(sig, 0.5);
 });
 )
 
 Ndef(\sd).play(0);
 
-Ndef(\sd).clear(1);
+Ndef(\sd).clear(0);

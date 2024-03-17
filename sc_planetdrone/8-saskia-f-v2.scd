@@ -1,6 +1,6 @@
 // todo sem6: modulateurs
 // 0402: presets, args, valeurs, graphe
-
+synthdef avec le preset lent !!
 Ndef(\sfMod1).fadeTime_(10);
 
 (
@@ -34,7 +34,7 @@ Ndef(\sfMod1).fadeTime_(10);
 )
 
 (
-~sfMod1Preset = (excitation: rrand(0.25, 15), excitationLfoFreq: rrand(0.5, 20), tensionSlope: rrand(0.05,100), tensionStart: rrand(0.025,0.65), tensionEnd: rrand(0.05,0.65), lossSlope: rrand(0.05,100), lossStart: rrand(0.65, 0.999999), lossEnd: rrand(0.65, 0.999999), mulSlope: rrand(0.05, 100), mulStart: rrand(0.75, 1.25), mulEnd: rrand(0.75, 1.5), addSlope: rrand(0.05, 10), addStart: rrand(0.75, 1.25), addEnd: rrand(0.75, 1.25));
+~sfMod1Preset = (excitation: rrand(0.25, 15), excitationLfoFreq: rrand(0.5, 20), tensionSlope: rrand(30005,100), tensionStart: rrand(0.025,0.65), tensionEnd: rrand(0.05,0.65), lossSlope: rrand(30005,100), lossStart: rrand(0.65, 0.999999), lossEnd: rrand(0.65, 0.999999), mulSlope: rrand(30005, 100), mulStart: rrand(0.75, 1.25), mulEnd: rrand(0.75, 1.5), addSlope: rrand(0.05, 10), addStart: rrand(0.75, 1.25), addEnd: rrand(0.75, 1.25));
 )
 
 (
@@ -42,9 +42,9 @@ Ndef(\sfMod1, {
 	MembraneCircle.ar(
 		LFPulse.ar(~sfMod1Preset[\excitationLfoFreq], 0.0, 0.5, ~sfMod1Preset[\excitation], ~sfMod1Preset[\excitation] / 2),
 		Phasor(0.0, ~sfMod1Preset[\tensionSlope], ~sfMod1Preset[\tensionStart], ~sfMod1Preset[\tensionEnd], ~sfMod1Preset[\tensionEnd]) ,
-		Phasor.kr(0.0, ~sfMod1Preset[\lossSlope], ~sfMod1Preset[\lossStart], ~sfMod1Preset[\lossEnd], ~sfMod1Preset[\lossEnd]),
-		Phasor.kr(0.0, ~sfMod1Preset[\mulSlope], ~sfMod1Preset[\mulStart], ~sfMod1Preset[\mulEnd], ~sfMod1Preset[\mulEnd]),
-		Phasor.kr(0.0, ~sfMod1Preset[\addSlope], ~sfMod1Preset[\addStart], ~sfMod1Preset[\addEnd], ~sfMod1Preset[\addEnd])
+		Phasor.kr(0.0, ~sfMod1Preset[\lossSlope], ~sfMod1Preset[\lossStart], ~sfMod1Preset[\lossEnd], ~sfMod1Preset[\lossEnd])
+		// Phasor.kr(0.0, ~sfMod1Preset[\mulSlope], ~sfMod1Preset[\mulStart], ~sfMod1Preset[\mulEnd], ~sfMod1Preset[\mulEnd]),
+		// Phasor.kr(0.0, ~sfMod1Preset[\addSlope], ~sfMod1Preset[\addStart], ~sfMod1Preset[\addEnd], ~sfMod1Preset[\addEnd])
 	)
 });
 )
@@ -67,7 +67,7 @@ Ndef(\sfMod2).fadeTime_(10);
 )
 
 (
-~sfMod2Preset = (freqLfoRate: rrand(0.05, 20), freq: rrand(0.1, 10), iphaseSlope: rrand(4550.5,10000), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(1000,44100), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(1000,44110), mulStart: rrand(0.65,3.5), mulEnd: rrand(0.65,3.5), addSlope: rrand(1000,44100), addStart: rrand(0.0,3.5), addEnd: rrand(0.0,3.5));
+~sfMod2Preset = (freqLfoRate: rrand(0.05, 20), freq: rrand(0.1, 10), iphaseSlope: rrand(45505,10000), iphaseStart: rrand(0.0,1), iphaseEnd: rrand(0.0,1), widthSlope: rrand(1000,44100), widthStart: rrand(0.25,0.85), widthEnd: rrand(0.25,0.85), mulSlope: rrand(10000,44110), mulStart: rrand(0.65,3.5), mulEnd: rrand(0.65,3.5), addSlope: rrand(1000,44100), addStart: rrand(0.0,3.5), addEnd: rrand(0.0,3.5));
 )
 
 (
@@ -189,4 +189,4 @@ Ndef(\sf, {
 
 Ndef(\sf).play(0);
 
-Ndef(\sf).clear(1);
+Ndef(\sf).clear(19);

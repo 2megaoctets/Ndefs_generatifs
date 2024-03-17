@@ -35,7 +35,7 @@ Ndef(\suMod2, {
 		),
 		Phasor.kr(0.0, ~suMod2Preset[\biasSlope], ~suMod2Preset[\biasStart], ~suMod2Preset[\biasEnd], ~suMod2Preset[\biasEnd]),
 		Phasor.kr(0.0, ~suMod2Preset[\saturationSlope], ~suMod2Preset[\saturationStart], ~suMod2Preset[\saturationEnd], ~suMod2Preset[\saturationEnd]) * Ndef.kr(\sdMod1, 1, 0).abs,
-		Phasor.kr(0.0, ~suMod2Preset[\driveSlope], ~suMod2Preset[\driveStart], ~suMod2Preset[\driveEnd], ~suMod2Preset[\driveEnd]) + Ndef.kr(\sdMod1, 1, 1).abs,
+		Phasor.kr(0.0, ~suMod2Preset[\driveSlope], ~suMod2Preset[\driveStart], ~suMod2Preset[\driveEnd], ~suMod2Preset[\driveEnd]) * Ndef.kr(\sdMod1, 1, 1).abs,
 		~suMod2Preset[\oversample]
 	)
 });
@@ -238,7 +238,7 @@ Ndef(\su, {
 
 	sig = HPF.ar(sig, 140);
 
-	sig = sig * ~suPreset[\amp] * 0.5 ;
+	sig = sig * ~suPreset[\amp] * 0.35 ;
 
 	sig = Limiter.ar(sig, 0.5, 0.01);
 
@@ -248,4 +248,4 @@ Ndef(\su, {
 
 Ndef(\su).play(0);
 
-Ndef(\su).clear(10);
+Ndef(\su).clear(1);

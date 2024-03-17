@@ -8,6 +8,7 @@ Ndef(\sa).fadeTime_(7);
 
 (
 Ndef(\sa,{
+
 	// var freq = ~saPreset[\sineAdd] ;
 	var rt = 0.75;
 	var src = (PinkNoise.ar(1!2) - ~saPreset[\srcSus]) ;

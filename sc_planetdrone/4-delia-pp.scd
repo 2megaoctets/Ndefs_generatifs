@@ -81,4 +81,4 @@ Ndef(\dpp,{
 
 Ndef(\dpp).play(0);
 
-Ndef(\dpp).clear(10);
+Ndef(\dpp).clear(1);

@@ -1,5 +1,45 @@
+// 1603 modulateurs, Dust au lieu de Impulse
 // 2102 ajout AnalogPhaser, à moduler
 // 1802 args, graphe, presets
+
+Ndef(\suMod1).fadeTime_(7);
+
+(
+~suMod1Preset = (speedSlope: rrand(44100, 96000), speedStart: rrand(0.15, 1), speedEnd: rrand(0.15, 1), aSlope: rrand(44100, 96000), aStart: rrand(0.15, 1), aEnd: rrand(0.15, 1), bSlope: rrand(44100, 96000), bStart: rrand(0.15, 1), bEnd: rrand(0.15, 1), cSlope: rrand(44100, 96000), cStart: rrand(0.15, 1), cEnd: rrand(0.15, 1));
+)
+
+(
+Ndef(\suMod1, {
+	Chen.kr(
+		Phasor.kr(0.0, ~suMod1Preset[\speedSlope], ~suMod1Preset[\speedStart], ~suMod1Preset[\speedEnd], ~suMod1Preset[\speedEnd]),
+		Phasor.kr(0.0, ~suMod1Preset[\aSlope], ~suMod1Preset[\aStart], ~suMod1Preset[\aEnd], ~suMod1Preset[\aEnd]),
+		Phasor.kr(0.0, ~suMod1Preset[\bSlope], ~suMod1Preset[\bStart], ~suMod1Preset[\bEnd], ~suMod1Preset[\bEnd]),
+		Phasor.kr(0.0, ~suMod1Preset[\cSlope], ~suMod1Preset[\cStart], ~suMod1Preset[\cEnd], ~suMod1Preset[\cEnd])
+	)
+});
+)
+
+Ndef(\suMod2).fadeTime_(7);
+
+(
+~suMod2Preset = (formantfreqSlope: rrand(44100, 96100), formantfreqStart: rrand(5.0, 100), formantfreqEnd: rrand(5.0, 100), carrierfreqSlope: rrand(44100, 96000), carrierfreqStart: rrand(4.0, 180), carrierfreqEnd: rrand(4.0, 180), phaseshiftSlope: rrand(44100, 96000), phaseshiftStart: rrand(0.01, 0.8), phaseshiftEnd: rrand(0.01, 0.8), biasSlope: rrand(44100, 96000), biasStart: rrand(0.01, 0.95), biasEnd: rrand(0.01, 0.95), saturationSlope: rrand(44100, 96000), saturationStart:  rrand(0.15, 0.75), saturationEnd: rrand(0.15, 0.75), driveSlope: rrand(44100, 96000), driveStart: rrand(0.35, 1), driveEnd: rrand(0.35, 1), oversample: rrand(0,4));
+)
+
+(
+Ndef(\suMod2, {
+	AnalogTape.ar(
+		NeoFormant.ar(
+			Phasor.kr(0.0, ~suMod2Preset[\formantfreqSlope], ~suMod2Preset[\formantfreqStart], ~suMod2Preset[\formantfreqEnd], ~suMod2Preset[\formantfreqEnd]),
+			Phasor.kr(0.0, ~suMod2Preset[\carrierfreqSlope], ~suMod2Preset[\carrierfreqStart], ~suMod2Preset[\carrierfreqEnd], ~suMod2Preset[\carrierfreqEnd]),
+			Phasor.kr(0.0, ~suMod2Preset[\phaseshiftSlope], ~suMod2Preset[\phaseshiftStart], ~suMod2Preset[\phaseshiftEnd], ~suMod2Preset[\phaseshiftEnd])
+		),
+		Phasor.kr(0.0, ~suMod2Preset[\biasSlope], ~suMod2Preset[\biasStart], ~suMod2Preset[\biasEnd], ~suMod2Preset[\biasEnd]),
+		Phasor.kr(0.0, ~suMod2Preset[\saturationSlope], ~suMod2Preset[\saturationStart], ~suMod2Preset[\saturationEnd], ~suMod2Preset[\saturationEnd]) * Ndef.kr(\sdMod1, 1, 0).abs,
+		Phasor.kr(0.0, ~suMod2Preset[\driveSlope], ~suMod2Preset[\driveStart], ~suMod2Preset[\driveEnd], ~suMod2Preset[\driveEnd]) + Ndef.kr(\sdMod1, 1, 1).abs,
+		~suMod2Preset[\oversample]
+	)
+});
+)
 
 Ndef(\su).fadeTime_(7);
 
@@ -51,7 +91,7 @@ Ndef(\su, {
 	src3, loc3, sig, localIn, locFb, loc2Fb, loc3Fb;
 
 	src = Decay2.ar(
-		Impulse.ar(~suPreset[\inputRate]), // in
+		Dust.ar(~suPreset[\inputRate]), // in
 		LFNoise2.kr(~suPreset[\attackRate]).range(0.001,0.0001), // attackTime
 		LFNoise2.kr(~suPreset[\decayRate]).range(0.005, 0.05) // decayTime
 	)!2 * Saw.ar(
@@ -94,7 +134,7 @@ Ndef(\su, {
 
 	loc = DelayC.ar(
 		loc,
-		~suPreset[\delayTime] * 1.25,
+		(~suPreset[\delayTime] * (3 + Ndef.kr(\suMod1, 1, 0))), // 1.25,
 		~suPreset[\delayTime]
 	);
 
@@ -123,16 +163,19 @@ Ndef(\su, {
 	);
 
 	loc2 = GVerb.ar(
-		loc2,
+		Select.ar(
+			LFPulse.kr(0.4),
+			[loc2, Ndef.ar(\suMod2)]
+		),
 		100,
-		4,
+		2 + (2 + Ndef.kr(\suMod1, 1, 1)), // 4,
 		mul: ~suPreset[\verbMul2],
 		add:loc2
 	);
 
 	loc2 = AnalogPhaser.ar(
 		loc2,
-		SinOsc.kr(0.1, 0.0, 0.5, 0.5),
+		SinOsc.kr(Ndef.kr(\suMod1, 1, 2)), // SinOsc.kr(0.1, 0.0, 0.5, 0.5),
 		SinOsc.kr(0.2),
 		0.5,
 		SinOsc.kr(0.25).abs,
